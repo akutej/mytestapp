@@ -16,7 +16,6 @@ ui <- fluidPage(
     #span(img(src = "risk.jpg"),br(),br(),"Dashboard NEW")),
     headerPanel(div(img(src = "risk.jpg"),style="text-align: center;")),
     
-    
     sidebarLayout(position = "right",
       
       sidebarPanel(
