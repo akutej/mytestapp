@@ -8,20 +8,22 @@
 #
 
 library(shiny)
-
+library(shinytitle)
 # Define UI for application that draws a histogram
 ui <- fluidPage(
-
-    # Application title
-    
-    titlePanel( title=span(img(src = "risk.jpg"),br(),br(),"Dashboard NEW")),
-    
+    title = "RiskAssessment",
+    use_shiny_title(),
+    #span(img(src = "risk.jpg"),br(),br(),"Dashboard NEW")),
+    headerPanel(div(img(src = "risk.jpg"),style="text-align: center;")),
     
     
     sidebarLayout(position = "right",
-      sidebarPanel(("sidebar panel"),
-      inputPanel("Paramtersetup"),
-      selectInput("projectgroup", "Projektgruppe:",
+      
+      sidebarPanel(
+      tags$h2("Benutzermenü"),
+      #inputPanel
+      tags$h3("Parametereinstellungen"),
+      selectInput("projectgroup",label = h4("Projektgruppe:"),
                   c("Projektgruppe 1" = "pgroup1",
                     "Projektgruppe 2" = "pgroup2",
                     "Projektgruppe 3" = "pgroup3",
@@ -29,7 +31,7 @@ ui <- fluidPage(
                     "Projektgruppe 5" = "pgroup5",
                     "Alle" = "alle"),selected = "alle"),
       
-      selectInput("Scenario", "Szenarien:",
+      selectInput("Scenario",label = h4("Szenarien:"),
                   c("Szenario 1" = "szenario1",
                     "Szenario 2" = "szenario2",
                     "Szenario 3" = "szenario3",
@@ -39,14 +41,31 @@ ui <- fluidPage(
                     "Szenario 7" = "szenario7",
                     "Szenario 8" = "szenario8",
                     "Alle" = "alle"),selected = "alle"),
-                   
-                   
-                   ),
+      
+      #tags$h5("Benutzergruppen"),
+      checkboxGroupInput("checkGroup", label = h4("Benutzergruppen"), 
+                         choices = list("Projektteam" = 1, "Mitarbeiter" = 2),
+                          ),
+      tags$br(),
+      tags$h3("Links"),
+      tags$br(),
+      tags$a(href="https://rstudio.risikobewertung.com","RStudio Server", target="_blank"),
+      tags$br(),
+      tags$br(),
+      
+      
+      ),
+      
       mainPanel(
+        #hr(),
+        #fluidRow(column(3, verbatimTextOutput("value"))),
+        tags$span("Folgende Gruppenwurden gewählt"),
+        textOutput("value")
+        
         # img (src='risk.jpg'),
         # p("Auswahlmenü"),
+        )
       )
-    )
     
     
 
@@ -58,7 +77,15 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
 
- 
+  
+  
+    # You can access the values of the widget (as a vector)
+    # with input$checkGroup, e.g.
+    #output$value <- renderPrint({ input$checkGroup })
+      output$value <- renderText({input$checkGroup})
+            #paste("ausgewählte Gruppen: ",input$checkGroup)})
+      #input$checkGroup 
+  
     
 }
 
