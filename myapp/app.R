@@ -56,11 +56,14 @@ ui <- fluidPage(
       
       ),
       
-      mainPanel(
+      mainPanel(align = "center",
         #hr(),
         #fluidRow(column(3, verbatimTextOutput("value"))),
-        tags$span("Folgende Gruppenwurden gewählt"),
-        textOutput("value")
+        tags$span("Folgende Gruppen wurden gewählt"), textOutput("value"),
+        tags$br(),
+        plotOutput("plot", width = "600px", height = "600px") #,inline = FALSE
+        
+        
         
         # img (src='risk.jpg'),
         # p("Auswahlmenü"),
@@ -72,8 +75,7 @@ ui <- fluidPage(
     # Sidebar with a slider input for number of bins 
  
         # Show a plot of the generated distribution
- 
-)    
+  )    
 # Define server logic required to draw a histogram
 server <- function(input, output) {
 
@@ -81,11 +83,18 @@ server <- function(input, output) {
   
     # You can access the values of the widget (as a vector)
     # with input$checkGroup, e.g.
-    #output$value <- renderPrint({ input$checkGroup })
-      output$value <- renderText({input$checkGroup})
+     #output$value <- renderPrint({ input$checkGroup })
+      #message("The value of input$count is ", input$checkGroup)    
+     output$plot <- renderPlot(plot(1:3), res = 96)
             #paste("ausgewählte Gruppen: ",input$checkGroup)})
       #input$checkGroup 
   
+     output$plot <- renderPlot({
+       #Produce scatter plot
+       
+          ggplot()},
+          res = 96)
+     
     
 }
 
