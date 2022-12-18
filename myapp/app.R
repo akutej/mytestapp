@@ -14,15 +14,37 @@ ui <- fluidPage(
 
     # Application title
     
-    titlePanel    #  div(img(src="risk.jpg"))),
-    ("Dashboard Risikobewertung"),
+    titlePanel( title=span(img(src = "risk.jpg"),br(),br(),"Dashboard NEW")),
+    
     
     
     sidebarLayout(position = "right",
-      sidebarPanel("sidebar panel"),
+      sidebarPanel(("sidebar panel"),
+      inputPanel("Paramtersetup"),
+      selectInput("projectgroup", "Projektgruppe:",
+                  c("Projektgruppe 1" = "pgroup1",
+                    "Projektgruppe 2" = "pgroup2",
+                    "Projektgruppe 3" = "pgroup3",
+                    "Projektgruppe 4" = "pgroup4",
+                    "Projektgruppe 5" = "pgroup5",
+                    "Alle" = "alle"),selected = "alle"),
+      
+      selectInput("Scenario", "Szenarien:",
+                  c("Szenario 1" = "szenario1",
+                    "Szenario 2" = "szenario2",
+                    "Szenario 3" = "szenario3",
+                    "Szenario 4" = "szenario4",
+                    "Szenario 5" = "szenario5",
+                    "Szenario 6" = "szenario6",
+                    "Szenario 7" = "szenario7",
+                    "Szenario 8" = "szenario8",
+                    "Alle" = "alle"),selected = "alle"),
+                   
+                   
+                   ),
       mainPanel(
-        img (src='risk.jpg'),
-        p("Auswahlmenü"),
+        # img (src='risk.jpg'),
+        # p("Auswahlmenü"),
       )
     )
     
