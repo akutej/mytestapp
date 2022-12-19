@@ -97,8 +97,8 @@ server <- function(input, output) {
        
           ggplot()},
           res = 96)
-     
-     output$table <- renderTable(iris)
+     testtable <- read.table("Data/data.csv", header=TRUE, sep=";", dec=".")
+     output$table <- renderTable(testtable)
 }
 
 # Run the application 
