@@ -60,8 +60,12 @@ ui <- fluidPage(
         #fluidRow(column(3, verbatimTextOutput("value"))),
         tags$span("Folgende Gruppen wurden gewählt"), textOutput("value"),
         tags$br(),
-        plotOutput("plot", width = "600px", height = "600px") #,inline = FALSE
-        
+        plotOutput("plot", width = "600px", height = "600px"), #,inline = FALSE
+        fluidRow(
+          column(12,
+                 tableOutput('table')
+          )
+        )
         
         
         # img (src='risk.jpg'),
@@ -94,7 +98,7 @@ server <- function(input, output) {
           ggplot()},
           res = 96)
      
-    
+     output$table <- renderTable(iris)
 }
 
 # Run the application 
