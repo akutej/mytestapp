@@ -10,8 +10,12 @@
 library(shiny)
 library(shinytitle)
 library(ggplot2)
+library(shinythemes)
+library(ggplot2)
+
 # Define UI for application that draws a histogram
 ui <- fluidPage(
+    theme = shinytheme("paper"),
     title = "RiskAssessment",
     use_shiny_title(),
     #span(img(src = "risk.jpg"),br(),br(),"Dashboard NEW")),
@@ -59,18 +63,32 @@ ui <- fluidPage(
       mainPanel(align = "center",
         #hr(),
         #fluidRow(column(3, verbatimTextOutput("value"))),
-        tags$span("Folgende Gruppen wurden gewählt"), textOutput("value"),
-        tags$br(),
-        plotOutput("plot", width = "600px", height = "600px"), #,inline = FALSE
-        fluidRow(
-          column(12,
-                 tableOutput('table')
-          )
-        )
+        tabsetPanel(type = "tabs",
+                    tabPanel("Plot",
+                             tags$span("Folgende Gruppen wurden gewählt"), textOutput("value"),
+                             tags$br(),
+                             plotOutput("plot", width = "600px", height = "600px"), #,inline = FALSE         
+                            ),
+                    tabPanel("Summary",
+                             tags$label("Anzahl der Datensätze: "), textOutput("rowsum",inline = T),
+                             
+                             ),
+                    tabPanel("Table",
+                             fluidRow(
+                               column(12,
+                                      tableOutput('table')
+                             )
+                             )
+                             ),            
+                    tabPanel("Datamanagement",
+                             )            
+                    
+                             
+        ),
         
+       
+      
         
-        # img (src='risk.jpg'),
-        # p("Auswahlmenü"),
         )
       )
     
@@ -100,6 +118,8 @@ server <- function(input, output) {
           res = 96)
      testtable <- read.table("Data/data.csv", header=TRUE, sep=";", dec=".")
      output$table <- renderTable(testtable)
+     countedtesttable <- nrow(testtable)
+     output$rowsum <- renderText(countedtesttable)
 }
 
 # Run the application 
