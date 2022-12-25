@@ -130,17 +130,20 @@ server <- function(input, output) {
        #   res = 96)
      testtable <- read.table("Data/data.csv", header=TRUE, sep=";", dec=".")
      output$table <- renderTable(testtable)
+     
      accounttable <- read.table("Data/account.csv", header=TRUE, sep=";", dec=".")
+     newtest <- aggregate(accounttable, by=list(Category="ACC2SURV_RATEGUI"), FUN=sum)
+     
      #accountoutput$table <- renderTable(accounttable)
      
      output$bar <- renderPlot({
        
        color <- c("blue", "red")
        
-       barplot(colSums(accounttable[,c("ACC2SURV_RATEGUI","ACC2SURV_GROUPID")]),
+       barplot(colSums(newtest[,c("ACC2SURV_RATEGUI")]),
                ylab="Total",
                xlab="Census Year",
-               names.arg = c("rated","Teilnehmer"),
+               names.arg = c("rated"),
                col = color)
      })
      
