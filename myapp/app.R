@@ -64,6 +64,9 @@ ui <- fluidPage(
         #hr(),
         #fluidRow(column(3, verbatimTextOutput("value"))),
         tabsetPanel(type = "tabs",
+                    tabPanel("Home",
+                      tags$h1("Welcome Page"), 
+                    ),
                     tabPanel("Plot",
                              tags$span("Folgende Gruppen wurden gewählt"), textOutput("value"),
                              tags$br(),
@@ -81,7 +84,13 @@ ui <- fluidPage(
                              )
                              ),            
                     tabPanel("Datamanagement",
-                             )            
+                             ),
+                    tabPanel("Survey Summary",
+                             
+                             plotOutput("bar", width = "600px", height = "600px"),
+                             
+                    )            
+                    
                     
                              
         ),
@@ -107,17 +116,35 @@ server <- function(input, output) {
     # with input$checkGroup, e.g.
      #output$value <- renderPrint({ input$checkGroup })
       #message("The value of input$count is ", input$checkGroup)    
-     output$plot <- renderPlot(plot(1:3), res = 96)
-            #paste("ausgewählte Gruppen: ",input$checkGroup)})
+     
+  
+      output$plot <- renderPlot(plot(1:3), res = 96)
+     
+      #paste("ausgewählte Gruppen: ",input$checkGroup)})
       #input$checkGroup 
   
-     output$plot <- renderPlot({
+     #output$plot <- renderPlot({
        #Produce scatter plot
        
-          ggplot()},
-          res = 96)
+      #    ggplot()},
+       #   res = 96)
      testtable <- read.table("Data/data.csv", header=TRUE, sep=";", dec=".")
      output$table <- renderTable(testtable)
+     accounttable <- read.table("Data/account.csv", header=TRUE, sep=";", dec=".")
+     #accountoutput$table <- renderTable(accounttable)
+     
+     output$bar <- renderPlot({
+       
+       color <- c("blue", "red")
+       
+       barplot(colSums(accounttable[,c("ACC2SURV_RATEGUI","ACC2SURV_GROUPID")]),
+               ylab="Total",
+               xlab="Census Year",
+               names.arg = c("rated","Teilnehmer"),
+               col = color)
+     })
+     
+     
      countedtesttable <- nrow(testtable)
      output$rowsum <- renderText(countedtesttable)
 }
