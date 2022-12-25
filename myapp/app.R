@@ -11,7 +11,8 @@ library(shiny)
 library(shinytitle)
 library(ggplot2)
 library(shinythemes)
-library(ggplot2)
+library(dplyr)
+library(RColorBrewer)
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
@@ -87,7 +88,7 @@ ui <- fluidPage(
                              ),
                     tabPanel("Survey Summary",
                              
-                             plotOutput("bar", width = "600px", height = "600px"),
+                             plotOutput("bar", width = "400px", height = "400px"),
                              
                     )            
                     
@@ -132,22 +133,40 @@ server <- function(input, output) {
      output$table <- renderTable(testtable)
      
      accounttable <- read.table("Data/account.csv", header=TRUE, sep=";", dec=".")
-     newtest <- aggregate(accounttable, by=list(Category="ACC2SURV_RATEGUI"), FUN=sum)
+     accframe=as.data.frame.matrix(accounttable)
+     newtest <- aggregate(accframe, by=list(accounttable$ACC2SURV_RATEGUI), FUN=length )
+     #reduced <- subset(newtest, select=c("Acc_ID"))
+     colnames(newtest)
+     names(newtest)[2] <- "User"
+     newacctable <- newtest[2]
+     
+     #newtest <- aggregate(accounttable, by=list(Category="ACC2SURV_RATEGUI"), FUN=sum)
      
      #accountoutput$table <- renderTable(accounttable)
      
      output$bar <- renderPlot({
        
-       color <- c("blue", "red")
        
-       barplot(colSums(newtest[,c("ACC2SURV_RATEGUI")]),
-               ylab="Total",
-               xlab="Census Year",
-               names.arg = c("rated"),
-               col = color)
+       counts <- newacctable$User  
+       coul <- brewer.pal(5, "Set2") 
+       barplot(counts, main="Which method is better?",
+               #xlab="methods",
+               ylab="number of ratings",
+               names.arg = c("classical","graphical","equal"),
+               col = coul,#rgb(0.2,0.4,0.6)
+               ylim=c(0,30)
+               )
+                
+       
+       
+       #barplot(colSums(newacctable[,c("User")]),
+       #         ylab="Total",
+       #        xlab="Census Year",
+       #         names.arg = c("rated"),
+       #         col = color)
      })
      
-     
+     #gibt die Tabelle aus
      countedtesttable <- nrow(testtable)
      output$rowsum <- renderText(countedtesttable)
 }

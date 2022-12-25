@@ -8,5 +8,9 @@ accounttable <- read.csv(file = 'myapp/Data/account.csv', header=TRUE, sep=";", 
 accframe=as.data.frame.matrix(accounttable)
 newtest <- aggregate(accframe, by=list(accounttable$ACC2SURV_RATEGUI), FUN=length )
 #reduced <- subset(newtest, select=c("Acc_ID"))
-newtest(ACC_ID)
-  
+colnames(newtest)
+names(newtest)[2] <- "User"
+newtest[2]
+
+
+
