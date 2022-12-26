@@ -17,15 +17,17 @@ library(tidyverse)
 library(reactable)
 
   # Define UI for application that draws a histogram
-ui <- fluidPage( theme = shinytheme("paper"),
+ui <- fluidPage( theme = shinytheme("united"),  #"paper""spacelab"flatly*cosmo
                 list(tags$head(HTML('<link rel="icon", href="favicon-6.png", type="image/png" />'))),
-                div(style="padding: 1px 0px; width: '100%'",
-                titlePanel(
-                              title="", windowTitle="Risk Assessment"
-                          )
-                ),
-      navbarPage( theme = shinytheme("paper"),
-                            title=div(img(src="risk.jpg", height=30 ),""),
+                div(style="padding: 5px 0px; width: '100%'",
+                titlePanel(   title="",
+                              windowTitle="Risk Assessment"
+                          ),
+                          div(img(src="risk.jpg", height=40 ),""),
+                          ),
+                
+      navbarPage( theme = shinytheme("flatly"),
+                            title="",
                             tabPanel("Home","",
                             tags$h1("Welcome Page"), 
                 ),
