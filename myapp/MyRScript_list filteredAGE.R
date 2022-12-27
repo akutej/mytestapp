@@ -31,7 +31,7 @@ accframe4 <- accframe3 %>%
     between(ACC2SURV_INFOAGE,41,50) ~ "AGE 41-50",
     between(ACC2SURV_INFOAGE,51,60) ~ "AGE 51-60",
     between(ACC2SURV_INFOAGE,61,70) ~ "AGE 61-70"
-  ))
+  )) 
 
 accframe4 <- accframe4 %>% 
   mutate (ACC2SURV_RATEGUI = case_when(
@@ -52,3 +52,5 @@ newtest2
 ggp <- ggplot(newtest2, aes(x = reorder(Group.2, -ACC2SURV_INFOAGE), y = ACC2SURV_INFOAGE,  fill = Group.1, label = ACC2SURV_INFOAGE)) +  # Create stacked bar chart
   geom_bar(stat = "identity")
 ggp + geom_text(size = 3, position = position_stack(vjust = 0.8)) + labs(title = "Bewertungen") + labs(x = "Methoden")+ labs(y = "Personen")+scale_fill_discrete(name = "Altersgruppen")
+
+
