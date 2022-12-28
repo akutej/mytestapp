@@ -15,6 +15,7 @@ library(dplyr)
 library(RColorBrewer)
 library(tidyverse)
 library(reactable)
+library(scales)
 
   # Define UI for application that draws a histogram
 ui <- fluidPage( theme = shinytheme("united"),  #"paper""spacelab"flatly*cosmo
@@ -103,7 +104,8 @@ ui <- fluidPage( theme = shinytheme("united"),  #"paper""spacelab"flatly*cosmo
                     tabPanel("Survey Summary",
                              
                              plotOutput("bar", width = "400px", height = "400px"),
-                             
+                             tags$br(),
+                             plotOutput("detailbar", width = "500px", height = "500px"),
                    )            
                     
                 
@@ -140,9 +142,11 @@ server <- function(input, output) {
      testtable <- read.table("Data/data.csv", header=TRUE, sep=";", dec=".")
      output$table <- renderTable(testtable)
      
+     #ACCOUNT Auswertungen
      accounttable <- read.table("Data/account.csv", header=TRUE, sep=";", dec=".")
      accframe=as.data.frame.matrix(accounttable)
-     newtest <- aggregate(accframe, by=list(accounttable$ACC2SURV_RATEGUI), FUN=length )
+     
+     
      #reduced <- subset(newtest, select=c("Acc_ID"))
      colnames(newtest)
      names(newtest)[2] <- "User"
@@ -153,8 +157,6 @@ server <- function(input, output) {
      #accountoutput$table <- renderTable(accounttable)
      
      output$bar <- renderPlot({
-       
-       
        counts <- newacctable$User  
        coul <- brewer.pal(5, "Set2") 
        barplot(counts, main="Which method do you find better?",
@@ -164,9 +166,6 @@ server <- function(input, output) {
                col = coul,#rgb(0.2,0.4,0.6)
                ylim=c(0,30)
                )
-                
-       
-       
        #barplot(colSums(newacctable[,c("User")]),
        #         ylab="Total",
        #        xlab="Census Year",
@@ -174,9 +173,40 @@ server <- function(input, output) {
        #         col = color)
      })
      
+     output$detailbar <- renderPlot({
+       
+       accframe2 <- cbind(accframe,AGEGroup=NA)
+       accframe3 <- accframe2 %>% filter(!is.na(ACC2SURV_RATEGUI))
+       accframe3 <- accframe3 %>% filter(!is.na(ACC2SURV_INFOAGE))
+       accframe4 <- accframe3 %>% 
+         mutate (AGEGroup = case_when(
+           #ACC2SURV_INFOAGE == "53" ~ 'ALT',
+           between(ACC2SURV_INFOAGE,21,30) ~ "age 21-30",
+           between(ACC2SURV_INFOAGE,31,40) ~ "age 31-40",
+           between(ACC2SURV_INFOAGE,41,50) ~ "age 41-50",
+           between(ACC2SURV_INFOAGE,51,60) ~ "age 51-60",
+           between(ACC2SURV_INFOAGE,61,70) ~ "age 61-70"
+         )) 
+       
+       accframe4 <- accframe4 %>% 
+         mutate (ACC2SURV_RATEGUI = case_when(
+           ACC2SURV_RATEGUI == "1" ~ 'classic',
+           ACC2SURV_RATEGUI == "2" ~ 'graphic',
+           ACC2SURV_RATEGUI == "3" ~ 'equal'
+         ))
+       accframe4 <- accframe4 %>% select(ACC2SURV_RATEGUI,ACC2SURV_INFOAGE, AGEGroup)
+       newtest2 <- aggregate(accframe4, by=list(accframe4$AGEGroup,accframe4$ACC2SURV_RATEGUI), FUN=length)
+       ggp <- ggplot(newtest2, aes(x = reorder(Group.2, -ACC2SURV_INFOAGE), y = ACC2SURV_INFOAGE,  fill = Group.1, label = ACC2SURV_INFOAGE)) +  # Create stacked bar chart
+       geom_bar(stat = "identity")
+       ggp + geom_text(size = 3, position = position_stack(vjust = 0.8)) + labs(title = "user voting") + labs(x = "method")+ labs(y = "persons")+scale_fill_discrete(name = "groups")
+       
+       
+     })
      #gibt die Tabelle aus
      countedtesttable <- nrow(testtable)
      output$rowsum <- renderText(countedtesttable)
+
+     
 }
 
 # Run the application 

@@ -26,12 +26,12 @@ accframe3 <- accframe3 %>% filter(!is.na(ACC2SURV_INFOAGE))
 accframe4 <- accframe3 %>% 
   mutate (AGEGroup = case_when(
     #ACC2SURV_INFOAGE == "53" ~ 'ALT',
-    between(ACC2SURV_INFOAGE,21,30) ~ "AGE 21-30",
-    between(ACC2SURV_INFOAGE,31,40) ~ "AGE 31-40",
-    between(ACC2SURV_INFOAGE,41,50) ~ "AGE 41-50",
-    between(ACC2SURV_INFOAGE,51,60) ~ "AGE 51-60",
-    between(ACC2SURV_INFOAGE,61,70) ~ "AGE 61-70"
-  ))
+    between(ACC2SURV_INFOAGE,21,30) ~ "age 21-30",
+    between(ACC2SURV_INFOAGE,31,40) ~ "age 31-40",
+    between(ACC2SURV_INFOAGE,41,50) ~ "age 41-50",
+    between(ACC2SURV_INFOAGE,51,60) ~ "age 51-60",
+    between(ACC2SURV_INFOAGE,61,70) ~ "age 61-70"
+  )) 
 
 accframe4 <- accframe4 %>% 
   mutate (ACC2SURV_RATEGUI = case_when(
@@ -51,4 +51,7 @@ newtest2
 #print(rows)
 ggp <- ggplot(newtest2, aes(x = reorder(Group.2, -ACC2SURV_INFOAGE), y = ACC2SURV_INFOAGE,  fill = Group.1, label = ACC2SURV_INFOAGE)) +  # Create stacked bar chart
   geom_bar(stat = "identity")
-ggp + geom_text(size = 3, position = position_stack(vjust = 0.8)) + labs(title = "Bewertungen") + labs(x = "Methoden")+ labs(y = "Personen")+scale_fill_discrete(name = "Altersgruppen")
+ggp + geom_text(size = 3, position = position_stack(vjust = 0.8)) + labs(title = "user voting") + labs(x = "method")+ labs(y = "persons")+scale_fill_discrete(name = "groups")
+
+
+
