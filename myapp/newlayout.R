@@ -148,9 +148,9 @@ server <- function(input, output) {
      
      
      #reduced <- subset(newtest, select=c("Acc_ID"))
-     colnames(newtest)
-     names(newtest)[2] <- "User"
-     newacctable <- newtest[2]
+     #ERROR SHINY colnames(newtest)
+     #ERROR SHINY names(newtest)[2] <- "User"
+     #ERROR SHINY newacctable <- newtest[2]
      
      #newtest <- aggregate(accounttable, by=list(Category="ACC2SURV_RATEGUI"), FUN=sum)
      
