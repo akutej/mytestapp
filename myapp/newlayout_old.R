@@ -1,3 +1,12 @@
+#
+# This is a Shiny web application. You can run the application by clicking
+# the 'Run App' button above.
+#
+# Find out more about building applications with Shiny here:
+#
+#    http://shiny.rstudio.com/
+#
+
 library(shiny)
 library(shinytitle)
 library(ggplot2)
@@ -98,16 +107,28 @@ ui <- fluidPage( theme = shinytheme("united"),  #"paper""spacelab"flatly*cosmo
                              tags$br(),
                              plotOutput("detailbar", width = "500px", height = "500px"),
                    )            
+                    
+                
   )   
-  )    
+        
+              
+    
 
+    # Sidebar with a slider input for number of bins 
+ 
+        # Show a plot of the generated distribution
+  )    
 # Define server logic required to draw a histogram
 server <- function(input, output) {
+
+  
+  
     # You can access the values of the widget (as a vector)
     # with input$checkGroup, e.g.
      #output$value <- renderPrint({ input$checkGroup })
       #message("The value of input$count is ", input$checkGroup)    
      
+  
       output$plot <- renderPlot(plot(1:3), res = 96)
      
       #paste("ausgewählte Gruppen: ",input$checkGroup)})
@@ -124,7 +145,37 @@ server <- function(input, output) {
      #ACCOUNT Auswertungen
      accounttable <- read.table("Data/account.csv", header=TRUE, sep=";", dec=".")
      accframe=as.data.frame.matrix(accounttable)
-  
+     
+     #newtest <- aggregate(accounttable, by=list(Category="ACC2SURV_RATEGUI"), FUN=sum)
+     #reduced <- subset(newtest, select=c("Acc_ID"))
+     #ERROR SHINY 
+     colnames(newtest)
+     #ERROR SHINY 
+     names(newtest)[2] <- "User"
+     #ERROR SHINY 
+     newacctable <- newtest[2]
+     
+     #
+     newtest <- aggregate(accounttable, by=list(Category="ACC2SURV_RATEGUI"), FUN=sum)
+     
+     #accountoutput$table <- renderTable(accounttable)
+     
+     output$bar <- renderPlot({
+       counts <- newacctable$User  
+       coul <- brewer.pal(5, "Set2") 
+       barplot(counts, main="Which method do you find better?",
+               #xlab="methods",
+               ylab="number of ratings",
+               names.arg = c("classical","graphical","equal"),
+               col = coul,#rgb(0.2,0.4,0.6)
+               ylim=c(0,30)
+               )
+       #barplot(colSums(newacctable[,c("User")]),
+       #         ylab="Total",
+       #        xlab="Census Year",
+       #         names.arg = c("rated"),
+       #         col = color)
+     })
      
      output$detailbar <- renderPlot({
        
