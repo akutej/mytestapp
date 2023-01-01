@@ -12,13 +12,13 @@ accframe=as.data.frame.matrix(accounttable)
 newtest <- aggregate(accframe, by=list(accounttable$ACC2SURV_RATEGUI), FUN=length )
 #reduced <- subset(newtest, select=c("Acc_ID"))
 
-#colnames(newtest)
+colnames(newtest)
 
 #names(newtest)[2] <- "User"
 #newtest[2]
 #accounttable[1:5]
 #accounttable %>% select(ACC2SURV_INFOAGE)
-
+Mittelalter <- mean(accframe$PERS_ALTER, trim = 0, na.rm = TRUE)
 
 accframe2 <- cbind(accframe,AGEGroup=NA)
 accframe3 <- accframe2 %>% filter(!is.na(ACC2SURV_RATEGUI))
@@ -53,5 +53,5 @@ ggp <- ggplot(newtest2, aes(x = reorder(Group.2, -ACC2SURV_INFOAGE), y = ACC2SUR
   geom_bar(stat = "identity")
 ggp + geom_text(size = 3, position = position_stack(vjust = 0.8)) + labs(title = "user voting") + labs(x = "method")+ labs(y = "persons")+scale_fill_discrete(name = "groups")
 
-
+Mittelalter
 

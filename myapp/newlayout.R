@@ -28,7 +28,7 @@ ui <- fluidPage( theme = shinytheme("united"),  #"paper""spacelab"flatly*cosmo
                          
                       fluidPage(
                            
-                           sidebarLayout(position = "right",
+                           sidebarLayout(position = "left",
                                          
                                          sidebarPanel(
                                            tags$h2("Benutzermenü"),
@@ -94,14 +94,27 @@ ui <- fluidPage( theme = shinytheme("united"),  #"paper""spacelab"flatly*cosmo
                              ),
                     tabPanel("Survey Summary",
                              
-                             plotOutput("bar", width = "400px", height = "400px"),
-                             tags$br(),
-                             plotOutput("detailbar", width = "500px", height = "500px"),
+                             #plotOutput("bar", width = "400px", height = "400px"),
+                             #tags$br(),
+                             
+                             fluidPage(
+                              splitLayout(cellWidths = c("33%", "33%", "34%"),
+                             
+                               plotOutput("detailbar1", width = "600px", height = "500px"),
+                               plotOutput("detailbar2", width = "600px", height = "500px"),
+                               tags$label(("Der Altersdurchschnitt der Befragten: "),textOutput("MeanAge",inline = T)),
+                               
+                              )
+                             )
+                             
+                             
+                             
+                             
                    )            
   )   
   )    
 
-# Define server logic required to draw a histogram
+
 server <- function(input, output) {
     # You can access the values of the widget (as a vector)
     # with input$checkGroup, e.g.
@@ -124,9 +137,9 @@ server <- function(input, output) {
      #ACCOUNT Auswertungen
      accounttable <- read.table("Data/account.csv", header=TRUE, sep=";", dec=".")
      accframe=as.data.frame.matrix(accounttable)
-  
+     CALCMeanAGE <- mean(accframe$PERS_ALTER, trim = 0, na.rm = TRUE)  
      
-     output$detailbar <- renderPlot({
+     output$detailbar1 <- renderPlot({
        
        accframe2 <- cbind(accframe,AGEGroup=NA)
        accframe3 <- accframe2 %>% filter(!is.na(ACC2SURV_RATEGUI))
@@ -151,10 +164,42 @@ server <- function(input, output) {
        newtest2 <- aggregate(accframe4, by=list(accframe4$AGEGroup,accframe4$ACC2SURV_RATEGUI), FUN=length)
        ggp <- ggplot(newtest2, aes(x = reorder(Group.2, -ACC2SURV_INFOAGE), y = ACC2SURV_INFOAGE,  fill = Group.1, label = ACC2SURV_INFOAGE)) +  # Create stacked bar chart
        geom_bar(stat = "identity")
-       ggp + geom_text(size = 3, position = position_stack(vjust = 0.8)) + labs(title = "user voting") + labs(x = "method")+ labs(y = "persons")+scale_fill_discrete(name = "groups")
+       ggp + geom_text(size = 3, position = position_stack(vjust = 0.8)) + labs(title = "Which method do you like better?") + labs(x = "method")+ labs(y = "persons")+scale_fill_discrete(name = "groups")
+        
+       
+     })
+     
+     output$detailbar2 <- renderPlot({
+       
+       accframe2 <- cbind(accframe,AGEGroup=NA)
+       accframe3 <- accframe2 %>% filter(!is.na(ACC2SURV_RATEGUI))
+       accframe3 <- accframe3 %>% filter(!is.na(ACC2SURV_INFOAGE))
+       accframe4 <- accframe3 %>% 
+         mutate (AGEGroup = case_when(
+           #ACC2SURV_INFOAGE == "53" ~ 'ALT',
+           between(ACC2SURV_INFOAGE,21,30) ~ "age 21-30",
+           between(ACC2SURV_INFOAGE,31,40) ~ "age 31-40",
+           between(ACC2SURV_INFOAGE,41,50) ~ "age 41-50",
+           between(ACC2SURV_INFOAGE,51,60) ~ "age 51-60",
+           between(ACC2SURV_INFOAGE,61,70) ~ "age 61-70"
+         )) 
+       
+       accframe4 <- accframe4 %>% 
+         mutate (ACC2SURV_RATEGUI = case_when(
+           ACC2SURV_RATEGUI == "1" ~ 'classic',
+           ACC2SURV_RATEGUI == "2" ~ 'graphic',
+           ACC2SURV_RATEGUI == "3" ~ 'equal'
+         ))
+       accframe4 <- accframe4 %>% select(ACC2SURV_RATEGUI,ACC2SURV_INFOAGE, AGEGroup)
+       newtest2 <- aggregate(accframe4, by=list(accframe4$AGEGroup,accframe4$ACC2SURV_RATEGUI), FUN=length)
+       ggp <- ggplot(newtest2, aes(x = reorder(Group.2, -ACC2SURV_INFOAGE), y = ACC2SURV_INFOAGE,  fill = Group.1, label = ACC2SURV_INFOAGE)) +  # Create stacked bar chart
+         geom_bar(stat = "identity")
+       ggp + geom_text(size = 3, position = position_stack(vjust = 0.8)) + labs(title = "Which method do you like better?") + labs(x = "method")+ labs(y = "persons")+scale_fill_discrete(name = "groups")
        
        
      })
+     output$MeanAge <- renderText(CALCMeanAGE)
+     
      #gibt die Tabelle aus
      countedtesttable <- nrow(testtable)
      output$rowsum <- renderText(countedtesttable)
