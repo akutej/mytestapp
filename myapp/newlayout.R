@@ -116,7 +116,13 @@ ui <- fluidPage( theme = shinytheme("united"),  #"paper""spacelab"flatly*cosmo
                                        tags$label("Details zu den Antworten: "),
                                        ),
                                        fluidPage(
-                                       tags$label("Deteails zu den Fragen"),
+                                       tags$label("Details zu den Fragen"),
+                                       tags$br(),
+                                       tags$br(),
+                                       tags$label(("Der Altersdurchschnitt der Befragten: "),textOutput("questiondetail1",inline = T)),
+                                       tags$br(),
+                                       tags$label(("Der Altersdurchschnitt der Befragten: "),textOutput("questiondetail2",inline = T)),
+                                       tags$br(),
                                        ),
                                     
                             
@@ -151,6 +157,17 @@ server <- function(input, output) {
      accounttable <- read.table("Data/account.csv", header=TRUE, sep=";", dec=".")
      accframe=as.data.frame.matrix(accounttable)
      CALCMeanAGE <- mean(accframe$PERS_ALTER, trim = 0, na.rm = TRUE)  
+     
+     questions <- read.csv(file = 'Data/questions.csv', header=TRUE, sep=";", dec=".", encoding="auto")
+     qframe=as.data.frame.matrix(questions)
+     newcount <- table(qframe$QUES_CATEGORY)
+     questcount <- nrow (qframe[duplicated(qframe$QUES_ID), ]) #zählt die Anzahl ohne Berücksichtigung der Duplikate
+     Categorycount <- nrow (newcount)
+     
+     
+     output$questiondetail1 <- renderText(questcount)
+     output$questiondetail2 <- renderText(Categorycount)
+     
      
      output$detailbar1 <- renderPlot({
        
@@ -211,6 +228,12 @@ server <- function(input, output) {
        
        
      })
+     
+     
+     
+     
+     
+     
      output$MeanAge <- renderText(CALCMeanAGE)
      
      #gibt die Tabelle aus
