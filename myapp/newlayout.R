@@ -119,10 +119,12 @@ ui <- fluidPage( theme = shinytheme("united"),  #"paper""spacelab"flatly*cosmo
                                        tags$label("Details zu den Fragen"),
                                        tags$br(),
                                        tags$br(),
-                                       tags$label(("Der Altersdurchschnitt der Befragten: "),textOutput("questiondetail1",inline = T)),
+                                       tags$label(("Anzahl der Risiko- und Chancen-Szenarien: "),textOutput("questiondetail1",inline = T)),
                                        tags$br(),
-                                       tags$label(("Der Altersdurchschnitt der Befragten: "),textOutput("questiondetail2",inline = T)),
+                                       tags$label(("Anzahl der Fragenkategorien: "),textOutput("questiondetail2",inline = T)),
                                        tags$br(),
+                                       tableOutput('tableCategories'),
+                                       
                                        ),
                                     
                             
@@ -158,15 +160,19 @@ server <- function(input, output) {
      accframe=as.data.frame.matrix(accounttable)
      CALCMeanAGE <- mean(accframe$PERS_ALTER, trim = 0, na.rm = TRUE)  
      
-     questions <- read.csv(file = 'Data/questions.csv', header=TRUE, sep=";", dec=".", encoding="auto")
+     questions <- read.csv(file = 'Data/questions2.csv', header=TRUE, sep=";", dec=".", encoding="auto")
      qframe=as.data.frame.matrix(questions)
      newcount <- table(qframe$QUES_CATEGORY)
      questcount <- nrow (qframe[duplicated(qframe$QUES_ID), ]) #zählt die Anzahl ohne Berücksichtigung der Duplikate
      Categorycount <- nrow (newcount)
-     
+     df2 <- qframe %>% group_by(QUES_CATEGORY,QUES_TYP) %>%    #weißt dem neuen dataframe2 den gefiterten dataframe zu
+       summarise(total_count=n(),.groups = 'drop') %>%
+       as.data.frame()
+     colnames(df2) = c("Kategorie", "Szenarientyp", "Anzahl")
      
      output$questiondetail1 <- renderText(questcount)
      output$questiondetail2 <- renderText(Categorycount)
+     output$tableCategories <- renderTable(df2)
      
      
      output$detailbar1 <- renderPlot({
