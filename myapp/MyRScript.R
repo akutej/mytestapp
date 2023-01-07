@@ -29,3 +29,4 @@ accframe4 <- accframe3 %>%
 
 #accframe3 %>% select(ACC2SURV_INFOAGE)
 accframe4 %>% select(ACC2SURV_INFOAGE, AGEGroup)
+

@@ -90,9 +90,7 @@ ui <- fluidPage( theme = shinytheme("united"),  #"paper""spacelab"flatly*cosmo
                              )
                              )
                              ),            
-                    tabPanel("Datamanagement",
-                             ),
-                    tabPanel("Survey Summary",
+                    tabPanel("Survey Analysis",
                              
                              #plotOutput("bar", width = "400px", height = "400px"),
                              #tags$br(),
@@ -106,11 +104,26 @@ ui <- fluidPage( theme = shinytheme("united"),  #"paper""spacelab"flatly*cosmo
                                
                               )
                              )
-                             
-                             
-                             
-                             
-                   )            
+                             ),
+                tabPanel("Survey Summary",
+                         fluidPage(
+                           splitLayout(cellWidths = c("33%", "33%", "34%"),
+                                       
+                                       fluidPage(
+                                         tags$label("Details zu den Befragten: "),
+                                         ),
+                                       fluidPage(
+                                       tags$label("Details zu den Antworten: "),
+                                       ),
+                                       fluidPage(
+                                       tags$label("Deteails zu den Fragen"),
+                                       ),
+                                    
+                            
+                                       )
+                           )
+                                       
+                ),
   )   
   )    
 
