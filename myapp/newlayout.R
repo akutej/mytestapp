@@ -152,7 +152,7 @@ server <- function(input, output) {
        
       #    ggplot()},
        #   res = 96)
-     testtable <- read.table("Data/data.csv", header=TRUE, sep=";", dec=".")
+     testtable <- read.table("Data/answer.csv", header=TRUE, sep=";", dec=".")
      output$table <- renderTable(testtable)
      
      #ACCOUNT Auswertungen
@@ -160,7 +160,7 @@ server <- function(input, output) {
      accframe=as.data.frame.matrix(accounttable)
      CALCMeanAGE <- mean(accframe$PERS_ALTER, trim = 0, na.rm = TRUE)  
      
-     questions <- read.csv(file = 'Data/questions2.csv', header=TRUE, sep=";", dec=".", encoding="auto")
+     questions <- read.csv(file = 'Data/question.csv', header=TRUE, sep=";", dec=".", encoding="auto")
      qframe=as.data.frame.matrix(questions)
      newcount <- table(qframe$QUES_CATEGORY)
      questcount <- nrow (qframe[duplicated(qframe$QUES_ID), ]) #zählt die Anzahl ohne Berücksichtigung der Duplikate
