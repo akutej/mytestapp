@@ -152,7 +152,7 @@ server <- function(input, output) {
        
       #    ggplot()},
        #   res = 96)
-     testtable <- read.table("Data/answers.csv", header=TRUE, sep=";", dec=".")
+     testtable <- read.table("Data/questions.csv", header=TRUE, sep=";", dec=".")
      output$table <- renderTable(testtable)
      
      #ACCOUNT Auswertungen
