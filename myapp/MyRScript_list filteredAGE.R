@@ -2,8 +2,13 @@ library(dplyr)
 library(ggplot2)
 library(scales)
 #read.table("example.csv", header=TRUE, sep=";", dec=".")
+<<<<<<< HEAD
 testtable <- read.csv(file = 'Data/data.csv', header=TRUE, sep=";", dec=".")
 accounttable <- read.csv(file = 'Data/account.csv', header=TRUE, sep=";", dec=".")
+=======
+#testtable <- read.csv(file = 'myapp/Data/data.csv', header=TRUE, sep=";", dec=".")
+accounttable <- read.csv(file = 'myapp/Data/account.csv', header=TRUE, sep=";", dec=".")
+>>>>>>> 64fe9f82dbd6c8f71452be776e2cabf1e46f9c02
 #testtable <- read.table("Data/data.csv", header=TRUE, sep=";", dec=".")
 #accounttable <- read.table("Data/account.csv", header=TRUE, sep=";", dec=".")
 #head (testtable)
@@ -12,13 +17,13 @@ accframe=as.data.frame.matrix(accounttable)
 newtest <- aggregate(accframe, by=list(accounttable$ACC2SURV_RATEGUI), FUN=length )
 #reduced <- subset(newtest, select=c("Acc_ID"))
 
-#colnames(newtest)
+colnames(newtest)
 
 #names(newtest)[2] <- "User"
 #newtest[2]
 #accounttable[1:5]
 #accounttable %>% select(ACC2SURV_INFOAGE)
-
+Mittelalter <- mean(accframe$PERS_ALTER, trim = 0, na.rm = TRUE)
 
 accframe2 <- cbind(accframe,AGEGroup=NA)
 accframe3 <- accframe2 %>% filter(!is.na(ACC2SURV_RATEGUI))
@@ -53,5 +58,5 @@ ggp <- ggplot(newtest2, aes(x = reorder(Group.2, -ACC2SURV_INFOAGE), y = ACC2SUR
   geom_bar(stat = "identity")
 ggp + geom_text(size = 3, position = position_stack(vjust = 0.8)) + labs(title = "user voting") + labs(x = "method")+ labs(y = "persons")+scale_fill_discrete(name = "groups")
 
-
+Mittelalter
 
