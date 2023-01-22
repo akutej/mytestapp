@@ -2,7 +2,7 @@ library(dplyr)
 library(ggplot2)
 library(scales)
 
-questions <- read.csv(file = 'myapp/Data/questions2.csv', header=TRUE, sep=";", dec=".", encoding="auto")
+questions <- read.csv(file = 'myapp/Data/questions.csv', header=TRUE, sep=";", dec=".", encoding="auto")
 
 qframe=as.data.frame.matrix(questions)
 colnames(qframe)
