@@ -22,7 +22,7 @@ answerstable <- read.csv(file = 'myapp/Data/answers.csv', header=TRUE, sep=";", 
 #answersframe_1 <- answersframe
 #print (rectanglegrid)
 
-df <- answerstable[ c(1,3,5:10,18,25) ] #reduziert den Dataframe auf die nötigen Spalten
+df <- answerstable[ c(1,3,5:10,18,21,25,26,31,35,36) ] #reduziert den Dataframe auf die nötigen Spalten
 df['X1Pixel'] <- NA
 df['X2Pixel'] <- NA
 df['Y1Pixel'] <- NA
@@ -41,7 +41,7 @@ firstentry <- (df[1,]) #nimmt die erste Zeile
 numberofanswers <- nrow(df)
 #print (numberofanswers)
 
-for (i in 1:1000) {
+for (i in 1:numberofanswers) {
   firstAccID <- (df[i,"ACC2SURV_ACCID"])
   firstQuesID <- (df[i,"QUES2SURV_QUESID"])
   firstMethod <- (df[i,"QUES2SURV_METHOD"])
@@ -53,7 +53,7 @@ for (i in 1:1000) {
   #print (df[i,])
   #print (firstCheck) 
   if (firstMethod =="classic" & firstCheck == FALSE ){
-    for (m in 1:1000) {
+    for (m in 1:numberofanswers) {
       if (firstAccID == df[m,"ACC2SURV_ACCID"] & firstQuesID == df[m,"QUES2SURV_QUESID"] & firstMethod != (df[m,"QUES2SURV_METHOD"])){
         #print (paste0(i ," und ", m, " sind Pärchen "))
         
