@@ -1,5 +1,6 @@
+
 library(dplyr)
-answerstable <- read.csv(file = 'myapp/Data/RQ1.csv', header=TRUE) #importiere das answers file
+answerstable <- read.csv(file = 'myapp/Data/RQ1_1.csv', header=TRUE) #importiere das answers file
 df2 <- answerstable
 df2 <- cbind(df2,QuestionGroup=NA)
 df2 <- dfqgroup %>% 
@@ -91,9 +92,11 @@ df2 <- dfqgroup %>%
     QUES2SURV_KBID == "UV6" ~ 'UV',
     QUES2SURV_KBID == "UV7" ~ 'UV'
   )) 
-
+df2 <- df2 %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1)
 
 dfnogroup <- df2 %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1)
+
+
 #print (df2)
 IMPOCC <- dfnogroup %>% filter( hitOcc == "TRUE" & hitImp == "TRUE" )
 OCC <- dfnogroup %>% filter( hitOcc == "TRUE"  & hitImp == "FALSE"  )
@@ -226,6 +229,96 @@ print (paste0( numberofanswersI, " Antworten überschneiden sich nur in der Ausw
 print (paste0( numberofanswersO, " Antworten überschneiden sich nur in der Eintrittswahrscheinlichkeit."))
 print ("  ")
 
+
+dfgroupPA <- df2 %>% filter(QUES2SURV_METHOD == "classic" & ACC2SURV_ROLE == "1" & ANS2SURV_ANSWERED == 1)
+#print (df2)
+IMPOCC <- dfgroupPA %>% filter( hitOcc == "TRUE" & hitImp == "TRUE" )
+OCC <- dfgroupPA %>% filter( hitOcc == "TRUE"  & hitImp == "FALSE"  )
+IMP <- dfgroupPA %>% filter( hitImp == "TRUE" & hitOcc == "FALSE" )
+IMPOROCC <- dfgroupPA %>% filter( hitOcc == "TRUE" | hitImp == "TRUE" )
+numberofanswers <- nrow(dfgroupPA)
+numberofanswersIO <- nrow(IMPOCC)
+numberofanswersI <- nrow(IMP)
+numberofanswersO <- nrow(OCC)
+numberofanswersIOO <- nrow(IMPOROCC)
+perIOO <- round(((100/numberofanswers)*numberofanswersIOO),digits=2)
+print ("Kern-Team")
+print ("  ")
+print (paste0("Insgesamt gibt es ", numberofanswers, " kombinierte Antworten."))
+print (paste0( numberofanswersIOO, " Antworten überschneiden sich in irgendeiner Form."))
+print (paste0( perIOO, " der Antworten überschneiden sich in irgendeiner Form."))
+print (paste0( numberofanswersIO, " überschneiden sich sowohl in Eintrittswahrscheinlichkeit und Auswirkung."))
+print (paste0( numberofanswersI, " Antworten überschneiden sich nur in der Auswirkung."))
+print (paste0( numberofanswersO, " Antworten überschneiden sich nur in der Eintrittswahrscheinlichkeit."))
+print ("  ")
+
+dfgroupPA <- df2 %>% filter(QUES2SURV_METHOD == "classic" & ACC2SURV_ROLE == "2" & ANS2SURV_ANSWERED == 1)
+#print (df2)
+IMPOCC <- dfgroupPA %>% filter( hitOcc == "TRUE" & hitImp == "TRUE" )
+OCC <- dfgroupPA %>% filter( hitOcc == "TRUE"  & hitImp == "FALSE"  )
+IMP <- dfgroupPA %>% filter( hitImp == "TRUE" & hitOcc == "FALSE" )
+IMPOROCC <- dfgroupPA %>% filter( hitOcc == "TRUE" | hitImp == "TRUE" )
+numberofanswers <- nrow(dfgroupPA)
+numberofanswersIO <- nrow(IMPOCC)
+numberofanswersI <- nrow(IMP)
+numberofanswersO <- nrow(OCC)
+numberofanswersIOO <- nrow(IMPOROCC)
+perIOO <- round(((100/numberofanswers)*numberofanswersIOO),digits=2)
+print ("NICHT Kern-Team")
+print ("  ")
+print (paste0("Insgesamt gibt es ", numberofanswers, " kombinierte Antworten."))
+print (paste0( numberofanswersIOO, " Antworten überschneiden sich in irgendeiner Form."))
+print (paste0( perIOO, " der Antworten überschneiden sich in irgendeiner Form."))
+print (paste0( numberofanswersIO, " überschneiden sich sowohl in Eintrittswahrscheinlichkeit und Auswirkung."))
+print (paste0( numberofanswersI, " Antworten überschneiden sich nur in der Auswirkung."))
+print (paste0( numberofanswersO, " Antworten überschneiden sich nur in der Eintrittswahrscheinlichkeit."))
+print ("  ")
+
+dfgroupPA <- df2 %>% filter(QUES2SURV_METHOD == "classic" & ACC2SURV_GROUPID == "1" & ANS2SURV_ANSWERED == 1)
+#print (df2)
+IMPOCC <- dfgroupPA %>% filter( hitOcc == "TRUE" & hitImp == "TRUE" )
+OCC <- dfgroupPA %>% filter( hitOcc == "TRUE"  & hitImp == "FALSE"  )
+IMP <- dfgroupPA %>% filter( hitImp == "TRUE" & hitOcc == "FALSE" )
+IMPOROCC <- dfgroupPA %>% filter( hitOcc == "TRUE" | hitImp == "TRUE" )
+numberofanswers <- nrow(dfgroupPA)
+numberofanswersIO <- nrow(IMPOCC)
+numberofanswersI <- nrow(IMP)
+numberofanswersO <- nrow(OCC)
+numberofanswersIOO <- nrow(IMPOROCC)
+perIOO <- round(((100/numberofanswers)*numberofanswersIOO),digits=2)
+print ("Klassisch -First")
+print ("  ")
+print (paste0("Insgesamt gibt es ", numberofanswers, " kombinierte Antworten."))
+print (paste0( numberofanswersIOO, " Antworten überschneiden sich in irgendeiner Form."))
+print (paste0( perIOO, " der Antworten überschneiden sich in irgendeiner Form."))
+print (paste0( numberofanswersIO, " überschneiden sich sowohl in Eintrittswahrscheinlichkeit und Auswirkung."))
+print (paste0( numberofanswersI, " Antworten überschneiden sich nur in der Auswirkung."))
+print (paste0( numberofanswersO, " Antworten überschneiden sich nur in der Eintrittswahrscheinlichkeit."))
+print ("  ")
+
+dfgroupPA <- df2 %>% filter(QUES2SURV_METHOD == "classic" & ACC2SURV_GROUPID == "2" & ANS2SURV_ANSWERED == 1)
+#print (df2)
+IMPOCC <- dfgroupPA %>% filter( hitOcc == "TRUE" & hitImp == "TRUE" )
+OCC <- dfgroupPA %>% filter( hitOcc == "TRUE"  & hitImp == "FALSE"  )
+IMP <- dfgroupPA %>% filter( hitImp == "TRUE" & hitOcc == "FALSE" )
+IMPOROCC <- dfgroupPA %>% filter( hitOcc == "TRUE" | hitImp == "TRUE" )
+numberofanswers <- nrow(dfgroupPA)
+numberofanswersIO <- nrow(IMPOCC)
+numberofanswersI <- nrow(IMP)
+numberofanswersO <- nrow(OCC)
+numberofanswersIOO <- nrow(IMPOROCC)
+perIOO <- round(((100/numberofanswers)*numberofanswersIOO),digits=2)
+print ("Graphisch -First")
+print ("  ")
+print (paste0("Insgesamt gibt es ", numberofanswers, " kombinierte Antworten."))
+print (paste0( numberofanswersIOO, " Antworten überschneiden sich in irgendeiner Form."))
+print (paste0( perIOO, " der Antworten überschneiden sich in irgendeiner Form."))
+print (paste0( numberofanswersIO, " überschneiden sich sowohl in Eintrittswahrscheinlichkeit und Auswirkung."))
+print (paste0( numberofanswersI, " Antworten überschneiden sich nur in der Auswirkung."))
+print (paste0( numberofanswersO, " Antworten überschneiden sich nur in der Eintrittswahrscheinlichkeit."))
+print ("  ")
+
+
 print ("  ")
 print ("KATEGORIEN")
 print ("  ")
@@ -274,6 +367,8 @@ for (i in 1:numberOfusers) {
 print (dfuser)
 
 
-#print (dfqgroup)
-#write.csv(dfqgroup, "RQ1_1.csv", row.names=TRUE)
+
+
+#print (df2)
+#write.csv(df2, "RQ1_1.csv", row.names=TRUE)
 
