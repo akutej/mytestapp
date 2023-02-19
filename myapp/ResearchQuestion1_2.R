@@ -1,6 +1,6 @@
 
 library(dplyr)
-answerstable <- read.csv(file = 'myapp/Data/RQ1_1.csv', header=TRUE) #importiere das answers file
+answerstable <- read.csv(file = 'Data/RQ1_1.csv', header=TRUE) #importiere das answers file
 df2 <- answerstable
 df2 <- cbind(df2,QuestionGroup=NA)
 df2 <- dfqgroup %>% 
@@ -10,7 +10,7 @@ df2 <- dfqgroup %>%
     QUES2SURV_KBID == "BB3" ~ 'BB',
     QUES2SURV_KBID == "BB4" ~ 'BB',
     QUES2SURV_KBID == "BB5" ~ 'BB',
-    QUES2SURV_KBID == "BB6" ~ 'BB',
+    # QUES2SURV_KBID == "BB6" ~ 'BB',
     QUES2SURV_KBID == "BB7" ~ 'BB',
     QUES2SURV_KBID == "BB8" ~ 'BB',
     QUES2SURV_KBID == "BB9" ~ 'BB',

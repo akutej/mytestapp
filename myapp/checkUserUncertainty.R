@@ -1,7 +1,7 @@
 library(dplyr)
 library(ggplot2)
 library(scales)
-answerstable <- read.csv(file = 'myapp/Data/answers.csv', header=TRUE, sep=";", dec=".")
+answerstable <- read.csv(file = 'Data/answers.csv', header=TRUE, sep=";", dec=".")
 answersframe=as.data.frame.matrix(answerstable)
 answersframe_1 <- answersframe
 #class(answersframe_1$X1PCT)
@@ -19,7 +19,7 @@ answersframe_1$LikelihoodUncPixel <- (answersframe_1$Y2Pixel-answersframe_1$Y1Pi
 answersframe_1$LikelihoodUncPCT <- (answersframe_1$Y2PCT-answersframe_1$Y1PCT)
 #colnames(answersframe_1)
 #answersframe[["ACC2SURV_ACCID"]]
-myoutput <- answersframe_1[answersframe_1$ACC2SURV_ACCID == "22" & answersframe_1$QUES2SURV_METHOD == "graphic",  ]
+#myoutput <- answersframe_1[answersframe_1$ACC2SURV_ACCID == "22" & answersframe_1$QUES2SURV_METHOD == "graphic",  ]
 uncertaintygroup1 <- answersframe_1[answersframe_1$ANS2SURV_ANSWERED == "1" & answersframe_1$ACC2SURV_GROUPID == "1" & answersframe_1$QUES2SURV_METHOD == "graphic",  ]  
 uncertaintygroup2 <- answersframe_1[answersframe_1$ANS2SURV_ANSWERED == "1" & answersframe_1$ACC2SURV_GROUPID == "2" & answersframe_1$QUES2SURV_METHOD == "graphic",  ]  
 
