@@ -1,8 +1,9 @@
 
 library(dplyr)
 answerstable <- read.csv(file = 'myapp/Data/RQ1_1.csv', header=TRUE) #importiere das answers file
-df2 <- answerstable
-df2 <- cbind(df2,QuestionGroup=NA)
+df <- answerstable
+#df2 <- cbind(df2,QuestionGroup=NA)
+df2 <- df %>% filter(!is.na(QuestionGroup))
 df2 <- dfqgroup %>% 
   mutate (QuestionGroup = case_when(
     QUES2SURV_KBID == "BB1" ~ 'BB',
