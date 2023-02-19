@@ -36,9 +36,13 @@ df['hitOcc'] <- NA
 df['hitImp'] <- NA
 
 
+
 firstentry <- (df[1,]) #nimmt die erste Zeile
 #print (firstentry)
 numberofanswers <- nrow(df)
+#numberofanswers <- 30
+
+
 #print (numberofanswers)
 
 for (i in 1:numberofanswers) {
@@ -124,7 +128,6 @@ for (i in 1:numberofanswers) {
 
 print ("finished")
 
-write.table(df, file = "RQ1.txt", sep = "\t",
-            row.names = TRUE, col.names = NA)
-
+#write.table(df, file = "RQ1.txt", sep = "\t", row.names = TRUE, col.names = NA)
+write.csv(df, "RQ1.csv", row.names=TRUE)
 
