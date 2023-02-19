@@ -2,7 +2,6 @@
 library(dplyr)
 answerstable <- read.csv(file = 'myapp/Data/RQ1_1.csv', header=TRUE) #importiere das answers file
 df <- answerstable
-#df2 <- cbind(df2,QuestionGroup=NA)
 df2 <- df %>% filter(!is.na(QuestionGroup))
 df2 <- dfqgroup %>% 
   mutate (QuestionGroup = case_when(
