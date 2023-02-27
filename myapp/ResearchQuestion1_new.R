@@ -1,6 +1,6 @@
 
 library(dplyr)
-answerstable <- read.csv(file = 'myapp/Data/RQ1_1.csv', header=TRUE) #importiere das answers file
+answerstable <- read.csv(file = 'myapp/Data/RQ1.csv', header=TRUE) #importiere das answers file
 df2 <- answerstable
 df2 <- df2 %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1)
 

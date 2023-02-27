@@ -1,8 +1,12 @@
 library(dplyr)
+<<<<<<< HEAD
 answerstable <- read.csv(file = 'myapp/Data/RQ1_1.csv', header=TRUE) #importiere das answers file
 df2 <- answerstable
 df2 <- cbind(df2,QuestionGroup=NA)
 answerstable <- read.csv(file = 'myapp/Data/RQ1_1.csv', header=TRUE) #importiere das answers file
+=======
+answerstable <- read.csv(file = 'myapp/Data/RQ1.csv', header=TRUE) #importiere das answers file
+>>>>>>> 2f8050ae8e457f799f177f60633ff3f74d94f60d
 df <- answerstable
 df2 <- df %>% filter(!is.na(QuestionGroup))
 df2 <- df2 %>%

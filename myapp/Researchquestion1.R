@@ -22,7 +22,8 @@ answerstable <- read.csv(file = 'myapp/Data/answers.csv', header=TRUE, sep=";", 
 #answersframe_1 <- answersframe
 #print (rectanglegrid)
 
-df <- answerstable[ c(1,3,5:10,18,21,25,26,31,35,36) ] #reduziert den Dataframe auf die nötigen Spalten
+#df <- answerstable[ c(1,3,5:10,18,21,25,26,31,35,36) ] #reduziert den Dataframe auf die nötigen Spalten
+df <- answerstable #die ganze Tabelle
 df['X1Pixel'] <- NA
 df['X2Pixel'] <- NA
 df['Y1Pixel'] <- NA
@@ -34,13 +35,16 @@ df['getlowy'] <- NA
 df['gethighy'] <- NA
 df['hitOcc'] <- NA
 df['hitImp'] <- NA
-
+df['QuestionGroup'] <- NA
 
 
 firstentry <- (df[1,]) #nimmt die erste Zeile
 #print (firstentry)
+
+
+
 numberofanswers <- nrow(df)
-#numberofanswers <- 30
+#numberofanswers <- 30 #Zu testzwecken auf 30 Stück reduzierbar :-)
 
 
 #print (numberofanswers)
