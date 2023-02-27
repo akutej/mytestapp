@@ -20,7 +20,7 @@ rectanglegrid <- data.frame(
 answerstable <- read.csv(file = 'myapp/Data/answers.csv', header=TRUE, sep=";", dec=".") #importiere das answers file
 #answersframe=as.data.frame.matrix(answerstable)
 #answersframe_1 <- answersframe
-#print (rectanglegrid)
+print (rectanglegrid)
 
 #df <- answerstable[ c(1,3,5:10,18,21,25,26,31,35,36) ] #reduziert den Dataframe auf die nötigen Spalten
 df <- answerstable #die ganze Tabelle
@@ -36,6 +36,16 @@ df['gethighy'] <- NA
 df['hitOcc'] <- NA
 df['hitImp'] <- NA
 df['QuestionGroup'] <- NA
+df['uncertaintyIPixel'] <- NA
+df['uncertaintyIPercent'] <- NA
+df['uncertaintyOPixel'] <- NA
+df['uncertaintyOPercent'] <- NA
+df['uncertaintyAreaPixel'] <- NA
+df['uncertaintyAreaPercent'] <- NA
+df['uncertaintyPerimeterPixel'] <- NA
+df['uncertaintyPerimeterPercent'] <- NA
+df['uncertaintytotalPixel'] <- NA
+df['uncertaintytotalPercent'] <- NA
 
 
 firstentry <- (df[1,]) #nimmt die erste Zeile
@@ -50,17 +60,18 @@ numberofanswers <- nrow(df)
 #print (numberofanswers)
 
 for (i in 1:numberofanswers) {
+  print (i)
   firstAccID <- (df[i,"ACC2SURV_ACCID"])
   firstQuesID <- (df[i,"QUES2SURV_QUESID"])
   firstMethod <- (df[i,"QUES2SURV_METHOD"])
-  firstCheck <- is.na(df[i,"IMPACT"])
+  firstCheck <-  (df[i,"ANS2SURV_ANSWERED"])
   firstImp <- (df[i,"IMPACT"])
   firstOcc <- (df[i,"OCCURRENCE"])
   #print (firstQuesID)
   #print (firstMethod)
   #print (df[i,])
   #print (firstCheck) 
-  if (firstMethod =="classic" & firstCheck == FALSE ){
+  if (firstMethod =="classic" & firstCheck == 1 ){
     for (m in 1:numberofanswers) {
       if (firstAccID == df[m,"ACC2SURV_ACCID"] & firstQuesID == df[m,"QUES2SURV_QUESID"] & firstMethod != (df[m,"QUES2SURV_METHOD"])){
         #print (paste0(i ," und ", m, " sind Pärchen "))
@@ -70,18 +81,48 @@ for (i in 1:numberofanswers) {
         NewY1PCT <- as.numeric(sub(",", ".", sub(".", "", df[m,"Y1PCT"], fixed=TRUE), fixed=TRUE))
         NewY2PCT <- as.numeric(sub(",", ".", sub(".", "", df[m,"Y2PCT"], fixed=TRUE), fixed=TRUE))
         
-        indices <- which(rectanglegrid$GridImp == firstImp & rectanglegrid$GridOcc == firstOcc)
+        NewX1Pixel <- ((400/100)*NewX1PCT)
+        NewX2Pixel <- ((400/100)*NewX2PCT)
+        NewY1Pixel <- ((400/100)*NewY1PCT)
+        NewY2Pixel <- ((400/100)*NewY2PCT)
+        
+        uncertaintyIPixel <- NewX2Pixel - NewX1Pixel
+        uncertaintyIPercent <- NewX2PCT - NewX1PCT
+        uncertaintyOPixel <- NewY2Pixel - NewY1Pixel
+        uncertaintyOPercent <- NewY2PCT - NewY1PCT
+        uncertaintyAreaPixel <- uncertaintyIPixel * uncertaintyOPixel
+        uncertaintyAreaPercent <- ((160000/100)*uncertaintyAreaPixel)
+        uncertaintyPerimeterPixel <- ((2 * uncertaintyIPixel) + (2 * uncertaintyOPixel))
+        uncertaintyPerimeterPercent <- ((1600/100)*uncertaintyPerimeterPixel)
+        uncertaintytotalPixel <- uncertaintyIPixel + uncertaintyOPixel
+        uncertaintytotalPercent <- ((800/100)*uncertaintytotalPixel)
+        
+        df[i,'uncertaintyIPixel'] <- uncertaintyIPixel
+        #print (uncertaintyIPixel)
+        df[i,'uncertaintyIPercent'] <- uncertaintyIPercent
+        df[i,'uncertaintyOPixel'] <- uncertaintyOPixel
+        df[i,'uncertaintyOPercent'] <- uncertaintyOPercent
+        df[i,'uncertaintyAreaPixel'] <- uncertaintyAreaPixel
+        df[i,'uncertaintyAreaPercent'] <- uncertaintyAreaPercent
+        df[i,'uncertaintyPerimeterPixel'] <- uncertaintyPerimeterPixel
+        df[i,'uncertaintyPerimeterPercent'] <- uncertaintyPerimeterPercent
+        df[i,'uncertaintytotalPixel'] <- uncertaintytotalPixel
+        df[i,'uncertaintytotalPercent'] <- uncertaintytotalPercent
+        #print (uncertaintytotalPercent)
+        
+        
+        #indices <- which(rectanglegrid$GridImp == firstImp & rectanglegrid$GridOcc == firstOcc)
         
         df[i,"X1PCT"] <- NewX1PCT
         df[i,"X2PCT"] <- NewX2PCT
         df[i,"Y1PCT"] <- NewY1PCT
         df[i,"Y2PCT"] <- NewY2PCT
         
-        df[i,"X1Pixel"] <- (400/100)*NewX1PCT
-        df[i,"X2Pixel"] <- ((400/100)*NewX2PCT)
-        df[i,"Y1Pixel"] <- ((400/100)*NewY1PCT)
-        df[i,"Y2Pixel"] <- ((400/100)*NewY2PCT)
-        df['ClassicGrid'] <- rectanglegrid[indices,1]
+        df[i,"X1Pixel"] <- NewX1Pixel
+        df[i,"X2Pixel"] <- NewX2Pixel
+        df[i,"Y1Pixel"] <- NewY1Pixel
+        df[i,"Y2Pixel"] <- NewY2Pixel
+        #df['ClassicGrid'] <- rectanglegrid[indices,1]
         
          
         
@@ -98,11 +139,12 @@ for (i in 1:numberofanswers) {
         else if(df[i,"X2Pixel"] <= 400) { gethighX = 5 }
         df[i,"getlowx"] <- getlowX
         df[i,"gethighx"] <- gethighX
-        if ((df[i,"OCCURRENCE"] >= getlowX) &  (df[i,"OCCURRENCE"] <= gethighX))
+        if ((df[i,"IMPACT"] >= getlowX) &  (df[i,"IMPACT"] <= gethighX))
         {
-         df[i,'hitOcc'] <- TRUE 
+          df[i,'hitImp'] <- TRUE 
+          
         }
-        else {df[i,'hitOcc'] <- FALSE }
+        else {df[i,'hitImp'] <- FALSE }
         
         if (df[i,"Y1Pixel"] < 79)       { gethighY = 5 }
         else if(df[i,"Y1Pixel"] < 159)  { gethighY = 4 }
@@ -116,22 +158,23 @@ for (i in 1:numberofanswers) {
         else if(df[i,"Y2Pixel"] <= 400) { getlowY = 1 }
         df[i,"getlowy"] <- getlowY
         df[i,"gethighy"] <- gethighY
-        if ((df[i,"IMPACT"] >= getlowY) &  (df[i,"IMPACT"] <= gethighY))
+        if ((df[i,"OCCURRENCE"] >= getlowY) &  (df[i,"OCCURRENCE"] <= gethighY))
         {
-          df[i,'hitImp'] <- TRUE 
+          df[i,'hitOcc'] <- TRUE 
         }
-        else {df[i,'hitImp'] <- FALSE }
+        else {df[i,'hitOcc'] <- FALSE }
       }
     }
     
   }
-  print (df[i,])
+  #print (df[i,])
   
   
 }
+dfnographic<-df[!(df$QUES2SURV_METHOD!="classic"),]
 
 print ("finished")
 
 #write.table(df, file = "RQ1.txt", sep = "\t", row.names = TRUE, col.names = NA)
-write.csv(df, "RQ1.csv", row.names=TRUE)
+write.csv(dfnographic, "RQ1.csv", row.names=TRUE)
 
