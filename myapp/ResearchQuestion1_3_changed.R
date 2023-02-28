@@ -1,5 +1,6 @@
 
 library(dplyr)
+library(openxlsx)
 answerstable1 <- read.csv(file = 'myapp/Data/RQ1.csv', header=TRUE) #importiere das answers file
 df <- answerstable1
 
@@ -280,10 +281,11 @@ numberOfCategories <- length(categories)
 print ("  ")
 print ("Users")
 print ("  ")
-users <- unique(df$ACC2SURV_ACCID) 
+#users <- unique(df$ACC2SURV_ACCID) 
 #print (users)
-numberOfusers <- length(users)
-dfnew <- df %>% distinct(ACC2SURV_ACCID,ACC2SURV_ROLE)
+
+users <- df %>% distinct(ACC2SURV_ACCID,ACC2SURV_ROLE)
+numberOfusers <- nrow(users)
 #print (numberOfusers)
 
 
@@ -292,10 +294,11 @@ dfuser = data.frame()
 #print (dfuser)
 
 for (i in 1:numberOfusers) {
-  actualuserID <- users[i]
+  actualuserID <- users[i,"ACC2SURV_ACCID"]
+  actualuserRole <- users[i,"ACC2SURV_ROLE"]
   dfaus <- df %>% filter(QUES2SURV_METHOD == "classic" & ACC2SURV_ACCID == actualuserID & ANS2SURV_ANSWERED == 1)
   #print (dfaus)
-  #actualuserRole <- dfaus["ACC2SURV_ROLE"]
+  
   IMPOCC <- dfaus %>% filter( hitOcc == "TRUE" & hitImp == "TRUE" )
   OCC <- dfaus %>% filter((hitOcc == "TRUE"  & hitImp == "FALSE") | (hitOcc == "TRUE" & hitImp == "TRUE"))
   IMP <- dfaus %>% filter((hitImp == "TRUE" & hitOcc == "FALSE") | (hitOcc == "TRUE" & hitImp == "TRUE"))
@@ -314,7 +317,8 @@ for (i in 1:numberOfusers) {
     uncertaintyelement <- dfaus[x,"uncertaintyIPercent"]
     uncertaintyIoverall <- uncertaintyIoverall + uncertaintyelement
   }
-  uncertaintyIoverall <- uncertaintyIoverall / numberofanswers
+  uncertaintyIoverall <- round((uncertaintyIoverall / numberofanswers),digits=2)
+  
   
   
   
@@ -323,7 +327,7 @@ for (i in 1:numberOfusers) {
     uncertaintyelement <- dfaus[m,"uncertaintyOPercent"]
     uncertaintyOoverall <- uncertaintyOoverall + uncertaintyelement
   }
-  uncertaintyOoverall <- uncertaintyOoverall / numberofanswers
+  uncertaintyOoverall <- round((uncertaintyOoverall / numberofanswers),digits=2)
   
   
   
@@ -343,21 +347,34 @@ for (i in 1:numberOfusers) {
   
 }
 
-print dfnew
+print (dfuser)
+write.csv(dfuser, "RQ1UserTabelle.csv", row.names=TRUE)
+write.xlsx(dfuser,'RQ1UserTabelle.xlsx', rowNames=TRUE)
 #print (dfuser)
 
-group1 <- dfuser %>% filter(actualuserRole == 1)
-group2 <- dfuser %>% filter(actualuserRole == 2)
+group1 <- dfuser %>% filter(actualuserRole == "1")
+group2 <- dfuser %>% filter(actualuserRole == "2")
 
 x <- dfuser[,'percent Auswirkung']
+y <- dfuser[,'percent Eintrittsw.']
+plotAuswirkung <- ecdf (x)
+plotEintritt <- ecdf (y)
+
+plot (plotAuswirkung)
+plot (plotEintritt)
+
 group1x <- group1[,'percent Auswirkung']
 group2x <- group2[,'percent Auswirkung']
-d <- ecdf (x)
-plot (d)
-t.test(group1x,group2x)
+group1y <- group1[,'percent Eintrittsw.']
+group2y <- group2[,'percent Eintrittsw.']
 
 
+ttest1 <- t.test(group1x,group2x)
+print (ttest)
 
+
+ttest2 <- t.test(group1y,group2y)
+print (ttest2)
 
 
 
