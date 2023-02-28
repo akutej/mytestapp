@@ -2,98 +2,6 @@
 library(dplyr)
 answerstable1 <- read.csv(file = 'myapp/Data/RQ1.csv', header=TRUE) #importiere das answers file
 df <- answerstable1
-df2 <- df %>% filter(!is.na(QuestionGroup))
-df2 <- dfqgroup %>% 
-  mutate (QuestionGroup = case_when(
-    QUES2SURV_KBID == "BB1" ~ 'BB',
-    QUES2SURV_KBID == "BB2" ~ 'BB',
-    QUES2SURV_KBID == "BB3" ~ 'BB',
-    QUES2SURV_KBID == "BB4" ~ 'BB',
-    QUES2SURV_KBID == "BB5" ~ 'BB',
-    QUES2SURV_KBID == "BB6" ~ 'BB',
-    QUES2SURV_KBID == "BB7" ~ 'BB',
-    QUES2SURV_KBID == "BB8" ~ 'BB',
-    QUES2SURV_KBID == "BB9" ~ 'BB',
-    QUES2SURV_KBID == "BB10" ~ 'BB',
-    QUES2SURV_KBID == "OR1" ~ 'OR',
-    QUES2SURV_KBID == "OR2" ~ 'OR',
-    QUES2SURV_KBID == "OR3" ~ 'OR',
-    QUES2SURV_KBID == "OR4" ~ 'OR',
-    QUES2SURV_KBID == "OR5" ~ 'OR',
-    QUES2SURV_KBID == "OR6" ~ 'OR',
-    QUES2SURV_KBID == "PA1" ~ 'PA',
-    QUES2SURV_KBID == "PA2" ~ 'PA',
-    QUES2SURV_KBID == "PF1" ~ 'PF',
-    QUES2SURV_KBID == "PF2" ~ 'PF',
-    QUES2SURV_KBID == "PF3" ~ 'PF',
-    QUES2SURV_KBID == "PF4" ~ 'PF',
-    QUES2SURV_KBID == "PF5" ~ 'PF',
-    QUES2SURV_KBID == "PF6" ~ 'PF',
-    QUES2SURV_KBID == "PF7" ~ 'PF',
-    QUES2SURV_KBID == "PF8" ~ 'PF',
-    QUES2SURV_KBID == "PF9" ~ 'PF',
-    QUES2SURV_KBID == "PF10" ~ 'PF',
-    QUES2SURV_KBID == "PF11" ~ 'PF',
-    QUES2SURV_KBID == "PF12" ~ 'PF',
-    QUES2SURV_KBID == "PF13" ~ 'PF',
-    QUES2SURV_KBID == "PF14" ~ 'PF',
-    QUES2SURV_KBID == "PF15" ~ 'PF',
-    QUES2SURV_KBID == "PU1" ~ 'PU',
-    QUES2SURV_KBID == "PU2" ~ 'PU',
-    QUES2SURV_KBID == "PU3" ~ 'PU',
-    QUES2SURV_KBID == "PU4" ~ 'PU',
-    QUES2SURV_KBID == "PU5" ~ 'PU',
-    QUES2SURV_KBID == "PU6" ~ 'PU',
-    QUES2SURV_KBID == "PU7" ~ 'PU',
-    QUES2SURV_KBID == "PU8" ~ 'PU',
-    QUES2SURV_KBID == "PU9" ~ 'PU',
-    QUES2SURV_KBID == "PU10" ~ 'PU',
-    QUES2SURV_KBID == "PV1" ~ 'PV',
-    QUES2SURV_KBID == "PV2" ~ 'PV',
-    QUES2SURV_KBID == "PV3" ~ 'PV',
-    QUES2SURV_KBID == "PV4" ~ 'PV',
-    QUES2SURV_KBID == "PV5" ~ 'PV',
-    QUES2SURV_KBID == "PV6" ~ 'PV',
-    QUES2SURV_KBID == "RA1" ~ 'RA',
-    QUES2SURV_KBID == "RA2" ~ 'RA',
-    QUES2SURV_KBID == "RA3" ~ 'RA',
-    QUES2SURV_KBID == "SI1" ~ 'SI',
-    QUES2SURV_KBID == "SI2" ~ 'SI',
-    QUES2SURV_KBID == "SI3" ~ 'SI',
-    QUES2SURV_KBID == "SI4" ~ 'SI',
-    QUES2SURV_KBID == "SI5" ~ 'SI',
-    QUES2SURV_KBID == "SI6" ~ 'SI',
-    QUES2SURV_KBID == "SI7" ~ 'SI',
-    QUES2SURV_KBID == "SI8" ~ 'SI',
-    QUES2SURV_KBID == "SI9" ~ 'SI',
-    QUES2SURV_KBID == "TE1" ~ 'TE',
-    QUES2SURV_KBID == "TE2" ~ 'TE',
-    QUES2SURV_KBID == "TE3" ~ 'TE',
-    QUES2SURV_KBID == "TE4" ~ 'TE',
-    QUES2SURV_KBID == "TE5" ~ 'TE',
-    QUES2SURV_KBID == "TE6" ~ 'TE',
-    QUES2SURV_KBID == "TE7" ~ 'TE',
-    QUES2SURV_KBID == "TE8" ~ 'TE',
-    QUES2SURV_KBID == "TE9" ~ 'TE',
-    QUES2SURV_KBID == "UÖ1" ~ 'UO',
-    QUES2SURV_KBID == "UÖ2" ~ 'UO',
-    QUES2SURV_KBID == "UÖ3" ~ 'UO',
-    QUES2SURV_KBID == "UÖ4" ~ 'UO',
-    QUES2SURV_KBID == "UÖ5" ~ 'UO',
-    QUES2SURV_KBID == "UÖ6" ~ 'UO',
-    QUES2SURV_KBID == "UÖ7" ~ 'UO',
-    QUES2SURV_KBID == "UÖ8" ~ 'UO',
-    QUES2SURV_KBID == "UÖ9" ~ 'UO',
-    QUES2SURV_KBID == "UV1" ~ 'UV',
-    QUES2SURV_KBID == "UV2" ~ 'UV',
-    QUES2SURV_KBID == "UV3" ~ 'UV',
-    QUES2SURV_KBID == "UV4" ~ 'UV',
-    QUES2SURV_KBID == "UV5" ~ 'UV',
-    QUES2SURV_KBID == "UV6" ~ 'UV',
-    QUES2SURV_KBID == "UV7" ~ 'UV'
-  )) 
-df2 <- df2 %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1)
-
 
 dfnogroup <- df %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1)
 #print (df2)
@@ -375,6 +283,7 @@ print ("  ")
 users <- unique(df$ACC2SURV_ACCID) 
 #print (users)
 numberOfusers <- length(users)
+dfnew <- df %>% distinct(ACC2SURV_ACCID,ACC2SURV_ROLE)
 #print (numberOfusers)
 
 
@@ -384,8 +293,9 @@ dfuser = data.frame()
 
 for (i in 1:numberOfusers) {
   actualuserID <- users[i]
-  
   dfaus <- df %>% filter(QUES2SURV_METHOD == "classic" & ACC2SURV_ACCID == actualuserID & ANS2SURV_ANSWERED == 1)
+  #print (dfaus)
+  #actualuserRole <- dfaus["ACC2SURV_ROLE"]
   IMPOCC <- dfaus %>% filter( hitOcc == "TRUE" & hitImp == "TRUE" )
   OCC <- dfaus %>% filter((hitOcc == "TRUE"  & hitImp == "FALSE") | (hitOcc == "TRUE" & hitImp == "TRUE"))
   IMP <- dfaus %>% filter((hitImp == "TRUE" & hitOcc == "FALSE") | (hitOcc == "TRUE" & hitImp == "TRUE"))
@@ -428,11 +338,25 @@ for (i in 1:numberOfusers) {
   dfuser[i,'Anzahl Auswirkung getroffen'] <-  numberofanswersI
   dfuser[i,'Anzahl Eintrittsw. getroffen'] <-  numberofanswersO
   dfuser[i,'Uncertainty Auswirkung'] <- uncertaintyIoverall
-  dfuser[i,'Uncertainty Eintrittsw.'] <- uncertaintyOoverall  
+  dfuser[i,'Uncertainty Eintrittsw.'] <- uncertaintyOoverall
+  dfuser[i,'actualuserRole'] <- actualuserRole   
   
 }
 
-print (dfuser)
+print dfnew
+#print (dfuser)
+
+group1 <- dfuser %>% filter(actualuserRole == 1)
+group2 <- dfuser %>% filter(actualuserRole == 2)
+
+x <- dfuser[,'percent Auswirkung']
+group1x <- group1[,'percent Auswirkung']
+group2x <- group2[,'percent Auswirkung']
+d <- ecdf (x)
+plot (d)
+t.test(group1x,group2x)
+
+
 
 
 
