@@ -370,7 +370,7 @@ group2y <- group2[,'percent Eintrittsw.']
 
 
 ttest1 <- t.test(group1x,group2x)
-print (ttest)
+print (ttest1)
 
 
 ttest2 <- t.test(group1y,group2y)
