@@ -5,7 +5,7 @@ answerstable1 <- read.csv(file = 'myapp/Data/RQ1.csv', header=TRUE) #importiere 
 df <- answerstable1
 
 dfnogroup <- df %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1)
-#print (df2)
+#print (dfnogroup)
 IMPOCC <- dfnogroup %>% filter( hitOcc == "TRUE" & hitImp == "TRUE" )
 OCC <- dfnogroup %>% filter( hitOcc == "TRUE"  & hitImp == "FALSE" | hitOcc == "TRUE" & hitImp == "TRUE"   )
 IMP <- dfnogroup %>% filter( hitImp == "TRUE" & hitOcc == "FALSE" | hitOcc == "TRUE" & hitImp == "TRUE" )
@@ -336,8 +336,8 @@ for (i in 1:numberOfusers) {
   dfuser[i,'id'] <-  actualuserID
   dfuser[i,'answers'] <-  numberofanswers
   #dfuser[i,'hitsans'] <-  numberofanswersIOO
-  dfuser[i,'percent Auswirkung'] <-  perI
-  dfuser[i,'percent Eintrittsw.'] <-  perO
+  dfuser[i,'percentAuswirkung'] <-  perI
+  dfuser[i,'percentEintrittsw'] <-  perO
   #dfuser[i,'hitsbothans'] <-  numberofanswersIO
   dfuser[i,'Anzahl Auswirkung getroffen'] <-  numberofanswersI
   dfuser[i,'Anzahl Eintrittsw. getroffen'] <-  numberofanswersO
@@ -352,21 +352,52 @@ write.csv(dfuser, "RQ1UserTabelle.csv", row.names=TRUE)
 write.xlsx(dfuser,'RQ1UserTabelle.xlsx', rowNames=TRUE)
 #print (dfuser)
 
+histuncertI <- dfuser[,'Uncertainty Auswirkung']
+histuncertO <- dfuser[,'Uncertainty Eintrittsw.']
+
+#histuncertIroh <- dfnogroup[,'uncertaintyIPercent']
+#histuncertOroh <- dfnogroup[,'uncertaintyOPercent']
+
+
+
 group1 <- dfuser %>% filter(actualuserRole == "1")
 group2 <- dfuser %>% filter(actualuserRole == "2")
 
-x <- dfuser[,'percent Auswirkung']
-y <- dfuser[,'percent Eintrittsw.']
+x <- dfuser[,'percentAuswirkung']
+y <- dfuser[,'percentEintrittsw']
 plotAuswirkung <- ecdf (x)
 plotEintritt <- ecdf (y)
 
-plot (plotAuswirkung)
-plot (plotEintritt)
+plot (plotAuswirkung,main="Empirische Verteilung - Überschneidung Auswirkung mit klassischer Methode")
+plot (plotEintritt,main="Empirische Verteilung - Überschneidung Eintrittswahrscheinlichkeit mit klassischer Methode")
 
-group1x <- group1[,'percent Auswirkung']
-group2x <- group2[,'percent Auswirkung']
-group1y <- group1[,'percent Eintrittsw.']
-group2y <- group2[,'percent Eintrittsw.']
+
+hist(histuncertI)
+hist(histuncertO)
+#hist(histuncertO)
+hist(dfnogroup$uncertaintyIPercent,main="Unsicherheit Auswirkung",breaks=20)
+hist(dfnogroup$uncertaintyOPercent,main="Unsicherheit Eintrittswahrscheinlichkeit",breaks=20)
+
+
+dfnogroup1 <- dfnogroup %>% filter(ACC2SURV_ROLE == "1")
+dfnogroup2 <- dfnogroup %>% filter(ACC2SURV_ROLE == "2")
+numberofanswersgroup1 <- nrow(dfnogroup1)
+numberofanswersgroup2 <- nrow(dfnogroup2)
+print (paste0( numberofanswersgroup1, " Antworten der Gruppe 'Kernteam'"))
+print (paste0( numberofanswersgroup2, " Antworten der Gruppe 'Nicht-Kernteam'"))
+
+plot(dfnogroup$ANS2SURV_DURATION,dfnogroup$uncertaintyIPercent,log='x')
+plot(dfnogroup$ANS2SURV_DURATION,dfnogroup$uncertaintyOPercent,log='x')
+
+plot(dfnogroup1$uncertaintyIPercent, dfnogroup1$uncertaintyOPercent)
+plot(dfnogroup2$uncertaintyIPercent, dfnogroup2$uncertaintyOPercent)
+
+
+
+group1x <- group1[,'percentAuswirkung']
+group2x <- group2[,'percentAuswirkung']
+group1y <- group1[,'percentEintrittsw']
+group2y <- group2[,'percentEintrittsw']
 
 
 ttest1 <- t.test(group1x,group2x)
