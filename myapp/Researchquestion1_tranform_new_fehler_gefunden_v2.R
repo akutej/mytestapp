@@ -144,11 +144,11 @@ for (i in 1:numberofanswers) {
         df[i,"middleIGRID"] <- getmidX
         
         
-        if (df[i,"middleY"] < 79)       { getmidY = 1 }
-        else if(df[i,"middleY"] < 159)  { getmidY = 2 }
+        if (df[i,"middleY"] < 79)       { getmidY = 5 }
+        else if(df[i,"middleY"] < 159)  { getmidY = 4 }
         else if(df[i,"middleY"] < 239)  { getmidY = 3 }
-        else if(df[i,"middleY"] < 319)  { getmidY = 4 }
-        else if(df[i,"middleY"] <= 400) { getmidY = 5 }
+        else if(df[i,"middleY"] < 319)  { getmidY = 2 }
+        else if(df[i,"middleY"] <= 400) { getmidY = 1 }
         df[i,"middleOGRID"] <- getmidY
         
         
