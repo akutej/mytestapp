@@ -51,13 +51,13 @@ print ("  ")
 
 
 
-dfnogroup <- df %>% filter(QUES2SURV_METHOD == "classic" & ACC2SURV_ACCID == "22" & ANS2SURV_ANSWERED == 1) #& QUES_ID == "344"
+dfnogroupd <- df %>% filter(QUES2SURV_METHOD == "classic" & ACC2SURV_ACCID == "22" & ANS2SURV_ANSWERED == 1) #& QUES_ID == "344"
 #print (df2)
-IMPOCC <- dfnogroup %>% filter( hitOcc == "TRUE" & hitImp == "TRUE" )
-OCC <- dfnogroup %>% filter(( hitOcc == "TRUE"  & hitImp == "FALSE") | (hitOcc == "TRUE" & hitImp == "TRUE"))
-IMP <- dfnogroup %>% filter(( hitImp == "TRUE" & hitOcc == "FALSE") | (hitOcc == "TRUE" & hitImp == "TRUE" ))
-IMPOROCC <- dfnogroup %>% filter( hitOcc == "TRUE" | hitImp == "TRUE" )
-numberofanswers <- nrow(dfnogroup)
+IMPOCC <- dfnogroupd %>% filter( hitOcc == "TRUE" & hitImp == "TRUE" )
+OCC <- dfnogroupd %>% filter(( hitOcc == "TRUE"  & hitImp == "FALSE") | (hitOcc == "TRUE" & hitImp == "TRUE"))
+IMP <- dfnogroupd %>% filter(( hitImp == "TRUE" & hitOcc == "FALSE") | (hitOcc == "TRUE" & hitImp == "TRUE" ))
+IMPOROCC <- dfnogroupd %>% filter( hitOcc == "TRUE" | hitImp == "TRUE" )
+numberofanswers <- nrow(dfnogroupd)
 numberofanswersIO <- nrow(IMPOCC)
 numberofanswersI <- nrow(IMP)
 numberofanswersO <- nrow(OCC)
@@ -96,13 +96,13 @@ print (paste0(uncertaintyOoverall, " Prozent durchschnittliche Unsicherheit in d
 print ("  ")
 
 
-dfnogroup <- df %>% filter(QUES2SURV_METHOD == "classic" & ACC2SURV_ROLE == "1" & ANS2SURV_ANSWERED == 1)
+dfnogroupx <- df %>% filter(QUES2SURV_METHOD == "classic" & ACC2SURV_ROLE == "1" & ANS2SURV_ANSWERED == 1)
 #print (df2)
-IMPOCC <- dfnogroup %>% filter( hitOcc == "TRUE" & hitImp == "TRUE" )
-OCC <- dfnogroup %>% filter( hitOcc == "TRUE"  & hitImp == "FALSE" | hitOcc == "TRUE" & hitImp == "TRUE"   )
-IMP <- dfnogroup %>% filter( hitImp == "TRUE" & hitOcc == "FALSE" | hitOcc == "TRUE" & hitImp == "TRUE" )
-IMPOROCC <- dfnogroup %>% filter( hitOcc == "TRUE" | hitImp == "TRUE" )
-numberofanswers <- nrow(dfnogroup)
+IMPOCC <- dfnogroupx %>% filter( hitOcc == "TRUE" & hitImp == "TRUE" )
+OCC <- dfnogroupx %>% filter( hitOcc == "TRUE"  & hitImp == "FALSE" | hitOcc == "TRUE" & hitImp == "TRUE"   )
+IMP <- dfnogroupx %>% filter( hitImp == "TRUE" & hitOcc == "FALSE" | hitOcc == "TRUE" & hitImp == "TRUE" )
+IMPOROCC <- dfnogroupx %>% filter( hitOcc == "TRUE" | hitImp == "TRUE" )
+numberofanswers <- nrow(dfnogroupx)
 numberofanswersIO <- nrow(IMPOCC)
 numberofanswersI <- nrow(IMP)
 numberofanswersO <- nrow(OCC)
@@ -140,12 +140,12 @@ uncertaintyOoverall <- round((uncertaintyOoverall / numberofanswers),digits=2)
 print (paste0(uncertaintyOoverall, " Prozent durchschnittliche Unsicherheit in der Eintrittswahrscheinlichkeit."))
 print ("  ")
 
-dfnogroup <- df %>% filter(QUES2SURV_METHOD == "classic" & ACC2SURV_ROLE == "2" & ANS2SURV_ANSWERED == 1)
-IMPOCC <- dfnogroup %>% filter( hitOcc == "TRUE" & hitImp == "TRUE" )
-OCC <- dfnogroup %>% filter( hitOcc == "TRUE"  & hitImp == "FALSE" | hitOcc == "TRUE" & hitImp == "TRUE"   )
-IMP <- dfnogroup %>% filter( hitImp == "TRUE" & hitOcc == "FALSE" | hitOcc == "TRUE" & hitImp == "TRUE" )
-IMPOROCC <- dfnogroup %>% filter( hitOcc == "TRUE" | hitImp == "TRUE" )
-numberofanswers <- nrow(dfnogroup)
+dfnogroupc <- df %>% filter(QUES2SURV_METHOD == "classic" & ACC2SURV_ROLE == "2" & ANS2SURV_ANSWERED == 1)
+IMPOCC <- dfnogroupc %>% filter( hitOcc == "TRUE" & hitImp == "TRUE" )
+OCC <- dfnogroupc %>% filter( hitOcc == "TRUE"  & hitImp == "FALSE" | hitOcc == "TRUE" & hitImp == "TRUE"   )
+IMP <- dfnogroupc %>% filter( hitImp == "TRUE" & hitOcc == "FALSE" | hitOcc == "TRUE" & hitImp == "TRUE" )
+IMPOROCC <- dfnogroupc %>% filter( hitOcc == "TRUE" | hitImp == "TRUE" )
+numberofanswers <- nrow(dfnogroupc)
 numberofanswersIO <- nrow(IMPOCC)
 numberofanswersI <- nrow(IMP)
 numberofanswersO <- nrow(OCC)
@@ -183,12 +183,12 @@ uncertaintyOoverall <- round((uncertaintyOoverall / numberofanswers),digits=2)
 print (paste0(uncertaintyOoverall, " Prozent durchschnittliche Unsicherheit in der Eintrittswahrscheinlichkeit."))
 print ("  ")
 
-dfnogroup <- df %>% filter(QUES2SURV_METHOD == "classic" & ACC2SURV_GROUPID == "1" & ANS2SURV_ANSWERED == 1)
-IMPOCC <- dfnogroup %>% filter( hitOcc == "TRUE" & hitImp == "TRUE" )
-OCC <- dfnogroup %>% filter( hitOcc == "TRUE"  & hitImp == "FALSE" | hitOcc == "TRUE" & hitImp == "TRUE"   )
-IMP <- dfnogroup %>% filter( hitImp == "TRUE" & hitOcc == "FALSE" | hitOcc == "TRUE" & hitImp == "TRUE" )
-IMPOROCC <- dfnogroup %>% filter( hitOcc == "TRUE" | hitImp == "TRUE" )
-numberofanswers <- nrow(dfnogroup)
+dfnogroupv <- df %>% filter(QUES2SURV_METHOD == "classic" & ACC2SURV_GROUPID == "1" & ANS2SURV_ANSWERED == 1)
+IMPOCC <- dfnogroupv %>% filter( hitOcc == "TRUE" & hitImp == "TRUE" )
+OCC <- dfnogroupv %>% filter( hitOcc == "TRUE"  & hitImp == "FALSE" | hitOcc == "TRUE" & hitImp == "TRUE"   )
+IMP <- dfnogroupv %>% filter( hitImp == "TRUE" & hitOcc == "FALSE" | hitOcc == "TRUE" & hitImp == "TRUE" )
+IMPOROCC <- dfnogroupv %>% filter( hitOcc == "TRUE" | hitImp == "TRUE" )
+numberofanswers <- nrow(dfnogroupv)
 numberofanswersIO <- nrow(IMPOCC)
 numberofanswersI <- nrow(IMP)
 numberofanswersO <- nrow(OCC)
@@ -226,12 +226,12 @@ uncertaintyOoverall <- round((uncertaintyOoverall / numberofanswers),digits=2)
 print (paste0(uncertaintyOoverall, " Prozent durchschnittliche Unsicherheit in der Eintrittswahrscheinlichkeit."))
 print ("  ")
 
-dfnogroup <- df %>% filter(QUES2SURV_METHOD == "classic" & ACC2SURV_GROUPID == "2" & ANS2SURV_ANSWERED == 1)
-IMPOCC <- dfnogroup %>% filter( hitOcc == "TRUE" & hitImp == "TRUE" )
-OCC <- dfnogroup %>% filter( hitOcc == "TRUE"  & hitImp == "FALSE" | hitOcc == "TRUE" & hitImp == "TRUE"   )
-IMP <- dfnogroup %>% filter( hitImp == "TRUE" & hitOcc == "FALSE" | hitOcc == "TRUE" & hitImp == "TRUE" )
-IMPOROCC <- dfnogroup %>% filter( hitOcc == "TRUE" | hitImp == "TRUE" )
-numberofanswers <- nrow(dfnogroup)
+dfnogroupb <- df %>% filter(QUES2SURV_METHOD == "classic" & ACC2SURV_GROUPID == "2" & ANS2SURV_ANSWERED == 1)
+IMPOCC <- dfnogroupb %>% filter( hitOcc == "TRUE" & hitImp == "TRUE" )
+OCC <- dfnogroupb %>% filter( hitOcc == "TRUE"  & hitImp == "FALSE" | hitOcc == "TRUE" & hitImp == "TRUE"   )
+IMP <- dfnogroupb %>% filter( hitImp == "TRUE" & hitOcc == "FALSE" | hitOcc == "TRUE" & hitImp == "TRUE" )
+IMPOROCC <- dfnogroupb %>% filter( hitOcc == "TRUE" | hitImp == "TRUE" )
+numberofanswers <- nrow(dfnogroupb)
 numberofanswersIO <- nrow(IMPOCC)
 numberofanswersI <- nrow(IMP)
 numberofanswersO <- nrow(OCC)
@@ -347,7 +347,7 @@ for (i in 1:numberOfusers) {
   
 }
 
-print (dfuser)
+#print (dfuser)
 write.csv(dfuser, "RQ1UserTabelle.csv", row.names=TRUE)
 write.xlsx(dfuser,'RQ1UserTabelle.xlsx', rowNames=TRUE)
 #print (dfuser)
@@ -406,6 +406,61 @@ print (ttest1)
 
 ttest2 <- t.test(group1y,group2y)
 print (ttest2)
+
+
+groupfirst <- dfnogroup %>% filter(ACC2SURV_GROUPID == "1")
+groupsecond <- dfnogroup %>% filter(ACC2SURV_GROUPID == "2")
+
+numberofanswersgroupfirst <- nrow(groupfirst)
+print (numberofanswersgroupfirst)
+numberofanswersgroupsecond <- nrow(groupsecond)
+print (numberofanswersgroupsecond)
+
+
+#print (groupsecond)
+
+groupfirstclassicmeanI <- mean(groupfirst$IMPACT)
+groupfirstclassicmeanO <- mean(groupfirst$OCCURRENCE)
+groupfirstgraphicmeanI <- mean(groupsecond$middleIGRID)
+groupfirstgraphicmeanO <- mean(groupsecond$middleOGRID)
+
+groupsecondclassicmeanI <- mean(groupsecond$IMPACT)
+groupsecondclassicmeanO <- mean(groupsecond$OCCURRENCE)
+groupsecondgraphicmeanI <- mean(groupfirst$middleIGRID)
+groupsecondgraphicmeanO <- mean(groupfirst$middleOGRID)
+
+classiccompareI <- c (groupfirstclassicmeanI,groupsecondclassicmeanI)
+classiccompareO <- c (groupfirstclassicmeanO,groupsecondclassicmeanO)
+graphiccompareI <- c (groupfirstgraphicmeanI,groupsecondgraphicmeanI)
+graphiccompareO <- c (groupfirstgraphicmeanO,groupsecondgraphicmeanO)
+
+groupclassicdiffI <- abs(diff(classiccompareI))
+groupclassicdiffO <- abs(diff(classiccompareO))
+groupgraphicdiffI <- abs(diff(graphiccompareI))
+groupgraphicdiffO <- abs(diff(graphiccompareO))
+
+
+
+
+print ("Vergleich der Klassischen Methode (gruppenabhängig first - second")
+print (paste0("1. Durchgang klassisch - Durchschnitt Auswirkung: ",groupfirstclassicmeanI))
+print (paste0("1. Durchgang klassisch - Durchschnitt Eintrittswahrscheinlichkeit",groupfirstclassicmeanO))
+print (paste0("2. Durchgang klassisch - Durchschnitt Auswirkung: ",groupsecondclassicmeanI))
+print (paste0("2. Durchgang klassisch - Durchschnitt Eintrittswahrscheinlichkeit",groupsecondclassicmeanO))
+print (paste0("Differenz Auswirkung",groupclassicdiffI))
+print (paste0("Differenz Eintrittswahrscheinlichkeit",groupclassicdiffO))
+
+
+print ("Vergleich der graphischen Methode (gruppenabhängig first - second")
+print (paste0("1. Durchgang graphisch - Durchschnitt Auswirkung: ",groupfirstgraphicmeanI))
+print (paste0("1. Durchgang graphisch - Durchschnitt Eintrittswahrscheinlichkeit",groupfirstgraphicmeanO))
+print (paste0("2. Durchgang graphisch - Durchschnitt Auswirkung: ",groupsecondgraphicmeanI))
+print (paste0("2. Durchgang graphisch - Durchschnitt Eintrittswahrscheinlichkeit",groupsecondgraphicmeanO))
+print (paste0("Differenz Auswirkung",groupgraphicdiffI))
+print (paste0("Differenz Eintrittswahrscheinlichkeit",groupgraphicdiffO))
+
+
+
 
 
 
