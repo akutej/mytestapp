@@ -97,11 +97,11 @@ for (i in 1:numberofanswers) {
         uncertaintyOPixel <- NewY2Pixel - NewY1Pixel
         uncertaintyOPercent <- NewY2PCT - NewY1PCT
         uncertaintyAreaPixel <- uncertaintyIPixel * uncertaintyOPixel
-        uncertaintyAreaPercent <- ((160000/100)*uncertaintyAreaPixel)
+        uncertaintyAreaPercent <- ((100/160000)*uncertaintyAreaPixel)
         uncertaintyPerimeterPixel <- ((2 * uncertaintyIPixel) + (2 * uncertaintyOPixel))
-        uncertaintyPerimeterPercent <- ((1600/100)*uncertaintyPerimeterPixel)
+        uncertaintyPerimeterPercent <- ((100/1600)*uncertaintyPerimeterPixel)
         uncertaintytotalPixel <- uncertaintyIPixel + uncertaintyOPixel
-        uncertaintytotalPercent <- ((800/100)*uncertaintytotalPixel)
+        uncertaintytotalPercent <- ((100/800)*uncertaintytotalPixel)
         middlex <- NewX1Pixel + (uncertaintyIPixel/2)
         middley <- NewY1Pixel + (uncertaintyOPixel/2)
         
