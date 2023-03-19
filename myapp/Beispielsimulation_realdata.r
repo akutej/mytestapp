@@ -1,4 +1,4 @@
-
+library(dplyr)
 answerstable1 <- read.csv(file = 'myapp/Data/RQ1.csv', header=TRUE) #importiere das answers file
 dfnogroup <- df %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == 281 )
 # Setzen eines Seeds, damit die Ergebnisse reproduzierbar sind
@@ -26,8 +26,8 @@ dfnogroup <- df %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 
 # Wenn ein Proband für die Auswirkung beispielsweise das Intervall von 3,2 bis 4,7 angibt,
 # dann ist seine individuelle Wahrscheinlichkeitsverteilung für die Auswirkung:
     x <- seq(0.01,0.99,0.01)
-	y <- dbeta(x,c.alpha,c.beta)
-	plot((4.7-3.2)*x+3.2,y,type="l",xlab="Auswirkung",ylab="")
+	  y <- dbeta(x,c.alpha,c.beta)
+	  plot((4.7-3.2)*x+3.2,y,type="l",xlab="Auswirkung",ylab="")
   
 # Monte-Carlo-Simulation
 
@@ -59,7 +59,7 @@ dfnogroup <- df %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 
   hist(Auswirkungen)
   
   
-  Runs <- 100000     # die Anzahl an Durchläufen
+  Runs <- 1000     # die Anzahl an Durchläufen
   Auswirkungen2 <- rep(NA,Runs)
   for(run in 1:Runs){
     
