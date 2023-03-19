@@ -1,5 +1,5 @@
 
-
+library(dplyr)
 # Setzen eines Seeds, damit die Ergebnisse reproduzierbar sind
 # (es werden jedesmal dieselben Zufallszahlen gezogen)
 
@@ -73,7 +73,7 @@
 
   quantile(Auswirkungen,0.9)
 
-  # Das heißt: mit einer Konfidenz von 90% ist die Auswrikung höchsten 4.63   
+  # Das heißt: mit einer Konfidenz von 90% ist die Auswirkung höchsten 4.63   
   
 
 

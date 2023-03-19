@@ -2,13 +2,11 @@ library(dplyr)
 library(ggplot2)
 library(scales)
 #read.table("example.csv", header=TRUE, sep=";", dec=".")
-<<<<<<< HEAD
-testtable <- read.csv(file = 'Data/data.csv', header=TRUE, sep=";", dec=".")
-accounttable <- read.csv(file = 'Data/account.csv', header=TRUE, sep=";", dec=".")
-=======
+#testtable <- read.csv(file = 'Data/data.csv', header=TRUE, sep=";", dec=".")
+#accounttable <- read.csv(file = 'myapp/Data/account.csv', header=TRUE, sep=";", dec=".")
 #testtable <- read.csv(file = 'myapp/Data/data.csv', header=TRUE, sep=";", dec=".")
 accounttable <- read.csv(file = 'myapp/Data/account.csv', header=TRUE, sep=";", dec=".")
->>>>>>> 64fe9f82dbd6c8f71452be776e2cabf1e46f9c02
+
 #testtable <- read.table("Data/data.csv", header=TRUE, sep=";", dec=".")
 #accounttable <- read.table("Data/account.csv", header=TRUE, sep=";", dec=".")
 #head (testtable)
@@ -59,4 +57,19 @@ ggp <- ggplot(newtest2, aes(x = reorder(Group.2, -ACC2SURV_INFOAGE), y = ACC2SUR
 ggp + geom_text(size = 3, position = position_stack(vjust = 0.8)) + labs(title = "user voting") + labs(x = "method")+ labs(y = "persons")+scale_fill_discrete(name = "groups")
 
 Mittelalter
+
+classic <- accframe %>% filter( ACC2SURV_RATEGUI == "1")
+graphic <- accframe %>% filter( ACC2SURV_RATEGUI == "2")
+neutral <- accframe %>% filter( ACC2SURV_RATEGUI == "3")
+graphicandclassic <- accframe %>% filter( ACC2SURV_RATEGUI == "1" | ACC2SURV_RATEGUI == "2" )
+
+print (numberofclassic <- nrow(classic))
+print (numberofgraphic <- nrow(graphic))
+print (numberofneutral <- nrow(neutral))
+print (numberofgac <- nrow(graphicandclassic))
+
+# accounttable  ACC_ID und ACC2SURV_RATEGUI
+#anzahlclassicundgraphic
+#anzahlgraphic
+binom.test(numberofgraphic,numberofgac, p=0.5)
 

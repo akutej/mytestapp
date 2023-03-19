@@ -1,8 +1,9 @@
 library(dplyr)
 library(openxlsx)
+library(gplots)
 
 answerstable <- read.csv(file = 'myapp/Data/RQ1.csv', header=TRUE) #importiere das answers file
-df <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == "344")
+df <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == "352")
 
 numberofanswers <- nrow(df)
 #print (paste0( "Anzahl der User: ",numberofanswers))
@@ -244,6 +245,7 @@ originx2 <- c()
 originy1 <- c()
 originy2 <- c()
 gridcol <- c()
+gridcolclassic <- c()
 gridImpact <- c()
 gridOccurrence <- c()
 uncertaintyIPercent <- c()
@@ -251,6 +253,9 @@ uncertaintyOPercent <- c()
 uncertaintyallPercent <- c()
 ratiotoareaPixel <- c()
 ratiotoareaPercent <- c()
+Impact <- c()
+Occurrence <- c()
+
 
 referenceI <- c()
 referenceO <- c()
@@ -263,6 +268,7 @@ OPixel <- c()
 createdf <- data.frame(AccId,
                        QuesId,
                        gridcol,
+                       gridcolclassic,
                        gridImpact,
                        gridOccurrence,
                        uncertaintyIPercent,
@@ -277,13 +283,19 @@ createdf <- data.frame(AccId,
                        referenceI,
                        referenceO,
                        IPixel,
-                       OPixel)
+                       OPixel,
+                       Impact,
+                       Occurrence
+                       )
 
 
 for (i in 1:numberofanswers){
+  
   AccId <- df[i,"ACC2SURV_ACCID"]
   QuesId <- df[i,"QUES_ID"]
-  
+  IMPACT <- df[i,"IMPACT"]
+  OCCURRENCE <- df[i,"OCCURRENCE"]
+  gridcolclassic <- df[i,"ClassicGrid"]
   X1Pixel <- df[i,"X1Pixel"]
   X2Pixel <- df[i,"X2Pixel"]
   Y1Pixel <- df[i,"Y1Pixel"]
@@ -295,6 +307,11 @@ for (i in 1:numberofanswers){
   Uncertainty.Impact <- (df[i,"uncertaintyIPercent"])
   Uncertainty.Occurrence <- (df[i,"uncertaintyOPercent"])
   Uncertainty.Percent <- round((df[i,"uncertaintyAreaPercent"]),digits=2)
+  
+  
+  
+  
+  
   #print (paste0( "Rechteck:", i))
   #print (paste0( "Höchstes X: ",highx))
   #print (paste0( "Höchstes Y: ",highy))
@@ -313,12 +330,14 @@ for (i in 1:numberofanswers){
       gridval <- (paste0( "Grid",gridvalO,gridvalI))
       rectresult <- getgrid(gridval,X1Pixel,X2Pixel,Y1Pixel,Y2Pixel)
       actualrow <- nrow(createdf) + 1
-      
+      createdf[actualrow,"Impact"] <- IMPACT
+      createdf[actualrow,"Occurrence"] <- OCCURRENCE
       createdf[actualrow,"originx1"] <- X1Pixel
       createdf[actualrow,"originx2"] <- X2Pixel
       createdf[actualrow,"originy1"] <- Y1Pixel
       createdf[actualrow,"originy2"] <- Y2Pixel
       createdf[actualrow,"gridcol"] <- gridval
+      createdf[actualrow,"gridcolclassic"] <-gridcolclassic
       createdf[actualrow,"gridOccurrence"] <- gridvalO
       createdf[actualrow,"gridImpact"] <- gridvalI
       createdf[actualrow,"uncertaintyIPercent"] <- Uncertainty.Impact
@@ -363,9 +382,116 @@ for (i in 1:numberofanswers){
 
 
 #print (createdf)
-createdfnew <- createdf %>% filter( QuesId == "344")
-mysum <- sum(createdfnew$ratiotoareaPixel)
+
+createdfnew <- createdf %>% filter( QuesId == "352")
+#print (createdfnew)
+#mysum <- sum(createdfnew$ratiotoareaPixel)
 mytest <- aggregate(createdfnew$ratiotoareaPixel, list(createdfnew$gridcol), FUN=sum)
+gesamtflächensumme <- (100/(sum(mytest$x)))
+mytest <- mutate (mytest, Prozent = gesamtflächensumme*x)
+#print (gesamtprozent <- (sum(mytest$Prozent)))
+#print (mytest)
+
+
+createdfgr2 <- createdf %>% filter( QuesId == "352")
+numberOfcreatedfgr2 <- nrow(createdfgr2)
+mytest2 <- table(createdfgr2$gridcol)
+#print (mytest2)
+#print (numberOfcreatedfgr2)
+
+dfnewclassic <- answerstable %>% filter( QUES_ID == "352" & ANS2SURV_ANSWERED == 1 )
+numberOfdfnewclassic <- nrow(dfnewclassic)
+#print (paste0("Anzahl der Datensätze"))
+#print(numberOfdfnewclassic)
+
+#print (dfnewclassic)
+#print (numberofanswersclas <- nrow(dfnewclassic))
+classictable <- table(dfnewclassic$ClassicGrid)
+middlegraphictable <- table(dfnewclassic$middleGRID)
+
+
+
+#mit t kann ich den dataframe flippen -> row auf column
+#newcdf <- t(data.frame(classictable))
+
+#print(classictable["Grid33"])
+
+
+
+# Join the variables to create a data frame
+
+m.grid <- c()
+m.areagraphical <- c()
+m.percentgraphical <- c()
+m.percentclassical <- c()
+m.anzahlclassical  <- c()
+m.anzahlgraphic2 <- c()
+m.percentgraphic2 <- c()
+m.anzahlmiddlegraphic <- c()
+m.percentmiddlegraphic <- c()
+
+mergedf <- data.frame(m.grid,
+                      m.areagraphical,
+                      m.percentgraphical,
+                      m.anzahlclassical,
+                      m.percentclassical,
+                      m.anzahlgraphic2,
+                      m.percentgraphic2,
+                      m.anzahlmiddlegraphic,
+                      m.percentmiddlegraphic
+                      )
+
+rectanglegrid <- data.frame(
+  Grid = c( "Grid11", "Grid12", "Grid13", "Grid14", "Grid15",
+            "Grid21", "Grid22", "Grid23", "Grid24", "Grid25",  
+            "Grid31", "Grid32", "Grid33", "Grid34", "Grid35",  
+            "Grid41", "Grid42", "Grid43", "Grid44", "Grid45", 
+            "Grid51", "Grid52", "Grid53", "Grid54", "Grid55"
+            )
+  )
+
+for (i in 1:25){
+  
+  m.grid <- rectanglegrid[i,"Grid"]
+  mergedf[i,"m.grid"] <- m.grid
+  actualgrid <- classictable[m.grid]
+  actualmiddlegrid <- middlegraphictable[m.grid]
+  actualgrid[is.na(actualgrid)] <- 0
+  actualmiddlegrid[is.na(actualmiddlegrid)] <- 0
+  actualgridgraph <- mytest2[m.grid]
+  actualgridgraph[is.na(actualgridgraph)] <- 0
+  m.percentclassical <- ((100/numberOfdfnewclassic)*actualgrid)
+  m.percentgraphic2 <- ((100/numberOfcreatedfgr2)*actualgridgraph)
+  m.percentmiddlegraphic <- ((100/numberOfdfnewclassic)*actualmiddlegrid)
+  mergedf[i,"m.areagraphical"] <- subset(mytest$x,mytest$Group.1==m.grid)
+  mergedf[i,"m.percentgraphical"] <- subset(mytest$Prozent,mytest$Group.1==m.grid)
+  mergedf[i,"m.anzahlclassical"] <- actualgrid
+  mergedf[i,"m.percentclassical"] <-m.percentclassical
+  mergedf[i,"m.anzahlgraphic2"] <- actualgridgraph
+  mergedf[i,"m.percentgraphic2"] <-m.percentgraphic2
+  mergedf[i,"m.anzahlmiddlegraphic"] <- actualmiddlegrid
+  mergedf[i,"m.percentmiddlegraphic"] <-m.percentmiddlegraphic
+  
+  
+  
+  
+  
+}
+
+print (mergedf)
+  
+  
+  
+ 
+
+
+
+
+
+
+#print (paste0( "Anzahl der User: ",numberofanswers))
+
+
 #mytestrows <- nrow(mytest)
 #print (colnames(mytest))
 #print (mytestrows)
@@ -377,10 +503,11 @@ mytest <- aggregate(createdfnew$ratiotoareaPixel, list(createdfnew$gridcol), FUN
 #  mytest[i,"percent"] <-  mypercent
 #}
 #print (table(createdfnew$gridcol))
-print (mytest)
+
+
 
 #print (createdfnew)
-numberofanswers1 <- nrow(createdf)
+#numberofanswers1 <- nrow(createdf)
 #print (paste0( "Anzahl der User: ",numberofanswers1))
-write.csv(createdf, "tablegridpooling.csv", row.names=TRUE)
-write.xlsx(createdf,'tablegridpooling.xlsx', rowNames=TRUE)
+write.csv(mergedf, "tablegridpooling.csv", row.names=TRUE)
+write.xlsx(mergedf,'tablegridpooling.xlsx', rowNames=TRUE)
