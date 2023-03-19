@@ -1,6 +1,8 @@
 library(dplyr)
 library(openxlsx)
 library(gplots)
+library(ggplot2)
+library(heatmaply)
 
 answerstable <- read.csv(file = 'myapp/Data/RQ1.csv', header=TRUE) #importiere das answers file
 df <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == "352")
@@ -421,6 +423,8 @@ middlegraphictable <- table(dfnewclassic$middleGRID)
 # Join the variables to create a data frame
 
 m.grid <- c()
+m.gridO <- c()
+m.gridI <- c()
 m.areagraphical <- c()
 m.percentgraphical <- c()
 m.percentclassical <- c()
@@ -431,6 +435,8 @@ m.anzahlmiddlegraphic <- c()
 m.percentmiddlegraphic <- c()
 
 mergedf <- data.frame(m.grid,
+                      m.gridO,
+                      m.gridI,
                       m.areagraphical,
                       m.percentgraphical,
                       m.anzahlclassical,
@@ -447,13 +453,38 @@ rectanglegrid <- data.frame(
             "Grid31", "Grid32", "Grid33", "Grid34", "Grid35",  
             "Grid41", "Grid42", "Grid43", "Grid44", "Grid45", 
             "Grid51", "Grid52", "Grid53", "Grid54", "Grid55"
-            )
+            
+            ),
+  x    = c( "1", "2", "3", "4", "5",
+            "1", "2", "3", "4", "5",
+            "1", "2", "3", "4", "5",
+            "1", "2", "3", "4", "5",
+            "1", "2", "3", "4", "5"
+          ),
+  y    = c( "1", "1", "1", "1", "1",
+            "2", "2", "2", "2", "2",
+            "3", "3", "3", "3", "3",
+            "4", "4", "4", "4", "4",
+            "5", "5", "5", "5", "5"
+            
+            
+            
+            
+            
+            
+            
+            
+  )
+  
   )
 
 for (i in 1:25){
-  
   m.grid <- rectanglegrid[i,"Grid"]
+  m.gridO <- rectanglegrid[i,"y"]
+  m.gridI <- rectanglegrid[i,"x"]
   mergedf[i,"m.grid"] <- m.grid
+  mergedf[i,"m.gridO"] <- m.gridO
+  mergedf[i,"m.gridI"] <- m.gridI
   actualgrid <- classictable[m.grid]
   actualmiddlegrid <- middlegraphictable[m.grid]
   actualgrid[is.na(actualgrid)] <- 0
@@ -479,9 +510,26 @@ for (i in 1:25){
 }
 
 print (mergedf)
-  
-  
-  
+
+prep.classicmatrix <- mergedf$m.anzahlclassical
+mat1 <- matrix(prep.classicmatrix,ncol=5,nrow=5,byrow=TRUE)
+prep.graphicmatrix <- mergedf$m.percentgraphical
+mat2 <- matrix(prep.graphicmatrix,ncol=5,nrow=5,byrow=TRUE)
+
+#mat2.data <- c(0,0,0,0,0,0,0,0,0,0,0,0,20,0,0,0,0,0,0,0,0,0,0,0,0)
+#mat2 <- matrix(mat2.data,nrow=5)
+
+#print (prep.classicmatrix)
+#print (mat1)
+
+
+
+datahm <- as.matrix(mat1)  
+heatmap(datahm, Colv = NA, Rowv = NA, scale="none")  
+datahm2 <- as.matrix(mat2)  
+heatmap(datahm2, Colv = NA, Rowv = NA, scale="none")
+#ggheatmap(datahm2,trace = "none")  
+
  
 
 
