@@ -2,7 +2,7 @@ library(dplyr)
 library(openxlsx)
 library(gplots)
 library(ggplot2)
-library(heatmaply)
+#library(heatmaply)
 
 answerstable <- read.csv(file = 'myapp/Data/RQ1.csv', header=TRUE) #importiere das answers file
 df <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == "352")
