@@ -1,6 +1,6 @@
 
 library(dplyr)
-answerstable <- read.csv(file = 'myapp/Data/RQ1_1.csv', header=TRUE) #importiere das answers file
+answerstable <- read.csv(file = 'myapp/Data/RQ1.csv', header=TRUE) #importiere das answers file
 df2 <- answerstable
 questions <- unique(df2$QUES2SURV_QUESID) 
 numberOfquestions <- length(questions)
@@ -9,22 +9,73 @@ print (paste0("Insgesamt gibt es ", numberOfquestions, " Szenarien."))
 #dfrolegraphicfirst <- df2 %>% filter(ACC2SURV_GROUPID == 2)
 
 
-
+print (paste0("Klassisches Ergebnis der Gruppe klassisch zuerst:"))
 df3 <- df2 %>% filter(ACC2SURV_GROUPID == "1" & QUES2SURV_QUESID == "345")
 numberOfdf3 <- nrow(df3)
+print (paste0("Anzahl der Datensätze"))
 print(numberOfdf3)
+print (paste0("Auswirkung"))
 print (table(df3$IMPACT))
+print (paste0("Eintrittswahrscheinlichkeit"))
 print (table(df3$OCCURRENCE))
-
+print ("  ")
+print ("  ")
+print (paste0("Klassisches Ergebnis der Gruppe graphisch zuerst:"))
 df4 <- df2 %>% filter(ACC2SURV_GROUPID == "2" & QUES2SURV_QUESID == "345")
 numberOfdf4 <- nrow(df4)
+print (paste0("Anzahl der Datensätze"))
 print(numberOfdf4)
+print (paste0("Auswirkung"))
 print (table(df4$IMPACT))
+print (paste0("Eintrittswahrscheinlichkeit"))
 print (table(df4$OCCURRENCE))
+print ("  ")
+print ("  ")
 
 
+classic.classicfirstI <- df3[,'IMPACT']
+classic.classicfirstO <- df3[,'OCCURRENCE']
+classic.graphicfirstI <- df4[,'IMPACT']
+classic.graphicfirstO <- df4[,'OCCURRENCE']
 
 
+print ("  ")
+print ("  ")
+
+
+print (paste0("Graphisches Ergebnis (Mittelpunkte) der Gruppe klassisch zuerst:"))
+df3 <- df2 %>% filter(ACC2SURV_GROUPID == "1" & QUES2SURV_QUESID == "345")
+numberOfdf3 <- nrow(df3)
+print (paste0("Anzahl der Datensätze"))
+print(numberOfdf3)
+print (paste0("Auswirkung"))
+print (table(df3$middleIGRID))
+print (paste0("Eintrittswahrscheinlichkeit"))
+print (table(df3$middleOGRID))
+print (" ")
+print (" ")
+print (paste0("Graphisches Ergebnis (Mittelpunkte) der Gruppe graphisch zuerst:"))
+df4 <- df2 %>% filter(ACC2SURV_GROUPID == "2" & QUES2SURV_QUESID == "345")
+numberOfdf4 <- nrow(df4)
+print (paste0("Anzahl der Datensätze"))
+print(numberOfdf4)
+print (paste0("Auswirkung"))
+print (table(df4$middleIGRID))
+print (paste0("Eintrittswahrscheinlichkeit"))
+print (table(df4$middleOGRID))
+print ("  ")
+print ("  ")
+
+#print (" ")
+#print (" ")
+#print (paste0("Klassisch Auswirkung"))
+#print (table(df3$IMPACT))
+#print (" ")
+#print (" ")
+#print (paste0("Klassisch Eintritt"))
+#print (table(df3$OCCURRENCE))
+#print ("  ")
+#print ("  ")
 
 
 #print(dfroleclassicfirstQuestion)

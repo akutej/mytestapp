@@ -51,6 +51,7 @@ df['middleX'] <- NA
 df['middleY'] <- NA
 df['middleIGRID'] <- NA
 df['middleOGRID'] <- NA
+df['middleGRID'] <- NA
 
 
 
@@ -73,11 +74,89 @@ for (i in 1:numberofanswers) {
   firstCheck <-  (df[i,"ANS2SURV_ANSWERED"])
   firstImp <- (df[i,"IMPACT"])
   firstOcc <- (df[i,"OCCURRENCE"])
+  
   #print (firstQuesID)
   #print (firstMethod)
   #print (df[i,])
   #print (firstCheck) 
   if (firstMethod =="classic" & firstCheck == 1 ){
+    if (firstOcc == "1" & firstImp == "1"){
+      gridcolclassic <- "Grid11"
+    }
+    else if (firstOcc == "1" & firstImp == "2"){
+      gridcolclassic <- "Grid12"
+    }
+    else if (firstOcc == "1" & firstImp == "3"){
+      gridcolclassic <- "Grid13"
+    }
+    else if (firstOcc == "1" & firstImp == "4"){
+      gridcolclassic <- "Grid14"
+    }
+    else if (firstOcc == "1" & firstImp == "5"){
+      gridcolclassic <- "Grid15"
+    }
+    else if (firstOcc == "2" & firstImp == "1"){
+      gridcolclassic <- "Grid21"
+    }
+    else if (firstOcc == "2" & firstImp == "2"){
+      gridcolclassic <- "Grid22"
+    }
+    else if (firstOcc == "2" & firstImp == "3"){
+      gridcolclassic <- "Grid23"
+    }
+    else if (firstOcc == "2" & firstImp == "4"){
+      gridcolclassic <- "Grid24"
+    }
+    else if (firstOcc == "2" & firstImp == "5"){
+      gridcolclassic <- "Grid25"
+    }
+    else if (firstOcc == "3" & firstImp == "1"){
+      gridcolclassic <- "Grid31"
+    }
+    else if (firstOcc == "3" & firstImp == "2"){
+      gridcolclassic <- "Grid32"
+    }
+    else if (firstOcc == "3" & firstImp == "3"){
+      gridcolclassic <- "Grid33"
+    }
+    else if (firstOcc == "3" & firstImp == "4"){
+      gridcolclassic <- "Grid34"
+    }
+    else if (firstOcc == "3" & firstImp == "5"){
+      gridcolclassic <- "Grid35"
+    }
+    else if (firstOcc == "4" & firstImp == "1"){
+      gridcolclassic <- "Grid41"
+    }
+    else if (firstOcc == "4" & firstImp == "2"){
+      gridcolclassic <- "Grid42"
+    }
+    else if (firstOcc == "4" & firstImp == "3"){
+      gridcolclassic <- "Grid43"
+    }
+    else if (firstOcc == "4" & firstImp == "4"){
+      gridcolclassic <- "Grid44"
+    }
+    else if (firstOcc == "4" & firstImp == "5"){
+      gridcolclassic <- "Grid45"
+    }
+    else if (firstOcc == "5" & firstImp == "1"){
+      gridcolclassic <- "Grid51"
+    }
+    else if (firstOcc == "5" & firstImp == "2"){
+      gridcolclassic <- "Grid52"
+    }
+    else if (firstOcc == "5" & firstImp == "3"){
+      gridcolclassic <- "Grid53"
+    }
+    else if (firstOcc == "5" & firstImp == "4"){
+      gridcolclassic <- "Grid54"
+    }
+    else if (firstOcc == "5" & firstImp == "5"){
+      gridcolclassic <- "Grid55"
+    }
+    df[i,'ClassicGrid'] <- gridcolclassic
+    
     for (m in 1:numberofanswers) {
       if (firstAccID == df[m,"ACC2SURV_ACCID"] & firstQuesID == df[m,"QUES2SURV_QUESID"] & firstMethod != (df[m,"QUES2SURV_METHOD"])){
         #print (paste0(i ," und ", m, " sind Pärchen "))
@@ -141,6 +220,7 @@ for (i in 1:numberofanswers) {
         else if(df[i,"middleX"] < 239)  { getmidX = 3 }
         else if(df[i,"middleX"] < 319)  { getmidX = 4 }
         else if(df[i,"middleX"] <= 400) { getmidX = 5 }
+        zwischenmidx <- getmidX
         df[i,"middleIGRID"] <- getmidX
         
         
@@ -149,7 +229,86 @@ for (i in 1:numberofanswers) {
         else if(df[i,"middleY"] < 239)  { getmidY = 3 }
         else if(df[i,"middleY"] < 319)  { getmidY = 2 }
         else if(df[i,"middleY"] <= 400) { getmidY = 1 }
+        zwischenmidy <- getmidY
         df[i,"middleOGRID"] <- getmidY
+        
+        if (zwischenmidy == "1" & zwischenmidx == "1"){
+          gridcolmid <- "Grid11"
+        }
+        else if (zwischenmidy == "1" & zwischenmidx == "2"){
+          gridcolmid <- "Grid12"
+        }
+        else if (zwischenmidy == "1" & zwischenmidx == "3"){
+          gridcolmid <- "Grid13"
+        }
+        else if (zwischenmidy == "1" & zwischenmidx == "4"){
+          gridcolmid <- "Grid14"
+        }
+        else if (zwischenmidy == "1" & zwischenmidx == "5"){
+          gridcolmid <- "Grid15"
+        }
+        else if (zwischenmidy == "2" & zwischenmidx == "1"){
+          gridcolmid <- "Grid21"
+        }
+        else if (zwischenmidy == "2" & zwischenmidx == "2"){
+          gridcolmid <- "Grid22"
+        }
+        else if (zwischenmidy == "2" & zwischenmidx == "3"){
+          gridcolmid <- "Grid23"
+        }
+        else if (zwischenmidy == "2" & zwischenmidx == "4"){
+          gridcolmid <- "Grid24"
+        }
+        else if (zwischenmidy == "2" & zwischenmidx == "5"){
+          gridcolmid <- "Grid25"
+        }
+        else if (zwischenmidy == "3" & zwischenmidx == "1"){
+          gridcolmid <- "Grid31"
+        }
+        else if (zwischenmidy == "3" & zwischenmidx == "2"){
+          gridcolmid <- "Grid32"
+        }
+        else if (zwischenmidy == "3" & zwischenmidx == "3"){
+          gridcolmid <- "Grid33"
+        }
+        else if (zwischenmidy == "3" & zwischenmidx == "4"){
+          gridcolmid <- "Grid34"
+        }
+        else if (zwischenmidy == "3" & zwischenmidx == "5"){
+          gridcolmid <- "Grid35"
+        }
+        else if (zwischenmidy == "4" & zwischenmidx == "1"){
+          gridcolmid <- "Grid41"
+        }
+        else if (zwischenmidy == "4" & zwischenmidx == "2"){
+          gridcolmid <- "Grid42"
+        }
+        else if (zwischenmidy == "4" & zwischenmidx == "3"){
+          gridcolmid <- "Grid43"
+        }
+        else if (zwischenmidy == "4" & zwischenmidx == "4"){
+          gridcolmid <- "Grid44"
+        }
+        else if (zwischenmidy == "4" & zwischenmidx == "5"){
+          gridcolmid <- "Grid45"
+        }
+        else if (zwischenmidy == "5" & zwischenmidx == "1"){
+          gridcolmid <- "Grid51"
+        }
+        else if (zwischenmidy == "5" & zwischenmidx == "2"){
+          gridcolmid <- "Grid52"
+        }
+        else if (zwischenmidy == "5" & zwischenmidx == "3"){
+          gridcolmid <- "Grid53"
+        }
+        else if (zwischenmidy == "5" & zwischenmidx == "4"){
+          gridcolmid <- "Grid54"
+        }
+        else if (zwischenmidy == "5" & zwischenmidx == "5"){
+          gridcolmid <- "Grid55"
+        }
+        df[i,'middleGRID'] <- gridcolmid
+        
         
         
         
