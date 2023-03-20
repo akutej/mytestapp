@@ -1,6 +1,6 @@
 library(dplyr)
 answerstable1 <- read.csv(file = 'myapp/Data/RQ1.csv', header=TRUE) #importiere das answers file
-dfnogroup <- df %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == 281 )
+dfnogroup <- df %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == 363 )
 # Setzen eines Seeds, damit die Ergebnisse reproduzierbar sind
 # (es werden jedesmal dieselben Zufallszahlen gezogen)
 #  set.seed(100)

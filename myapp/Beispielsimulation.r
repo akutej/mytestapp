@@ -57,7 +57,9 @@ library(dplyr)
 # Die ergibt nun eine gemeinsame Verteilung, die die Angaben aller Probanden
 # zur Auswirkung wiederspiegelt
 
-  hist(Auswirkungen)
+  hist(Auswirkungen,freq=FALSE ,breaks = c(0.5,1.5,2.5,3.5,4.5,5.5))
+  test <- hist(Auswirkungen,freq=FALSE ,breaks = c(0.5,1.5,2.5,3.5,4.5,5.5))
+  print (test)
 
 # Daraus lässt sich nun die mittlere Auswirkung über alle Probanden angeben:
   mean(Auswirkungen)
