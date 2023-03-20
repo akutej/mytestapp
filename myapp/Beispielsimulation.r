@@ -44,6 +44,9 @@ library(dplyr)
 	  i.proband <- which(Probanden==proband)
 	  untere.grenze <- Daten[i.proband,"Untere.Grenze"]
 	  obere.grenze <- Daten[i.proband,"Obere.Grenze"]
+	  #untere.grenze <- Daten[i.proband,"Untere.Grenze"] hier erwitern um eintrittsw. 
+	  #obere.grenze <- Daten[i.proband,"Obere.Grenze"] hier erwitern um eintrittsw. 
+	  
 
     # Ziehung einer zufälligen Auswirkung gemäß der individuellen Beta-Verteilung des Probanden	  
       x <- rbeta(1,c.alpha,c.beta)
@@ -51,6 +54,7 @@ library(dplyr)
 	  
 	# Zum Schluss wird noch die in diesem Run ermittelte Auswirkung abgespeichert
       Auswirkungen[run] <- auswirkung	
+      
 	  
   }
   
