@@ -1,12 +1,42 @@
 
 library(dplyr)
 answerstable <- read.csv(file = 'myapp/Data/RQ1.csv', header=TRUE) #importiere das answers file
-df2 <- answerstable
+accounttable <- read.csv(file = 'myapp/Data/accounts.csv',sep=";", header=TRUE) #importiere das answers file
+dfuser <- accounttable
+numberofacc <- nrow(dfuser)
+answerstablefiltered <- answerstable %>% filter(ANS2SURV_ANSWERED == 1)
+#answerstablefiltered <- cbind(answerstablefiltered,EXPERIENCE)
+answerstablefiltered['EXPERIENCE'] <- NA
+answerstablefiltered['INFORISK'] <- NA
+numberofanswers <- nrow(answerstablefiltered)
+
+for (x in 1:numberofanswers) {
+  
+    actualAccID <- answerstablefiltered[x,"ACC2SURV_ACCID"]
+  
+    for (y in 1:numberofacc){
+      actualAccID2 <- dfuser[y,"ACC_ID"]
+      
+      if (actualAccID == actualAccID2){
+        accEXPERIENCE <- dfuser[y,"ACC2SURV_INFOEXPERIENCE"] 
+        INFORISK <- dfuser[y,"ACC2SURV_INFORISK"] 
+        answerstablefiltered[x,"EXPERIENCE"] = accEXPERIENCE
+        answerstablefiltered[x,"INFORISK"] = INFORISK
+      }
+    }
+}
+
+
+
+df2 <- answerstablefiltered
+
+
 questions <- unique(df2$QUES2SURV_QUESID) 
 numberOfquestions <- length(questions)
 print (paste0("Insgesamt gibt es ", numberOfquestions, " Szenarien."))
 #dfroleclassicfirst <- df2 %>% filter(ACC2SURV_GROUPID == 1)
 #dfrolegraphicfirst <- df2 %>% filter(ACC2SURV_GROUPID == 2)
+
 
 
 print (paste0("Klassisches Ergebnis der Gruppe klassisch zuerst:"))
@@ -15,6 +45,7 @@ numberOfdf3 <- nrow(df3)
 print (paste0("Anzahl der Datensätze"))
 print(numberOfdf3)
 print (paste0("Auswirkung"))
+
 print (table(df3$IMPACT))
 print (paste0("Eintrittswahrscheinlichkeit"))
 print (table(df3$OCCURRENCE))
@@ -65,6 +96,25 @@ print (paste0("Eintrittswahrscheinlichkeit"))
 print (table(df4$middleOGRID))
 print ("  ")
 print ("  ")
+
+
+
+
+
+
+
+print ("Erfahrung mit kritischer Infrastruktur")
+print (table(dfuser$ACC2SURV_INFOEXPCRITICAL))
+print ("eigene Risikoeinschätzung")
+print (table(dfuser$ACC2SURV_INFORISK))
+print ("Berufserfahrung")
+print (table(dfuser$ACC2SURV_INFOEXPERIENC))
+print ("Berufserfahrung in der KABEG")
+print (table(dfuser$ACC2SURV_INFODURATION))
+
+#print (df2)
+#print (chisq.test(table(df2$INFORISK,df2$IMPACT)))
+#print (chisq.test(df2$INFORISK,df2$IMPACT))
 
 #print (" ")
 #print (" ")

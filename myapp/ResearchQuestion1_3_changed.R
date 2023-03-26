@@ -352,7 +352,7 @@ write.csv(dfuser, "RQ1UserTabelle.csv", row.names=TRUE)
 write.xlsx(dfuser,'RQ1UserTabelle.xlsx', rowNames=TRUE)
 #print (dfuser)
 
-histuncertI <- dfuser[,'Uncertainty Auswirkung']
+histuncertI <- dfuser[,'Uncertainty Auswirkung']#4,breaks=c(10,20,30,40,50,60,,70,80,90,100)]
 histuncertO <- dfuser[,'Uncertainty Eintrittsw.']
 
 #histuncertIroh <- dfnogroup[,'uncertaintyIPercent']
@@ -365,8 +365,11 @@ group2 <- dfuser %>% filter(actualuserRole == "2")
 
 x <- dfuser[,'percentAuswirkung']
 y <- dfuser[,'percentEintrittsw']
+#print (x)
+
 plotAuswirkung <- ecdf (x)
 plotEintritt <- ecdf (y)
+
 
 plot (plotAuswirkung,main="Empirische Verteilung - Überschneidung Auswirkung mit klassischer Methode")
 plot (plotEintritt,main="Empirische Verteilung - Überschneidung Eintrittswahrscheinlichkeit mit klassischer Methode")
