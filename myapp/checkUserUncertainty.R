@@ -1,7 +1,7 @@
 library(dplyr)
 library(ggplot2)
 library(scales)
-answerstable <- read.csv(file = 'Data/answers.csv', header=TRUE, sep=";", dec=".")
+answerstable <- read.csv(file = 'myapp/Data/answers.csv', header=TRUE, sep=";", dec=".")
 answersframe=as.data.frame.matrix(answerstable)
 answersframe_1 <- answersframe
 #class(answersframe_1$X1PCT)
