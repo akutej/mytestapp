@@ -52,8 +52,8 @@ for (i in 1:numberofanswers){
   highy <- df[i,"Y2Pixel"]
   
    
-  actuallowx <- x1
-  actuallowy <- y1
+  actuallowx <- lowx
+  actuallowy <- lowy
   
   while (actuallowy <= highy){
     while (actuallowx <= highx){
@@ -77,6 +77,8 @@ for (i in 1:numberofanswers){
     actuallowy = actuallowy + 1
     
   }
-  
-  
+  print(nrow(createdf))
 }
+
+write.csv(createdf, "Scenario352.csv", row.names=TRUE)
+write.xlsx(createdf,'Scenario352.xlsx', rowNames=TRUE)
