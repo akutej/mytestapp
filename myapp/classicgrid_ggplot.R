@@ -4,193 +4,139 @@ library(ggplot2)
 library(grid)
 library(RColorBrewer)
 
-make_gradient <- function(deg = 180, n = 100, cols = blues9) {
-  cols <- colorRampPalette(cols)(n + 1)
-  rad <- deg / (62/pi)
-  mat <- matrix(
-    data = rep(seq(0, 1, length.out = n) * cos(rad), n),
-    byrow = TRUE,
-    ncol = n
-  ) +
-    matrix(
-      data = rep(seq(0, 1, length.out = n) * sin(rad), n),
-      byrow = FALSE,
-      ncol = n
-    )
-  mat <- mat - min(mat)
-  mat <- mat / max(mat)
-  mat <- 1 + mat * n
-  mat <- matrix(data = cols[round(mat)], ncol = n)
-  grid::rasterGrob(
-    image = mat,
-    width = unit(1, "npc"),
-    height = unit(1, "npc"), 
-    interpolate = TRUE
-  )
-}
 
 
 answerstable <- read.csv(file = 'myapp/Data/RQ1.csv', header=TRUE) #importiere das answers file
 df <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == "352")
 numberofanswers <- nrow(df)
 #print (numberofanswers)
-dfgroup1 <- df %>% filter(ACC2SURV_ROLE == "1")# ACC2SURV_GROUPID== "1"
-numberofanswersg1 <- nrow(dfgroup1)
-dfgroup2 <- df %>% filter(ACC2SURV_ROLE == "2")
-numberofanswersg2 <- nrow(dfgroup2)
+#dfgroup1 <- df %>% filter(ACC2SURV_ROLE == "1")# ACC2SURV_GROUPID== "1"
+#numberofanswersg1 <- nrow(dfgroup1)
+#dfgroup2 <- df %>% filter(ACC2SURV_ROLE == "2")
+#numberofanswersg2 <- nrow(dfgroup2)
+scenariogrid <- data.frame(table(df$ClassicGrid))
+#print (scenariogrid)
+basicgrid <- data.frame(c("Grid11","Grid21","Grid31","Grid41","Grid51","Grid12","Grid22","Grid32","Grid42","Grid52","Grid13","Grid23","Grid33","Grid43","Grid53","Grid14","Grid24","Grid34","Grid44","Grid54","Grid15","Grid25","Grid35","Grid45","Grid55"))
 
-YPIXELORIGIN <- seq (0,400)
-YPIXELPLOT <- seq (400,0)
-switchdf <- data.frame(YPIXELORIGIN,YPIXELPLOT)
-#print (switchdf)
+numberbasic  <- nrow(basicgrid)
 
-getswitchedy <- function(YORIGIN) { 
-  this.row = which(switchdf$YPIXELORIGIN == YORIGIN)
-  return (switchdf$YPIXELPLOT[this.row])
-  
+for (i in 1:numberbasic) {
+      #print (basicgrid[i,1])
+      actualGRID <- basicgrid[i,1]
+      m = which(scenariogrid == actualGRID)
+      x <- identical(m, integer(0))
+      if(x != TRUE){
+        value <- (scenariogrid[m,"Freq"])
+        #print (value)
+        basicgrid[i,"MatrixSum"] <- value
+      } else{
+        basicgrid[i,"MatrixSum"] <- "0"
+      }
 }
 
-#transformedy <- getswitchedy(0)
-#print (transformedy)
+classicgrid <- (basicgrid$MatrixSum)
+#classicgrid<- c(20,2,3,4,2,20,2,3,4,2,20,2,3,4,2,20,2,3,4,2)
 
-x1g1 <- c()
-x2g1 <- c()
-y1g1 <- c()
-y2g1 <- c()
-
-x1g1m <- c()
-x2g1m <- c()
-y1g1m <- c()
-y2g1m <- c()
-
-x1g2 <- c()
-x2g2 <- c()
-y1g2 <- c()
-y2g2 <- c()
-
-x1g2m <- c()
-x2g2m <- c()
-y1g2m <- c()
-y2g2m <- c()
-
-
-rectangleg1 <- data.frame(x1g1,
-                          x2g1,                             
-                          y1g1,
-                          y2g1
-                         )
-
-rectangleg1m <- data.frame(x1g1m,
-                           x2g1m,                             
-                           y1g1m,
-                           y2g1m
-                          )
-
-rectangleg2 <- data.frame(x1g2,
-                          x2g2,                             
-                          y1g2,
-                          y2g2
-)
-
-rectangleg2m <- data.frame(x1g2m,
-                           x2g2m,                             
-                           y1g2m,
-                           y2g2m
-)
-
-
-
-
-for (i in 1:numberofanswersg1) {
-  actualrowg1 <- nrow(rectangleg1) + 1
-  actualrowg1m <- nrow(rectangleg1m) + 1
-  
-  x1 <- dfgroup1[i,"X1Pixel"]
-  x2 <- dfgroup1[i,"X2Pixel"]
-  y1origin <- dfgroup1[i,"Y1Pixel"]
-  y1 <- getswitchedy(y1origin)
-  y2origin <- dfgroup1[i,"Y2Pixel"]
-  y2 <- getswitchedy(y2origin)
-  mx= ((x2-x1)/2)+x1
-  my= ((y2-y1)/2)+y1
-  mx1=mx-1
-  mx2=mx+1
-  my1=my-1
-  my2=my+1
-  rectangleg1[actualrowg1,"x1g1"] <- x1
-  rectangleg1[actualrowg1,"x2g1"] <- x2
-  rectangleg1[actualrowg1,"y1g1"] <- y1
-  rectangleg1[actualrowg1,"y2g1"] <- y2
-  
-  rectangleg1m[actualrowg1m,"x1g1m"] <- mx1
-  rectangleg1m[actualrowg1m,"x2g1m"] <- mx2
-  rectangleg1m[actualrowg1m,"y1g1m"] <- my1
-  rectangleg1m[actualrowg1m,"y2g1m"] <- my2
-  
-}
-
-for (i in 1:numberofanswersg2) {
-  actualrowg2 <- nrow(rectangleg2) + 1
-  actualrowg2m <- nrow(rectangleg2m) + 1
-  x1 <- dfgroup2[i,"X1Pixel"]
-  x2 <- dfgroup2[i,"X2Pixel"]
-  y1origin <- dfgroup2[i,"Y1Pixel"]
-  y1 <- getswitchedy(y1origin)
-  y2origin <- dfgroup2[i,"Y2Pixel"]
-  y2 <- getswitchedy(y2origin)
-  mx= ((x2-x1)/2)+x1
-  my= ((y2-y1)/2)+y1
-  mx1=mx-1
-  mx2=mx+1
-  my1=my-1
-  my2=my+1
-  rectangleg2[actualrowg2,"x1g2"] <- x1
-  rectangleg2[actualrowg2,"x2g2"] <- x2
-  rectangleg2[actualrowg2,"y1g2"] <- y1
-  rectangleg2[actualrowg2,"y2g2"] <- y2
-  
-  rectangleg2m[actualrowg2m,"x1g2m"] <- mx1
-  rectangleg2m[actualrowg2m,"x2g2m"] <- mx2
-  rectangleg2m[actualrowg2m,"y1g2m"] <- my1
-  rectangleg2m[actualrowg2m,"y2g2m"] <- my2
-  
-  
-}
-
-print(rectangleg1m)
-
-
-g <- make_gradient(
-  deg = 45, n = 500, cols = brewer.pal(3, "Spectral")
-)
 
 thisis <- ggplot() + 
-  annotation_custom(
-    grob = g, xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf
-  ) +
-  xlim(0,400) +
-  ylim(0,400) +
-  geom_rect(data=rectangleg1, mapping=aes(xmin=x1g1, xmax=x2g1, ymin=y1g1, ymax=y2g1), color="red", alpha=0)+
-  geom_rect(data=rectangleg1m, mapping=aes(xmin=x1g1m, xmax=x2g1m, ymin=y1g1m, ymax=y2g1m), color="red", alpha=1)+
-  geom_rect(data=rectangleg2, mapping=aes(xmin=x1g2, xmax=x2g2, ymin=y1g2, ymax=y2g2), color="blue", alpha=0)+
-  geom_rect(data=rectangleg2m, mapping=aes(xmin=x1g2m, xmax=x2g2m, ymin=y1g2m, ymax=y2g2m), color="blue", alpha=1)
+  xlim(-150,400) +
+  ylim(0,530) +
+  geom_rect(aes(xmin=-150, xmax=0, ymin=0, ymax=80),fill="lightgrey", color="black", alpha=1)+
+  geom_rect(aes(xmin=-150, xmax=0, ymin=80, ymax=160),fill="lightgrey", color="black", alpha=1)+
+  geom_rect(aes(xmin=-150, xmax=0, ymin=160, ymax=240),fill="lightgrey", color="black", alpha=1)+
+  geom_rect(aes(xmin=-150, xmax=0, ymin=240, ymax=320),fill="lightgrey", color="black", alpha=1)+
+  geom_rect(aes(xmin=-150, xmax=0, ymin=320, ymax=400),fill="lightgrey", color="black", alpha=1)+
+  geom_rect(aes(xmin=-150, xmax=-100, ymin=0, ymax=400),fill="grey", color="black", alpha=1)+
+  geom_rect(aes(xmin=0, xmax=80, ymin=400, ymax=480),fill="lightgrey", color="black", alpha=1)+
+  geom_rect(aes(xmin=80, xmax=160, ymin=400, ymax=480),fill="lightgrey", color="black", alpha=1)+
+  geom_rect(aes(xmin=160, xmax=240, ymin=400, ymax=480),fill="lightgrey", color="black", alpha=1)+
+  geom_rect(aes(xmin=240, xmax=320, ymin=400, ymax=480),fill="lightgrey", color="black", alpha=1)+
+  geom_rect(aes(xmin=320, xmax=400, ymin=400, ymax=480),fill="lightgrey", color="black", alpha=1)+
+  geom_rect(aes(xmin=0, xmax=400, ymin=480, ymax=530),fill="grey", color="black", alpha=1)+
+  
+  geom_rect(aes(xmin=0, xmax=80, ymin=0, ymax=80),fill="green", color="black", alpha=1)+
+  geom_rect(aes(xmin=0, xmax=80, ymin=80, ymax=160),fill="green", color="black", alpha=1)+
+  geom_rect(aes(xmin=0, xmax=80, ymin=160, ymax=240),fill="green", color="black", alpha=1)+
+  geom_rect(aes(xmin=0, xmax=80, ymin=240, ymax=320),fill="green", color="black", alpha=1)+
+  geom_rect(aes(xmin=0, xmax=80, ymin=320, ymax=400),fill="yellow", color="black", alpha=1)+
+  geom_rect(aes(xmin=80, xmax=160, ymin=0, ymax=80),fill="green", color="black", alpha=1)+
+  geom_rect(aes(xmin=80, xmax=160, ymin=80, ymax=160),fill="green", color="black", alpha=1)+
+  geom_rect(aes(xmin=80, xmax=160, ymin=160, ymax=240),fill="yellow", color="black", alpha=1)+
+  geom_rect(aes(xmin=80, xmax=160, ymin=240, ymax=320),fill="yellow", color="black", alpha=1)+
+  geom_rect(aes(xmin=80, xmax=160, ymin=320, ymax=400),fill="yellow", color="black", alpha=1)+
+  geom_rect(aes(xmin=160, xmax=240, ymin=0, ymax=80),fill="green", color="black", alpha=1)+
+  geom_rect(aes(xmin=160, xmax=240, ymin=80, ymax=160),fill="yellow", color="black", alpha=1)+
+  geom_rect(aes(xmin=160, xmax=240, ymin=160, ymax=240),fill="yellow", color="black", alpha=1)+
+  geom_rect(aes(xmin=160, xmax=240, ymin=240, ymax=320),fill="yellow", color="black", alpha=1)+
+  geom_rect(aes(xmin=160, xmax=240, ymin=320, ymax=400),fill="red", color="black", alpha=1)+
+  geom_rect(aes(xmin=240, xmax=320, ymin=0, ymax=80),fill="yellow", color="black", alpha=1)+
+  geom_rect(aes(xmin=240, xmax=320, ymin=80, ymax=160),fill="yellow", color="black", alpha=1)+
+  geom_rect(aes(xmin=240, xmax=320, ymin=160, ymax=240),fill="yellow", color="black", alpha=1)+
+  geom_rect(aes(xmin=240, xmax=320, ymin=240, ymax=320),fill="red", color="black", alpha=1)+
+  geom_rect(aes(xmin=240, xmax=320, ymin=320, ymax=400),fill="red", color="black", alpha=1)+
+  geom_rect(aes(xmin=320, xmax=400, ymin=0, ymax=80),fill="yellow", color="black", alpha=1)+
+  geom_rect(aes(xmin=320, xmax=400, ymin=80, ymax=160),fill="red", color="black", alpha=1)+
+  geom_rect(aes(xmin=320, xmax=400, ymin=160, ymax=240),fill="red", color="black", alpha=1)+
+  geom_rect(aes(xmin=320, xmax=400, ymin=240, ymax=320),fill="red", color="black", alpha=1)+
+  geom_rect(aes(xmin=320, xmax=400, ymin=320, ymax=400),fill="red", color="black", alpha=1)+
+  
+  geom_text(aes(x = 40, y = 40, label = classicgrid[1]),size = 10)+
+  geom_text(aes(x = 40, y = 120, label = classicgrid[2]),size = 10)+
+  geom_text(aes(x = 40, y = 200, label = classicgrid[3]),size = 10)+
+  geom_text(aes(x = 40, y = 280, label = classicgrid[4]),size = 10)+
+  geom_text(aes(x = 40, y = 360, label = classicgrid[5]),size = 10)+
+  
+  geom_text(aes(x = 120, y = 40, label = classicgrid[6]),size = 10)+
+  geom_text(aes(x = 120, y = 120, label = classicgrid[7]),size = 10)+
+  geom_text(aes(x = 120, y = 200, label = classicgrid[8]),size = 10)+
+  geom_text(aes(x = 120, y = 280, label = classicgrid[9]),size = 10)+
+  geom_text(aes(x = 120, y = 360, label = classicgrid[10]),size = 10)+
+  
+  geom_text(aes(x = 200, y = 40, label = classicgrid[11]),size = 10)+
+  geom_text(aes(x = 200, y = 120, label = classicgrid[12]),size = 10)+
+  geom_text(aes(x = 200, y = 200, label = classicgrid[13]),size = 10)+
+  geom_text(aes(x = 200, y = 280, label = classicgrid[14]),size = 10)+
+  geom_text(aes(x = 200, y = 360, label = classicgrid[15]),size = 10)+
+  
+  geom_text(aes(x = 280, y = 40, label = classicgrid[16]),size = 10)+
+  geom_text(aes(x = 280, y = 120, label = classicgrid[17]),size = 10)+
+  geom_text(aes(x = 280, y = 200, label = classicgrid[18]),size = 10)+
+  geom_text(aes(x = 280, y = 280, label = classicgrid[19]),size = 10)+
+  geom_text(aes(x = 280, y = 360, label = classicgrid[20]),size = 10)+
+  
+  geom_text(aes(x = 360, y = 40, label = classicgrid[21]),size = 10)+
+  geom_text(aes(x = 360, y = 120, label = classicgrid[22]),size = 10)+
+  geom_text(aes(x = 360, y = 200, label = classicgrid[23]),size = 10)+
+  geom_text(aes(x = 360, y = 280, label = classicgrid[24]),size = 10)+
+  geom_text(aes(x = 360, y = 360, label = classicgrid[25]),size = 10)+
+  
+  geom_text(aes(x = -50, y = 40, label = "unwahrscheinlich"),size = 5)+
+  geom_text(aes(x = -50, y = 120, label = "sehr gering"),size = 5)+
+  geom_text(aes(x = -50, y = 200, label = "gering"),size = 5)+
+  geom_text(aes(x = -50, y = 280, label = "hoch"),size = 5)+
+  geom_text(aes(x = -50, y = 360, label = "sehr hoch"),size = 5)+
+  
+  geom_text(aes(x = 40 , y = 440, label = "unbedeutend"),size = 5)+
+  geom_text(aes(x = 120, y = 440, label = "gering"),size = 5)+
+  geom_text(aes(x = 200, y = 440, label = "spürbar"),size = 5)+
+  geom_text(aes(x = 280, y = 440, label = "kritisch"),size = 5)+
+  geom_text(aes(x = 360, y = 440, label = "katastrophal"),size = 5)+
+  
+  geom_text(aes(x = 200, y = 505, label = "Auswirkung"),size = 5)+
+  geom_text(aes(x = -125, y = 200, label = "Eintrittswahrscheinlichkeit"),size = 5,angle=90)+
+  
+  
+  theme_classic() +
+  theme(axis.line  = element_blank(),
+        axis.ticks = element_blank(),
+        axis.text  = element_blank(),
+        axis.title = element_blank())
+
+  
+  
+print(thisis)
   
 
-print (thisis)
-
-thisis2 <- ggplot() + 
-  annotation_custom(
-    grob = g, xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf
-  ) +
-  xlim(0,400) +
-  ylim(0,400) +
-  #geom_rect(data=rectangleg1, mapping=aes(xmin=x1g1, xmax=x2g1, ymin=y1g1, ymax=y2g1), color="red", alpha=0)+
-  geom_rect(data=rectangleg1m, mapping=aes(xmin=x1g1m, xmax=x2g1m, ymin=y1g1m, ymax=y2g1m),fill = "red", color="red", alpha=1)+
-  #geom_rect(data=rectangleg2, mapping=aes(xmin=x1g2, xmax=x2g2, ymin=y1g2, ymax=y2g2), color="blue", alpha=0)+
-  geom_rect(data=rectangleg2m, mapping=aes(xmin=x1g2m, xmax=x2g2m, ymin=y1g2m, ymax=y2g2m),fill = "blue", color="blue", alpha=1)
-
-
-print (thisis2)
 
 
 ## set up the plot region:
