@@ -4,10 +4,21 @@ library(gplots)
 library(ggplot2)
 #library(heatmaply)
 
+
 answerstable <- read.csv(file = 'myapp/Data/RQ1.csv', header=TRUE) #importiere das answers file
-df <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == "352")# & ACC2SURV_ACCID == "22")
-print (df)
-numberofanswers <- nrow(df)
+dfall <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1)
+scenarios <- as.data.frame(table(dfall$QUES_ID))
+numberscenarios  <- nrow(scenarios)
+for (anz in 1:numberscenarios) {
+  actualscenario =as.vector(scenarios[anz,1])
+  print (actualscenario)
+  scentext <- (paste0("Scenario ", actualscenario))
+  if((actualscenario != "281") & (actualscenario != "282") & (actualscenario != "283")
+  {
+    print (actualscenario) 
+  df <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == actualscenario)# & ACC2SURV_ACCID == "22")
+  #print (df)
+  numberofanswers <- nrow(df)
 
 
 Grid <- c()
@@ -79,6 +90,13 @@ for (i in 1:numberofanswers){
   }
   print(nrow(createdf))
 }
+scenfile <- (paste0("myapp/files/heatmap/",scentext,"_tranformed.xlsx"))
+print (scenfile)
 
-write.csv(createdf, "Scenario352.csv", row.names=TRUE)
-write.xlsx(createdf,'Scenario352.xlsx', rowNames=TRUE)
+write.csv(createdf, paste0("myapp/files/heatmap/", scentext,"_tranformed.csv"), row.names=TRUE)
+write.xlsx(createdf,file = scenfile, rowNames=TRUE)
+  }
+  else {
+    print ("nicht")
+  }
+}
