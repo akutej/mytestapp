@@ -5,7 +5,15 @@ library(ggplot2)
 #library(heatmaply)
 
 answerstable <- read.csv(file = 'myapp/Data/RQ1.csv', header=TRUE) #importiere das answers file
-df <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == "352")
+dfall <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == "283")
+scenarios <- as.data.frame(table(dfall$QUES_ID))
+numberscenarios  <- nrow(scenarios)
+for (anz in 1:numberscenarios) {
+  actualscenario =as.vector(scenarios[anz,1])
+  print (actualscenario)
+  
+
+df <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == actualscenario)
 
 numberofanswers <- nrow(df)
 #print (paste0( "Anzahl der User: ",numberofanswers))
@@ -353,18 +361,15 @@ for (i in 1:numberofanswers){
       createdf[actualrow,"referenceO"] <- rectresult$referenceO
       createdf[actualrow,"IPixel"] <- rectresult$IPixel
       createdf[actualrow,"OPixel"] <- rectresult$OPixel
-      
       actuallowx = actuallowx + 1
       }
       
       actuallowx <- lowx
       actuallowy = actuallowy + 1
-      
+     
   }
   
 
-  
-  
  # if ((X1Pixel < 79) & (Y1Pixel < 79)){
  #      gridval <- "Grid51"
  #      Uncertainty.Impact <- (df[i,"uncertaintyIPercent"])
@@ -385,7 +390,7 @@ for (i in 1:numberofanswers){
 
 #print (createdf)
 
-createdfnew <- createdf %>% filter( QuesId == "352")
+createdfnew <- createdf %>% filter( QuesId == actualscenario)
 #print (createdfnew)
 #mysum <- sum(createdfnew$ratiotoareaPixel)
 mytest <- aggregate(createdfnew$ratiotoareaPixel, list(createdfnew$gridcol), FUN=sum)
@@ -395,14 +400,15 @@ mytest <- mutate (mytest, Prozent = gesamtflächensumme*x)
 #print (mytest)
 
 
-createdfgr2 <- createdf %>% filter( QuesId == "352")
+createdfgr2 <- createdf %>% filter( QuesId == actualscenario)
 numberOfcreatedfgr2 <- nrow(createdfgr2)
 mytest2 <- table(createdfgr2$gridcol)
 #print (mytest2)
 #print (numberOfcreatedfgr2)
 
-dfnewclassic <- answerstable %>% filter( QUES_ID == "352" & ANS2SURV_ANSWERED == 1 )
+dfnewclassic <- answerstable %>% filter( QUES_ID == actualscenario & ANS2SURV_ANSWERED == 1 )
 numberOfdfnewclassic <- nrow(dfnewclassic)
+
 #print (paste0("Anzahl der Datensätze"))
 #print(numberOfdfnewclassic)
 
@@ -417,8 +423,6 @@ middlegraphictable <- table(dfnewclassic$middleGRID)
 #newcdf <- t(data.frame(classictable))
 
 #print(classictable["Grid33"])
-
-
 
 # Join the variables to create a data frame
 
@@ -467,18 +471,15 @@ rectanglegrid <- data.frame(
             "4", "4", "4", "4", "4",
             "5", "5", "5", "5", "5"
             
-            
-            
-            
-            
-            
-            
+         
             
   )
   
   )
 
+
 for (i in 1:25){
+  
   m.grid <- rectanglegrid[i,"Grid"]
   m.gridO <- rectanglegrid[i,"y"]
   m.gridI <- rectanglegrid[i,"x"]
@@ -494,6 +495,11 @@ for (i in 1:25){
   m.percentclassical <- ((100/numberOfdfnewclassic)*actualgrid)
   m.percentgraphic2 <- ((100/numberOfcreatedfgr2)*actualgridgraph)
   m.percentmiddlegraphic <- ((100/numberOfdfnewclassic)*actualmiddlegrid)
+  #problem <- subset(mytest$x,mytest$Group.1==m.grid)
+  #print(problem)
+  #problem[problem == 0] <- NA
+  #if(mytest$Group.1)
+  #print (grepl(m.grid, mytest$Group.1))
   mergedf[i,"m.areagraphical"] <- subset(mytest$x,mytest$Group.1==m.grid)
   mergedf[i,"m.percentgraphical"] <- subset(mytest$Prozent,mytest$Group.1==m.grid)
   mergedf[i,"m.anzahlclassical"] <- actualgrid
@@ -502,19 +508,22 @@ for (i in 1:25){
   mergedf[i,"m.percentgraphic2"] <-m.percentgraphic2
   mergedf[i,"m.anzahlmiddlegraphic"] <- actualmiddlegrid
   mergedf[i,"m.percentmiddlegraphic"] <-m.percentmiddlegraphic
-  
-  
-  
-  
-  
+ 
 }
+
 
 print (mergedf)
 
+
 prep.classicmatrix <- mergedf$m.anzahlclassical
 mat1 <- matrix(prep.classicmatrix,ncol=5,nrow=5,byrow=TRUE)
+
 prep.graphicmatrix <- mergedf$m.percentgraphical
 mat2 <- matrix(prep.graphicmatrix,ncol=5,nrow=5,byrow=TRUE)
+
+prep.classicmatrixperc <- mergedf$m.percentclassical
+mat3 <- matrix(prep.classicmatrixperc,ncol=5,nrow=5,byrow=TRUE)
+
 
 #mat2.data <- c(0,0,0,0,0,0,0,0,0,0,0,0,20,0,0,0,0,0,0,0,0,0,0,0,0)
 #mat2 <- matrix(mat2.data,nrow=5)
@@ -522,12 +531,30 @@ mat2 <- matrix(prep.graphicmatrix,ncol=5,nrow=5,byrow=TRUE)
 #print (prep.classicmatrix)
 #print (mat1)
 
+scentext_pic <- (paste0("Scenario ", actualscenario))
+scenfile_picm1 <- (paste0("myapp/pictures/9_heatmap_classic_grid/",scentext_pic,".bmp"))
+scenfile_picm2 <- (paste0("myapp/pictures/9_heatmap_graphic_area_to_5x5/",scentext_pic,".bmp"))
+scenfile_picm3 <- (paste0("myapp/pictures/9_heatmap_classic_percent/",scentext_pic,".bmp"))
+
 
 
 datahm <- as.matrix(mat1)  
+bmp(file=scenfile_picm1, width = 300, height = 300, units = 'px', res = 100)
 heatmap(datahm, Colv = NA, Rowv = NA, scale="none")  
+dev.off()
+
 datahm2 <- as.matrix(mat2)  
+bmp(file=scenfile_picm2, width = 300, height = 300, units = 'px', res = 100)
 heatmap(datahm2, Colv = NA, Rowv = NA, scale="none")
+dev.off()
+
+datahm3 <- as.matrix(mat3)  
+bmp(file=scenfile_picm3, width = 300, height = 300, units = 'px', res = 100)
+heatmap(datahm3, Colv = NA, Rowv = NA, scale="none")
+dev.off()
+
+
+
 #ggheatmap(datahm2,trace = "none")  
 
  
@@ -557,5 +584,10 @@ heatmap(datahm2, Colv = NA, Rowv = NA, scale="none")
 #print (createdfnew)
 #numberofanswers1 <- nrow(createdf)
 #print (paste0( "Anzahl der User: ",numberofanswers1))
-write.csv(mergedf, "tablegridpooling.csv", row.names=TRUE)
-write.xlsx(mergedf,'tablegridpooling.xlsx', rowNames=TRUE)
+scentext <- (paste0("Scenario ", actualscenario))
+scenfile <- (paste0("myapp/files/9_MethodComparePercent/",scentext,".xlsx"))
+
+write.csv(mergedf, paste0("myapp/files/9_MethodComparePercent/", scentext,".csv"), row.names=TRUE)
+write.xlsx(mergedf,file = scenfile, rowNames=TRUE)
+
+}
