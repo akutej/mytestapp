@@ -13,7 +13,59 @@ for (anz in 1:numberscenarios) {
   actualscenario =as.vector(scenarios[anz,1])
   print (actualscenario)
   scentext <- (paste0("Scenario ", actualscenario))
-  if((actualscenario != "281") & (actualscenario != "282") & (actualscenario != "283")
+  if((actualscenario != "281") & 
+     (actualscenario != "282") & 
+     (actualscenario != "283") &
+     (actualscenario != "284") &
+     (actualscenario != "285") &
+     (actualscenario != "286") &
+     (actualscenario != "287") &
+     (actualscenario != "288") &
+     (actualscenario != "289") &
+     (actualscenario != "290") &
+     (actualscenario != "291") &
+     (actualscenario != "292") &
+     (actualscenario != "293") &
+     (actualscenario != "294") &
+     (actualscenario != "295") &
+     (actualscenario != "296") &
+     (actualscenario != "297") &
+     (actualscenario != "298") &
+     (actualscenario != "299") &
+     (actualscenario != "300") &
+     (actualscenario != "301") &
+     (actualscenario != "302") &
+     (actualscenario != "303") &
+     (actualscenario != "304") &
+     (actualscenario != "305") &
+     (actualscenario != "306") &
+     (actualscenario != "307") &
+     (actualscenario != "308") &
+     (actualscenario != "309") &
+     (actualscenario != "310") &
+     (actualscenario != "311") &
+     (actualscenario != "312") &
+     (actualscenario != "313") &
+     (actualscenario != "314") &
+     (actualscenario != "315") &
+     (actualscenario != "316") &
+     (actualscenario != "317") &
+     (actualscenario != "318") &
+     (actualscenario != "319") &
+     (actualscenario != "320") &
+     (actualscenario != "321") &
+     (actualscenario != "322") &
+     (actualscenario != "323") &
+     (actualscenario != "324") &
+     (actualscenario != "325") &
+     (actualscenario != "326") &
+     (actualscenario != "327") &
+     (actualscenario != "328") &
+     (actualscenario != "329") &
+     (actualscenario != "330") &
+     (actualscenario != "331") &
+     (actualscenario != "332") 
+     )
   {
     print (actualscenario) 
   df <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == actualscenario)# & ACC2SURV_ACCID == "22")
