@@ -14,11 +14,7 @@ for (anz in 1:numberscenarios) {
   print (actualscenario)
   scentext <- (paste0("Scenario ", actualscenario))
   if((actualscenario != "281") & 
-<<<<<<< HEAD:myapp/heatmap_transform.R
      (actualscenario != "282") & 
-=======
-     (actualscenario != "282") &
->>>>>>> 4ab3e0132b68df090317cbd11663793e56b1de02:myapp/4_heatmap_transform.R
      (actualscenario != "283") &
      (actualscenario != "284") &
      (actualscenario != "285") &
@@ -46,7 +42,6 @@ for (anz in 1:numberscenarios) {
      (actualscenario != "307") &
      (actualscenario != "308") &
      (actualscenario != "309") &
-<<<<<<< HEAD:myapp/heatmap_transform.R
      (actualscenario != "310") &
      (actualscenario != "311") &
      (actualscenario != "312") &
@@ -71,9 +66,6 @@ for (anz in 1:numberscenarios) {
      (actualscenario != "331") &
      (actualscenario != "332") 
      )
-=======
-     (actualscenario != "310") )
->>>>>>> 4ab3e0132b68df090317cbd11663793e56b1de02:myapp/4_heatmap_transform.R
   {
     print (actualscenario) 
   df <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == actualscenario)# & ACC2SURV_ACCID == "22")
