@@ -34,13 +34,13 @@ MatrixSum <- c()
 createdf <- data.frame(MatrixGrid,MatrixSum)
 
 lowx <- 0
-highy <- 401
+highy <- 400
 actualx <- lowx
 actualy <- highy
 get <- 0
 actualrow <- 0
 while (actualy >= 0){ #401
-  while (actualx <= 401){ #401
+  while (actualx <= 400){ #401
     actualrow <- nrow(createdf) + 1
     value <- paste("PIXEL",actualx,"/",actualy,"", sep = "")
     createdf[actualrow,"MatrixGrid"] <- value
@@ -53,8 +53,8 @@ while (actualy >= 0){ #401
 }
 print (createdf)
 
-write.csv(createdf, "basic_heatmap.csv", row.names=TRUE)
-write.xlsx(createdf,'basic_heatmap.xlsx', rowNames=TRUE)
+write.csv(createdf, "myapp/Data/basic_heatmap.csv", row.names=TRUE)
+write.xlsx(createdf,'myapp/Data/basic_heatmap.xlsx', rowNames=TRUE)
 
 
 
