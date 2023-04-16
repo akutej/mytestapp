@@ -45,4 +45,5 @@ for (anz in 1:1) {
   
   hist (IMPACT)
   hist (LIKELIHOOD)
+  
 }
