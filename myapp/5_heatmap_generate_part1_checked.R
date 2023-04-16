@@ -33,8 +33,8 @@ print (df)
 #createdf <- data.frame(MatrixGrid,MatrixSum)
 
 
-write.csv(df, "myapp/files/5_heatmap_step2/merged_Scenario292.csv", row.names=TRUE)
-write.xlsx(df,'myapp/files/5_heatmap_step2/merged_Scenario292.xlsx', rowNames=TRUE)
+write.csv(df, "myapp/files/5_heatmap_step2/merged_Scenario281.csv", row.names=TRUE)
+write.xlsx(df,'myapp/files/5_heatmap_step2/merged_Scenario281.xlsx', rowNames=TRUE)
 
 
 #lowx <- 0
