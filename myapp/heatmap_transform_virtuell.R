@@ -64,7 +64,20 @@ for (anz in 1:numberscenarios) {
      (actualscenario != "329") &
      (actualscenario != "330") &
      (actualscenario != "331") &
-     (actualscenario != "332") 
+     (actualscenario != "332") &
+     (actualscenario != "333") &
+     (actualscenario != "334") &
+     (actualscenario != "335") &
+     (actualscenario != "336") &
+     (actualscenario != "337") &
+     (actualscenario != "338") &
+     (actualscenario != "339") &
+     (actualscenario != "340") &
+     (actualscenario != "341") &
+     (actualscenario != "342") &
+     (actualscenario != "343") &
+     (actualscenario != "344") &
+     (actualscenario != "345")   
      )
   {
     print (actualscenario) 
