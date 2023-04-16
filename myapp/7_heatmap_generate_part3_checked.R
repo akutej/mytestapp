@@ -9,7 +9,7 @@ df <- read.csv(file = 'myapp/files/6_heatmap_step3/heatmap_281_switched.csv', he
 
 
 
-mat1 <- matrix(df$MatrixSum,ncol=401,nrow=401,byrow=true)
+mat1 <- matrix(df$MatrixSum,ncol=401,nrow=401,byrow=TRUE)
 datahm <- as.matrix(mat1)  
 bmp(file="myapp/pictures/7_heatmap_pixel_graphic/heatmap_281.bmp", width = 1000, height = 1000, units = 'px', res = 100)
 heatmap(datahm, Colv = NA, Rowv = NA, scale="none")
