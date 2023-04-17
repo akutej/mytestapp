@@ -1,7 +1,7 @@
 
 library(dplyr)
-answerstable <- read.csv(file = 'myapp/Data/RQ1_corrected.csv', header=TRUE) #importiere das answers file
-accounttable <- read.csv(file = 'myapp/Data/accounts.csv',sep=";", header=TRUE) #importiere das answers file
+answerstable <- read.csv(file = 'myapp/data/RQ1_corrected.csv', header=TRUE) #importiere das answers file
+accounttable <- read.csv(file = 'myapp/data/accounts.csv',sep=";", header=TRUE) #importiere das answers file
 dfuser <- accounttable
 numberofacc <- nrow(dfuser)
 answerstablefiltered <- answerstable %>% filter(ANS2SURV_ANSWERED == 1)
