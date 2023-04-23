@@ -5,6 +5,24 @@ library(ggplot2)
 #library(heatmaply)
 
 
+#D <- as.data.frame(expand.grid(1:400,1:400))
+#D <- cbind(D,0)
+#names(D) <- c("x-Achse","y-Achse","Zähler")
+#
+#for-Schleife über Personen i:
+#  
+#  x.min, x.max, y.min, y.max: die Randwerte für Person i
+#
+#index <- which( D[,"x-Achse"] >= x.min & D[,"x-Achse"] <= x.max &
+#                  D[,"y-Achse"] >= y.min & D[,"y-Achse"] <= y.max
+#)
+#
+#D[index,"Zähler"] <- D[index,"Zähler"] + 1 
+#
+#Ende der for-Schleife
+
+
+
 answerstable <- read.csv(file = 'myapp/Data/RQ1_corrected.csv', header=TRUE) #importiere das answers file
 dfall <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1)
 scenarios <- as.data.frame(table(dfall$QUES_ID))
@@ -13,42 +31,14 @@ for (anz in 1:numberscenarios) {
   actualscenario =as.vector(scenarios[anz,1])
   print (actualscenario)
   scentext <- (paste0("Scenario ", actualscenario))
-  if((actualscenario == "281") 
-     #&(actualscenario != "283") 
-     
-     )
-  {
-    print (actualscenario) 
+  print (actualscenario) 
   df <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == actualscenario)# & ACC2SURV_ACCID == "22")
   #print (df)
   numberofanswers <- nrow(df)
+  D <- as.data.frame(expand.grid(1:400,1:400))
+  D <- cbind(D,0)
+  names(D) <- c("x-Achse","y-Achse","Zähler")
 
-
-Grid <- c()
-XCoordinate <- c()
-YCoordinate <- c()
-UncertaintyI <- c()
-UncertaintyO <- c()
-AccId <- c()
-QuesId <- c()
-Role <- c()
-GroupId <- c()
-
-
-
-createdf <- data.frame(Grid,
-                       XCoordinate,
-                       YCoordinate,
-                       UncertaintyI,
-                       UncertaintyO,
-                       AccId,
-                       QuesId,
-                       Role,
-                       GroupId
-)
-
-#print (numberofanswers)
-#print (df)
 for (i in 1:numberofanswers){
   print (i)
   AccId <- df[i,"ACC2SURV_ACCID"]
@@ -57,45 +47,25 @@ for (i in 1:numberofanswers){
   UncertaintyO <- df[i,"uncertaintyOPixel"]
   Role <- df[i,"ACC2SURV_ROLE"]
   GroupId <- df[i,"ACC2SURV_GROUPID"]
-  lowx <- df[i,"X1Pixel"]
-  highx <- df[i,"X2Pixel"]
-  lowy <- df[i,"Y1Pixel"]
-  highy <- df[i,"Y2Pixel"]
+  x.min <- df[i,"X1Pixel"]
+  x.max <- df[i,"X2Pixel"]
+  y.min <- df[i,"Y1Pixel"]
+  y.max <- df[i,"Y2Pixel"]
   
-   
-  actuallowx <- lowx
-  actuallowy <- lowy
   
-  while (actuallowy <= highy){
-    while (actuallowx <= highx){
-      actualrow <- nrow(createdf) + 1
-      value <- (paste0( "PIXEL",actuallowx,"/",actuallowy))
-      createdf[actualrow,"Grid"] <- value
-      createdf[actualrow,"XCoordinate"] <- actuallowx
-      createdf[actualrow,"YCoordinate"] <- actuallowy
-      createdf[actualrow,"UncertaintyI"] <- UncertaintyI
-      createdf[actualrow,"UncertaintyO"] <- UncertaintyO
-      createdf[actualrow,"AccId"] <- AccId
-      createdf[actualrow,"QuesId"] <- QuesId
-      createdf[actualrow,"Role"] <- Role
-      createdf[actualrow,"GroupId"] <- GroupId 
-      actuallowx = actuallowx + 1
-      
-      
-    }
-    actuallowx <- lowx
-    actuallowy = actuallowy + 1
-    
-  }
-  print(nrow(createdf))
+  index <- which( D[,"x-Achse"] >= x.min & D[,"x-Achse"] <= x.max &
+                    D[,"y-Achse"] >= y.min & D[,"y-Achse"] <= y.max)
+  
+  D[index,"Zähler"] <- D[index,"Zähler"] + 1 
+ 
+  
 }
-scenfile <- (paste0("myapp/files/4_heatmap/",scentext,"_transformed.xlsx"))
-print (scenfile)
+#print (D)  
+  
+scenfile <- (paste0("myapp/files/4_heatmap/",scentext,"_transformed_new.xlsx"))
+#print (scenfile)
 
-write.csv(createdf, paste0("myapp/files/4_heatmap/", scentext,"_transformed.csv"), row.names=TRUE)
-write.xlsx(createdf,file = scenfile, rowNames=TRUE)
-  }
-  else {
-    print ("nicht")
-  }
+write.csv(D, paste0("myapp/files/4_heatmap/", scentext,"_transformed_new.csv"), row.names=TRUE)
+write.xlsx(D,file = scenfile, rowNames=TRUE)
+  
 }
