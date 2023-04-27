@@ -17,7 +17,7 @@ for (anz in 1:numberscenarios) {
   numberofanswers <- nrow(df)
   D <- as.data.frame(expand.grid(1:400,1:400))
   D <- cbind(D,0)
-  names(D) <- c("x-Achse","y-Achse","Zähler")
+  names(D) <- c("x","y","count")
 
 for (i in 1:numberofanswers){
   print (i)
@@ -33,10 +33,10 @@ for (i in 1:numberofanswers){
   y.max <- df[i,"Y2Pixel"]
   
   
-  index <- which( D[,"x-Achse"] >= x.min & D[,"x-Achse"] <= x.max &
-                    D[,"y-Achse"] >= y.min & D[,"y-Achse"] <= y.max)
+  index <- which( D[,"x"] >= x.min & D[,"x"] <= x.max &
+                    D[,"y"] >= y.min & D[,"y"] <= y.max)
   
-  D[index,"Zähler"] <- D[index,"Zähler"] + 1 
+  D[index,"count"] <- D[index,"count"] + 1 
  
   
 }
@@ -45,7 +45,7 @@ for (i in 1:numberofanswers){
   scenfile <- (paste0("myapp/files/4_heatmap/",scentext,"_transformed_new.xlsx"))
   scenpic <- (paste0("myapp/pictures/17_heatmap_pixel_graphic/",scentext,"_heatmap.bmp"))
   
-  mat1 <- matrix(D$Zähler,ncol=400,nrow=400,byrow=TRUE)
+  mat1 <- matrix(D$count,ncol=400,nrow=400,byrow=TRUE)
   datahm <- as.matrix(mat1)  
   
   bmp(file=scenpic, width = 1000, height = 1000, units = 'px', res = 100)
