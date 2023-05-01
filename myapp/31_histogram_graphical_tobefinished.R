@@ -43,6 +43,6 @@ for (anz in 1:1) {
   print (table(IMPACT))
   print (table(LIKELIHOOD))
   
-  hist (IMPACT)
-  hist (LIKELIHOOD)
+  hist (IMPACT,breaks=400)
+  hist (LIKELIHOOD,breaks=400)
 }
