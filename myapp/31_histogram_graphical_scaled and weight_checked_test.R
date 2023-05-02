@@ -18,7 +18,12 @@ for (anz in 1:1){#numberscenarios) {
   
   #D <- cbind(D,0)
   IMPACT <- c()
+  IMPACT.grid <- c()
   LIKELIHOOD <- c()
+  LIKELIHOOD.grid <- c()
+  
+  histImpactclassic <- df[,'IMPACT']
+  histOccurrenceclassic <- df[,'OCCURRENCE']
   
   for (i in 1:numberofanswers){
     AccId <- df[i,"ACC2SURV_ACCID"]
@@ -34,9 +39,11 @@ for (anz in 1:1){#numberscenarios) {
     actualvaluex <- x.min
     
     while (actualvaluex <= x.max){
-      transformedx <- (((actualvaluex/400)*5)+0.5)
+      transformedx <- (((actualvaluex/400)*100))
+      transformedx.grid <- (((actualvaluex/400)*5)+0.5)
       #print (transformedx)
       IMPACT <- c(IMPACT,transformedx)
+      IMPACT.grid <- c(IMPACT.grid,transformedx.grid)
       actualvaluex = actualvaluex + 1
       
       
@@ -44,7 +51,9 @@ for (anz in 1:1){#numberscenarios) {
     actualvaluey <- y.min
     while (actualvaluey <= y.max){
       transformedy <- (((actualvaluey/400)*5)+ 0.5)
-      LIKELIHOOD <- c(LIKELIHOOD,transformedy)
+      transformedy.grid <- (((actualvaluey/400)*5)+0.5)
+      LIKELIHOOD <- c(LIKELIHOOD.grid,transformedy)
+      LIKELIHOOD.grid <- c(LIKELIHOOD.grid,transformedy.grid)
       actualvaluey = actualvaluey + 1
     }
     
@@ -57,22 +66,29 @@ for (anz in 1:1){#numberscenarios) {
   filetitleImpact <- (paste0("myapp/pictures/31_histogramms_graphical/",scentext,"- Impact_scaled_1to5_test.bmp"))
   filetitleOcc <- (paste0("myapp/pictures/31_histogramms_graphical/",scentext,"- Occurrence_scaled_1to5_test.bmp"))
   
-  print (IMPACT)
-
+  #print (IMPACT)
+  print (IMPACT.grid)
+  
   bin_grenzen <- seq( 0,400)
-  bin_grenzen.new <- seq(0.5, 5.5, by = 0.0025)
+  bin_grenzen.new <- seq(0, 100, by = 0.25)
   bin_grenzen.new2 <- seq(0.5, 5.5)
   
   
   
-  bmp(file=filetitleImpact,width=1500, height=1000, res=150)
-  hist(IMPACT,breaks = bin_grenzen.new, main=headtitleImpact, xlab = "Werte", ylab = "Häufigkeit", xlim = c(0.5, 5.5), col = "lightblue", border = "black")
-  dev.off()
+  #bmp(file=filetitleImpact,width=1500, height=1000, res=150)
+  hist(IMPACT.grid,breaks = bin_grenzen.new2, main=headtitleImpact, xlab = "Werte", ylab = "Häufigkeit", xlim = c(0.5, 5.5), col = "lightblue", border = "black")
+  #dev.off()
 
-  bmp(file=filetitleOcc,width=1500, height=1000, res=150)
-  hist(LIKELIHOOD,breaks = bin_grenzen.new, main = headtitleOcc, xlab = "Werte", ylab = "Häufigkeit", xlim = c(0.5, 5.5), col = "lightblue", border = "black")
-  dev.off()
+  #bmp(file=filetitleOcc,width=1500, height=1000, res=150)
+  hist(LIKELIHOOD.grid,breaks = bin_grenzen.new2, main = headtitleOcc, xlab = "Werte", ylab = "Häufigkeit", xlim = c(0.5, 5.5), col = "lightblue", border = "black")
+  #dev.off()
   
+  
+  kstx1 <- histImpactclassic
+  kstx2 <- IMPACT.grid
+  
+  # Anwenden des Kolmogorov-Smirnov-Tests
+ print (ks.test(kstx1, kstx2, alternative = "two.sided", exact = NULL))
     
   #scenfile <- (paste0("myapp/files/4_heatmap/",scentext,"_transformed_new.xlsx"))
   #scenpic <- (paste0("myapp/pictures/17_heatmap_pixel_graphic/",scentext,"_heatmap.bmp"))

@@ -34,7 +34,8 @@ for (anz in 1:numberscenarios) {
     actualvaluex <- x.min
     
     while (actualvaluex <= x.max){
-      transformedx <- (((actualvaluex/400)*5)+0.5)
+      transformedx <- (((actualvaluex/400)*100))
+      #transformedx <- (((actualvaluex/400)*5)+0.5)
       #print (transformedx)
       IMPACT <- c(IMPACT,transformedx)
       actualvaluex = actualvaluex + 1
@@ -43,7 +44,8 @@ for (anz in 1:numberscenarios) {
     }
     actualvaluey <- y.min
     while (actualvaluey <= y.max){
-      transformedy <- (((actualvaluey/400)*5)+ 0.5)
+      transformedy <- (((actualvaluey/400)*100))
+      #transformedy <- (((actualvaluey/400)*5)+ 0.5)
       LIKELIHOOD <- c(LIKELIHOOD,transformedy)
       actualvaluey = actualvaluey + 1
     }
@@ -54,23 +56,28 @@ for (anz in 1:numberscenarios) {
   
   headtitleImpact <- (paste0(scentext,"- Impact of the graphical method_scaled"))
   headtitleOcc <- (paste0(scentext,"- Probability of occurrence of the graphical method_scaled"))
-  filetitleImpact <- (paste0("myapp/pictures/31_histogramms_graphical/",scentext,"- Impact_scaled_1to5.bmp"))
-  filetitleOcc <- (paste0("myapp/pictures/31_histogramms_graphical/",scentext,"- Occurrence_scaled_1to5.bmp"))
+  #filetitleImpact <- (paste0("myapp/pictures/31_histogramms_graphical/",scentext,"- Impact_scaled_1to5.bmp"))
+  #filetitleOcc <- (paste0("myapp/pictures/31_histogramms_graphical/",scentext,"- Occurrence_scaled_1to5.bmp"))
+  
+  filetitleImpact <- (paste0("myapp/pictures/31_histogramms_graphical/",scentext,"- Impact_scaled.bmp"))
+  filetitleOcc <- (paste0("myapp/pictures/31_histogramms_graphical/",scentext,"- Occurrence_scaled.bmp"))
   
   print (IMPACT)
 
   bin_grenzen <- seq( 0,400)
-  bin_grenzen.new <- seq(0.5, 5.5, by = 0.0025)
+  #bin_grenzen.new <- seq(0.5, 5.5, by = 0.0025)
+  bin_grenzen.new <- seq(0, 100, by = 0.25)
   bin_grenzen.new2 <- seq(0.5, 5.5)
   
   
   
   bmp(file=filetitleImpact,width=1500, height=1000, res=150)
-  hist(IMPACT,breaks = bin_grenzen.new2, main=headtitleImpact, xlab = "Werte", ylab = "Häufigkeit", xlim = c(0.5, 5.5), col = "lightblue", border = "black")
+  hist(IMPACT,breaks = bin_grenzen.new, main=headtitleImpact, xlab = "Werte", ylab = "Häufigkeit", xlim = c(0, 100), col = "lightblue", border = "black")
+  # (0.5, 5.5)
   dev.off()
 
   bmp(file=filetitleOcc,width=1500, height=1000, res=150)
-  hist(LIKELIHOOD,breaks = bin_grenzen.new2, main = headtitleOcc, xlab = "Werte", ylab = "Häufigkeit", xlim = c(0.5, 5.5), col = "lightblue", border = "black")
+  hist(LIKELIHOOD,breaks = bin_grenzen.new, main = headtitleOcc, xlab = "Werte", ylab = "Häufigkeit", xlim = c(0, 100), col = "lightblue", border = "black")
   dev.off()
   
     
