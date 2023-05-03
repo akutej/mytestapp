@@ -4,7 +4,7 @@ library(gplots)
 library(ggplot2)
 #library(heatmaply)
 
-answerstable <- read.csv(file = 'myapp/Data/RQ1_corrected.csv', header=TRUE) #importiere das answers file
+answerstable <- read.csv(file = 'myapp/data/RQ1_corrected.csv', header=TRUE) #importiere das answers file
 dfall <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1)# & QUES_ID == "319")
 scenarios <- as.data.frame(table(dfall$QUES_ID))
 numberscenarios  <- nrow(scenarios)
