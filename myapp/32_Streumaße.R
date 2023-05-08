@@ -3,11 +3,11 @@ library(openxlsx)
 library(gplots)
 library(ggplot2)
 
-answers <- read.csv(file = 'myapp/Data/RQ1_corrected.csv', header=TRUE) #importiere das answers file
+answers <- read.csv(file = 'myapp/data/RQ1_corrected.csv', header=TRUE) #importiere das answers file
 all.answers <- answers %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1)
 number.scenarios <- nrow(as.data.frame(table(all.answers$QUES_ID)))
 
-for (anz in 1:1){#number.scenarios) {
+for (anz in 1:number.scenarios) {
   actualscenario =as.vector(scenarios[anz,1])
   print (actualscenario)
   #scentext <- (paste0("Scenario ", actualscenario))
@@ -187,8 +187,8 @@ print (paste0("Interquartilsabstand:",Q3_O - Q1_O))
 kstx1 <- data_IMPACT
 kstx2 <- IMPACT
 
-print (kstx1)
-print (kstx2)
+#print (kstx1)
+#print (kstx2)
 
 # Anwenden des Kolmogorov-Smirnov-Tests
 print (ks.test(kstx1, kstx2, alternative = "two.sided", exact = NULL))

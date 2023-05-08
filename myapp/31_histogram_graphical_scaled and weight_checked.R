@@ -3,7 +3,7 @@ library(openxlsx)
 library(gplots)
 library(ggplot2)
 
-answerstable <- read.csv(file = 'myapp/Data/RQ1_corrected.csv', header=TRUE) #importiere das answers file
+answerstable <- read.csv(file = 'myapp/data/RQ1_corrected.csv', header=TRUE) #importiere das answers file
 dfall <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1)
 scenarios <- as.data.frame(table(dfall$QUES_ID))
 numberscenarios  <- nrow(scenarios)
@@ -34,8 +34,8 @@ for (anz in 1:numberscenarios) {
     actualvaluex <- x.min
     
     while (actualvaluex <= x.max){
-      transformedx <- (((actualvaluex/400)*100))
-      #transformedx <- (((actualvaluex/400)*5)+0.5)
+      #transformedx <- (((actualvaluex/400)*100))
+      transformedx <- (((actualvaluex/400)*5)+0.5)
       #print (transformedx)
       IMPACT <- c(IMPACT,transformedx)
       actualvaluex = actualvaluex + 1
@@ -44,8 +44,8 @@ for (anz in 1:numberscenarios) {
     }
     actualvaluey <- y.min
     while (actualvaluey <= y.max){
-      transformedy <- (((actualvaluey/400)*100))
-      #transformedy <- (((actualvaluey/400)*5)+ 0.5)
+      #transformedy <- (((actualvaluey/400)*100))
+      transformedy <- (((actualvaluey/400)*5)+ 0.5)
       LIKELIHOOD <- c(LIKELIHOOD,transformedy)
       actualvaluey = actualvaluey + 1
     }
