@@ -1,7 +1,7 @@
 library(dplyr)
 library(openxlsx)
 
-answerstable <- read.csv(file = 'myapp/data/answers.csv', header=TRUE, sep=";", dec=".") #importiere das answers file
+answerstable <- read.csv(file = 'myapp/data/answers_test.csv', header=TRUE, sep=";", dec=".") #importiere das answers file
 
 df <- answerstable #die ganze Tabelle
 df['X1Pixel'] <- NA
@@ -40,8 +40,8 @@ df['scaled_uncertainty_PERIMETER'] <- NA
 df['scaled_uncertainty_middle_X'] <- NA
 df['scaled_uncertainty_middle_Y'] <- NA
 
-numberofanswers <- 100###zu test 1
-#numberofanswers <- nrow(df)
+#numberofanswers <- 100###zu test 1
+numberofanswers <- nrow(df)
 
 for (i in 1:numberofanswers) {
   print (i)
@@ -114,8 +114,8 @@ for (i in 1:numberofanswers) {
         
         NewX1Pixel <- ((400/100)*NewX1PCT)
         NewX2Pixel <- ((400/100)*NewX2PCT)
-        NewY1Pixel <- 400 - ((400/100)*NewY1PCT)
-        NewY2Pixel <- 400 - ((400/100)*NewY2PCT)
+        NewY1Pixel <- 400 - ((400/100)*NewY2PCT)
+        NewY2Pixel <- 400 - ((400/100)*NewY1PCT)
         
         uncertaintyIPixel <- NewX2Pixel - NewX1Pixel
         uncertaintyOPixel <- NewY2Pixel - NewY1Pixel
@@ -138,12 +138,32 @@ for (i in 1:numberofanswers) {
         df[i,'middleY'] <- middley
         df[i,"X1PCT"] <- NewX1PCT
         df[i,"X2PCT"] <- NewX2PCT
-        df[i,"Y1PCT"] <- NewY1PCT
-        df[i,"Y2PCT"] <- NewY2PCT
+        df[i,"Y1PCT"] <- 100 - NewY2PCT
+        df[i,"Y2PCT"] <- 100 - NewY1PCT
         df[i,"X1Pixel"] <- NewX1Pixel
         df[i,"X2Pixel"] <- NewX2Pixel
         df[i,"Y1Pixel"] <- NewY1Pixel
         df[i,"Y2Pixel"] <- NewY2Pixel
+        
+        scaledX1 <- ((100/400)*NewX1Pixel)
+        scaledX2 <- ((100/400)*NewX2Pixel)
+        scaledY1 <- ((100/400)*NewY1Pixel)
+        scaledY2 <- ((100/400)*NewY2Pixel)
+        scaled_uncertainty_X <- scaledX2 - scaledX1 
+        scaled_uncertainty_Y <- scaledY2 - scaledY1 
+          
+        df[i,"scaled_X1"] <- scaledX1
+        df[i,"scaled_X2"] <- scaledX2
+        df[i,"scaled_Y1"] <- scaledY1
+        df[i,"scaled_Y2"] <- scaledY2
+        df[i,"scaled_uncertainty_X"] <- scaled_uncertainty_X
+        df[i,"scaled_uncertainty_Y"] <- scaled_uncertainty_Y
+        df[i,"scaled_uncertainty_XY"] <- scaled_uncertainty_X + scaled_uncertainty_Y
+        df[i,"scaled_uncertainty_AREA"] <- scaled_uncertainty_X * scaled_uncertainty_Y
+        df[i,"scaled_uncertainty_PERIMETER"] <- ((2 * scaled_uncertainty_X) + (2 * scaled_uncertainty_Y))
+        df[i,"scaled_uncertainty_middle_X"] <- scaledX2 + (scaled_uncertainty_X / 2)
+        df[i,"scaled_uncertainty_middle_Y"] <- scaledY2 + (scaled_uncertainty_Y / 2)
+        
         
         conditionmx1 <- (df$middleX[i] >=0) & (df$middleX[i] <= 79)
         df$middleIGRID[i][conditionmx1] <- 1
