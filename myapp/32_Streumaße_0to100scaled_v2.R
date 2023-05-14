@@ -15,8 +15,8 @@ for (anz in 1:number.scenarios) {
   print (actualscenario)
   #scentext <- (paste0("Scenario ", actualscenario))
   actual.df <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == actualscenario)# & ACC2SURV_ACCID == "22")
-  data_IMPACT <- actual.df$IMPACT
-  data_OCCURRENCE <- actual.df$OCCURRENCE
+  data_IMPACT <- actual.df$scaled_IMPACT
+  data_OCCURRENCE <- actual.df$scaled_OCCURRENCE
   ordinal_df_IMPACT <- data.frame(value = data_IMPACT)
   ordinal_df_OCCURRENCE <- data.frame(value = data_OCCURRENCE)
   ordinal_df_IMPACT$freq <- 1
@@ -35,43 +35,46 @@ for (anz in 1:number.scenarios) {
   #sums.UNC.O <- colSums(actual.df["uncertaintyOPixel"])
   #print (sums.UNC.I[[1]])
   #print (sums.UNC.O[[1]])
-  sum_I <- actual.df %>% mutate(uncertaintyIPixel = 400 - uncertaintyIPixel) %>% summarize(sum_I = sum(uncertaintyIPixel)) %>% pull(sum_I)
-  sum_O <- actual.df %>% mutate(uncertaintyOPixel = 400 - uncertaintyOPixel) %>% summarize(sum_O = sum(uncertaintyOPixel)) %>% pull(sum_O)
+  sum_I <- actual.df %>% mutate(scaled_uncertainty_X = 100 - scaled_uncertainty_X) %>% summarize(sum_I = sum(scaled_uncertainty_X)) %>% pull(sum_I)
+  sum_O <- actual.df %>% mutate(scaled_uncertainty_Y = 100 - scaled_uncertainty_Y) %>% summarize(sum_O = sum(scaled_uncertainty_Y)) %>% pull(sum_O)
+  
+  
   print (sum_I)
   print (sum_O)
   
   for (i in 1:numberofanswers){
     AccId <- actual.df[i,"ACC2SURV_ACCID"]
     QuesId <- actual.df[i,"QUES_ID"]
-    UncertaintyI <- actual.df[i,"uncertaintyIPixel"]
-    UncertaintyO <- actual.df[i,"uncertaintyOPixel"]
+    UncertaintyI <- actual.df[i,"scaled_uncertainty_X"]
+    UncertaintyO <- actual.df[i,"scaled_uncertainty_Y"]
     Role <- actual.df[i,"ACC2SURV_ROLE"]
     GroupId <- actual.df[i,"ACC2SURV_GROUPID"]
-    x.min <- actual.df[i,"X1Pixel"]
-    x.max <- actual.df[i,"X2Pixel"]
-    y.min <- actual.df[i,"Y1Pixel"]
-    y.max <- actual.df[i,"Y2Pixel"]
+    x.min <- actual.df[i,"scaled_X1"]
+    x.max <- actual.df[i,"scaled_X2"]
+    y.min <- actual.df[i,"scaled_Y1"]
+    y.max <- actual.df[i,"scaled_Y2"]
     actualvaluex <- x.min
     actualvaluey <- y.min
 
     
     while (actualvaluex <= x.max){
-      weight.IMPACT <- (100/sum_I)*(400-UncertaintyI)
+      weight.IMPACT <- (100/sum_I)*(100-UncertaintyI)
       #transformedx <- (((actualvaluex/400)*100))
-      transformedx <- (((actualvaluex/400)*5)) #+0.5 !!!!!!!!!!!OHNE 0.5
-      weight.transformedx <- (((actualvaluex/400)*5)*weight.IMPACT)
+      #transformedx <- (((actualvaluex/400)*5)) #+0.5 !!!!!!!!!!!OHNE 0.5
+      weight.transformedx <- ((actualvaluex)*weight.IMPACT)
       #print (transformedx)
-      IMPACT <- c(IMPACT,transformedx)
+      IMPACT <- c(IMPACT,actualvaluex)
       weight.IMPACT <- c(weight.IMPACT,weight.transformedx)
       actualvaluex = actualvaluex + 1
       }
     
     while (actualvaluey <= y.max){
-      weight.OCCURRENCE <- (100/sum_O)*(400-UncertaintyO)
+      weight.OCCURRENCE <- (100/sum_O)*(100-UncertaintyO)
+      #   print (weight.OCCURRENCE)
       #transformedy <- (((actualvaluey/400)*100))
-      transformedy <- (((actualvaluey/400)*5))
-      weight.transformedy <- (((actualvaluey/400)*5)*weight.OCCURRENCE)
-      LIKELIHOOD <- c(LIKELIHOOD,transformedy)
+      #transformedy <- (((actualvaluey/400)*5))
+      weight.transformedy <- ((actualvaluey)*weight.OCCURRENCE)
+      LIKELIHOOD <- c(LIKELIHOOD,actualvaluey)
       weight.LIKELIHOOD <- c(weight.LIKELIHOOD,weight.transformedy)
       actualvaluey = actualvaluey + 1
     }
@@ -101,8 +104,8 @@ O <- ggplot(ordinal_freq_OCCURRENCE, aes(x = factor(value), y = freq)) +
   theme_minimal() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
-plot (I)
-plot (O)
+#plot (I)
+#plot (O)
 
 
 print (paste0("GRAPHISCH - IMPACT"))
@@ -190,7 +193,7 @@ print (paste0("Interquartilsabstand:",Q3_O - Q1_O))
 kstx1 <- data_IMPACT
 ksty1 <- data_OCCURRENCE
 kstx2 <- IMPACT
-ksty2 <- IMPACT
+ksty2 <- LIKELIHOOD
 
 #print (kstx1)
 #print (kstx2)
@@ -198,10 +201,21 @@ ksty2 <- IMPACT
 # Anwenden des Kolmogorov-Smirnov-Tests
 ks_result1 <- (ks.test(kstx1, kstx2, alternative = "two.sided", exact = NULL))
 ks_result2 <- (ks.test(ksty1, ksty2, alternative = "two.sided", exact = NULL))
-new_row <- data.frame(D_value_I = ks_result1$statistic, D_value_O = ks_result2$statistic,Label = paste0("Szenario_", QuesId))
+new_row <- data.frame(
+                      Label = paste0("Szenario_", QuesId),                    
+                      D_I_classicgraphic = ks_result1$statistic,
+                      D_O_classicgraphic = ks_result2$statistic,
+                      classic_SD_Occurrence = sd_ordinal_data_O,
+                      classic_SD_Impact = sd_ordinal_data_I,
+                      graphic_SD_Occurrence = gr_sd_ordinal_data_O,
+                      graphic_SD_Impact = gr_sd_ordinal_data_I                    
+                      
+                      )
 row.names(new_row) <- NULL
 dfkst <- rbind(dfkst, new_row)
 
-print (dfkst)
+#print (dfkst)
+
 
 }
+write.xlsx(dfkst,'myapp/files/32_Streumaße/Streumaße.xlsx', rowNames=TRUE)
