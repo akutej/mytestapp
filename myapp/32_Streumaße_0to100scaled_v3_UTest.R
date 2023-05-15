@@ -14,13 +14,11 @@ for (anz in 1:number.scenarios) {
   actualscenario =as.vector(scenarios[anz,1])
   print (actualscenario)
   #scentext <- (paste0("Scenario ", actualscenario))
-  actual.df <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == actualscenario)# & ACC2SURV_ACCID == "22")
+  actual.df <- answers %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == actualscenario)# & ACC2SURV_ACCID == "22")
   data_IMPACT <- actual.df$scaled_IMPACT
   data_OCCURRENCE <- actual.df$scaled_OCCURRENCE
-  ordinal_df_IMPACT <- data.frame(value = data_IMPACT)
-  ordinal_df_OCCURRENCE <- data.frame(value = data_OCCURRENCE)
-  ordinal_df_IMPACT$freq <- 1
-  ordinal_df_OCCURRENCE$freq <- 1
+  ordinal_df_IMPACT <- data.frame(value = data_IMPACT, freq = 1)
+  ordinal_df_OCCURRENCE <- data.frame(value = data_OCCURRENCE, freq = 1)
   ordinal_freq_IMPACT <- aggregate(freq ~ value, data = ordinal_df_IMPACT, sum)
   ordinal_freq_OCCURRENCE <- aggregate(freq ~ value, data = ordinal_df_OCCURRENCE, sum)
   
@@ -55,7 +53,7 @@ for (anz in 1:number.scenarios) {
     y.max <- actual.df[i,"scaled_Y2"]
     actualvaluex <- x.min
     actualvaluey <- y.min
-
+    
     
     while (actualvaluex <= x.max){
       weight.IMPACT <- (100/sum_I)*(100-UncertaintyI)
@@ -66,7 +64,7 @@ for (anz in 1:number.scenarios) {
       IMPACT <- c(IMPACT,actualvaluex)
       weight.IMPACT <- c(weight.IMPACT,weight.transformedx)
       actualvaluex = actualvaluex + 1
-      }
+    }
     
     while (actualvaluey <= y.max){
       weight.OCCURRENCE <- (100/sum_O)*(100-UncertaintyO)
@@ -83,145 +81,145 @@ for (anz in 1:number.scenarios) {
     
     
     
-
-}
-
-
-#print (ordinal_freq_IMPACT)
-#print (ordinal_freq_OCCURRENCE)
-
-I <- ggplot(ordinal_freq_IMPACT, aes(x = factor(value), y = freq)) +
-  geom_bar(stat = "identity", fill = "steelblue") +
-  labs(x = "Ordinal Value", y = "Frequency") +
-  labs(title = "classic IMPACT") +
-  theme_minimal() +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-
-O <- ggplot(ordinal_freq_OCCURRENCE, aes(x = factor(value), y = freq)) +
-  geom_bar(stat = "identity", fill = "steelblue") +
-  labs(x = "Ordinal Value", y = "Frequency") +
-  labs(title = "classic OCCURRENCE") +
-  theme_minimal() +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-
-#plot (I)
-#plot (O)
-
-
-print (paste0("GRAPHISCH - IMPACT"))
-gr_sd_ordinal_data_I <- sd(IMPACT)
-gr_median_ordinal_data_I <- median(IMPACT)
-gr_mean_ordinal_data_I <- mean(IMPACT)
-gr_Q1_I <- quantile(IMPACT, 0.25)[[1]]
-gr_Q3_I <- quantile(IMPACT, 0.75)[[1]]
-print (paste0("Standardabweichung:",gr_sd_ordinal_data_I))
-print (paste0("Median:",gr_median_ordinal_data_I))
-print (paste0("Mittelwert:",gr_mean_ordinal_data_I))
-print (paste0("erstes Quartil:",gr_Q1_I))
-print (paste0("drittes Quartil:",gr_Q3_I))
-print (paste0("Interquartilsabstand:",gr_Q3_I - gr_Q1_I))
-print ("")
-print (paste0("GRAPHISCH - OCCURRENCE"))
-gr_sd_ordinal_data_O <- sd(LIKELIHOOD)
-gr_median_ordinal_data_O <- median(LIKELIHOOD)
-gr_mean_ordinal_data_O <- mean(LIKELIHOOD)
-gr_Q1_O <- quantile(LIKELIHOOD, 0.25)[[1]]
-gr_Q3_O <- quantile(LIKELIHOOD, 0.75)[[1]]
-print (paste0("Standardabweichung:",gr_sd_ordinal_data_O))
-print (paste0("Median:",gr_median_ordinal_data_O))
-print (paste0("Mittelwert:",gr_mean_ordinal_data_O))
-print (paste0("erstes Quartil:",gr_Q1_O))
-print (paste0("drittes Quartil:",gr_Q3_O))
-print (paste0("Interquartilsabstand:",gr_Q3_O - gr_Q1_O))
-print ("")
-
-print (paste0("gewichtet GRAPHISCH - IMPACT"))
-weight_gr_sd_ordinal_data_I <- sd(weight.IMPACT)
-weight_gr_median_ordinal_data_I <- median(weight.IMPACT)
-weight_gr_mean_ordinal_data_I <- mean(weight.IMPACT)
-weight_gr_Q1_I <- quantile(weight.IMPACT, 0.25)[[1]]
-weight_gr_Q3_I <- quantile(weight.IMPACT, 0.75)[[1]]
-print (paste0("Standardabweichung:",weight_gr_sd_ordinal_data_I))
-print (paste0("Median:",weight_gr_median_ordinal_data_I))
-print (paste0("Mittelwert:",weight_gr_mean_ordinal_data_I))
-print (paste0("erstes Quartil:",weight_gr_Q1_I))
-print (paste0("drittes Quartil:",weight_gr_Q3_I))
-print (paste0("Interquartilsabstand:",weight_gr_Q3_I - weight_gr_Q1_I))
-print ("")
-print (paste0("gewichtet GRAPHISCH - OCCURRENCE"))
-weight_gr_sd_ordinal_data_O <- sd(weight.LIKELIHOOD)
-weight_gr_median_ordinal_data_O <- median(weight.LIKELIHOOD)
-weight_gr_mean_ordinal_data_O <- mean(weight.LIKELIHOOD)
-weight_gr_Q1_O <- quantile(LIKELIHOOD, 0.25)[[1]]
-weight_gr_Q3_O <- quantile(LIKELIHOOD, 0.75)[[1]]
-print (paste0("Standardabweichung:",weight_gr_sd_ordinal_data_O))
-print (paste0("Median:",weight_gr_median_ordinal_data_O))
-print (paste0("Mittelwert:",weight_gr_mean_ordinal_data_O))
-print (paste0("erstes Quartil:",weight_gr_Q1_O))
-print (paste0("drittes Quartil:",weight_gr_Q3_O))
-print (paste0("Interquartilsabstand:",weight_gr_Q3_O - weight_gr_Q1_O))
-print ("")
-
-
-print (paste0("KLASSISCH - IMPACT"))
-sd_ordinal_data_I <- sd(data_IMPACT)
-median_ordinal_data_I <- median(data_IMPACT)
-mean_ordinal_data_I <- mean(data_IMPACT)
-Q1_I <- quantile(data_IMPACT, 0.25)[[1]]
-Q3_I <- quantile(data_IMPACT, 0.75)[[1]]
-print (paste0("Standardabweichung:",sd_ordinal_data_I))
-print (paste0("Median:",median_ordinal_data_I))
-print (paste0("Mittelwert:",mean_ordinal_data_I))
-print (paste0("erstes Quartil:",Q1_I))
-print (paste0("drittes Quartil:",Q3_I))
-print (paste0("Interquartilsabstand:",Q3_I - Q1_I))
-print ("")       
-
-sd_ordinal_data_O <- sd(data_OCCURRENCE)
-median_ordinal_data_O <- median(data_OCCURRENCE)
-mean_ordinal_data_O <- mean(data_OCCURRENCE)
-Q1_O <- quantile(data_OCCURRENCE, 0.25)[[1]]
-Q3_O <- quantile(data_OCCURRENCE, 0.75)[[1]]
-print (paste0("KLASSISCH - OCCURRENCE"))
-print (paste0("Standardabweichung:",sd_ordinal_data_O))
-print (paste0("Median:",median_ordinal_data_O))
-print (paste0("Mittelwert:",mean_ordinal_data_O))
-print (paste0("erstes Quartil:",Q1_O))
-print (paste0("drittes Quartil:",Q3_O))
-print (paste0("Interquartilsabstand:",Q3_O - Q1_O))
-
-kstx1 <- data_IMPACT
-ksty1 <- data_OCCURRENCE
-kstx2 <- IMPACT
-ksty2 <- LIKELIHOOD
-
-#print (kstx1)
-#print (kstx2)
-
-# Anwenden des Kolmogorov-Smirnov-Tests
-ks_result1 <- (ks.test(kstx1, kstx2, alternative = "two.sided", exact = NULL))
-ks_result2 <- (ks.test(ksty1, ksty2, alternative = "two.sided", exact = NULL))
-new_row <- data.frame(
-                      Label = paste0("Szenario_", QuesId),                    
-                      D_I_classicgraphic = ks_result1$statistic,
-                      D_O_classicgraphic = ks_result2$statistic,
-                      classic_SD_Occurrence = sd_ordinal_data_O,
-                      classic_SD_Impact = sd_ordinal_data_I,
-                      graphic_SD_Occurrence = gr_sd_ordinal_data_O,
-                      graphic_SD_Impact = gr_sd_ordinal_data_I,
-                      classic_median_Occurrence = median_ordinal_data_O,
-                      classic_median_Impact = median_ordinal_data_I,
-                      graphic_median_Occurrence = gr_median_ordinal_data_O,
-                      graphic_median_Impact = gr_median_ordinal_data_I
-                      
-                      )
-row.names(new_row) <- NULL
-dfkst <- rbind(dfkst, new_row)
-
-
-
-
-
+    
+  }
+  
+  
+  #print (ordinal_freq_IMPACT)
+  #print (ordinal_freq_OCCURRENCE)
+  
+  I <- ggplot(ordinal_freq_IMPACT, aes(x = factor(value), y = freq)) +
+    geom_bar(stat = "identity", fill = "steelblue") +
+    labs(x = "Ordinal Value", y = "Frequency") +
+    labs(title = "classic IMPACT") +
+    theme_minimal() +
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+  
+  O <- ggplot(ordinal_freq_OCCURRENCE, aes(x = factor(value), y = freq)) +
+    geom_bar(stat = "identity", fill = "steelblue") +
+    labs(x = "Ordinal Value", y = "Frequency") +
+    labs(title = "classic OCCURRENCE") +
+    theme_minimal() +
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+  
+  #plot (I)
+  #plot (O)
+  
+  
+  print (paste0("GRAPHISCH - IMPACT"))
+  gr_sd_ordinal_data_I <- sd(IMPACT)
+  gr_median_ordinal_data_I <- median(IMPACT)
+  gr_mean_ordinal_data_I <- mean(IMPACT)
+  gr_Q1_I <- quantile(IMPACT, 0.25)[[1]]
+  gr_Q3_I <- quantile(IMPACT, 0.75)[[1]]
+  print (paste0("Standardabweichung:",gr_sd_ordinal_data_I))
+  print (paste0("Median:",gr_median_ordinal_data_I))
+  print (paste0("Mittelwert:",gr_mean_ordinal_data_I))
+  print (paste0("erstes Quartil:",gr_Q1_I))
+  print (paste0("drittes Quartil:",gr_Q3_I))
+  print (paste0("Interquartilsabstand:",gr_Q3_I - gr_Q1_I))
+  print ("")
+  print (paste0("GRAPHISCH - OCCURRENCE"))
+  gr_sd_ordinal_data_O <- sd(LIKELIHOOD)
+  gr_median_ordinal_data_O <- median(LIKELIHOOD)
+  gr_mean_ordinal_data_O <- mean(LIKELIHOOD)
+  gr_Q1_O <- quantile(LIKELIHOOD, 0.25)[[1]]
+  gr_Q3_O <- quantile(LIKELIHOOD, 0.75)[[1]]
+  print (paste0("Standardabweichung:",gr_sd_ordinal_data_O))
+  print (paste0("Median:",gr_median_ordinal_data_O))
+  print (paste0("Mittelwert:",gr_mean_ordinal_data_O))
+  print (paste0("erstes Quartil:",gr_Q1_O))
+  print (paste0("drittes Quartil:",gr_Q3_O))
+  print (paste0("Interquartilsabstand:",gr_Q3_O - gr_Q1_O))
+  print ("")
+  
+  print (paste0("gewichtet GRAPHISCH - IMPACT"))
+  weight_gr_sd_ordinal_data_I <- sd(weight.IMPACT)
+  weight_gr_median_ordinal_data_I <- median(weight.IMPACT)
+  weight_gr_mean_ordinal_data_I <- mean(weight.IMPACT)
+  weight_gr_Q1_I <- quantile(weight.IMPACT, 0.25)[[1]]
+  weight_gr_Q3_I <- quantile(weight.IMPACT, 0.75)[[1]]
+  print (paste0("Standardabweichung:",weight_gr_sd_ordinal_data_I))
+  print (paste0("Median:",weight_gr_median_ordinal_data_I))
+  print (paste0("Mittelwert:",weight_gr_mean_ordinal_data_I))
+  print (paste0("erstes Quartil:",weight_gr_Q1_I))
+  print (paste0("drittes Quartil:",weight_gr_Q3_I))
+  print (paste0("Interquartilsabstand:",weight_gr_Q3_I - weight_gr_Q1_I))
+  print ("")
+  print (paste0("gewichtet GRAPHISCH - OCCURRENCE"))
+  weight_gr_sd_ordinal_data_O <- sd(weight.LIKELIHOOD)
+  weight_gr_median_ordinal_data_O <- median(weight.LIKELIHOOD)
+  weight_gr_mean_ordinal_data_O <- mean(weight.LIKELIHOOD)
+  weight_gr_Q1_O <- quantile(LIKELIHOOD, 0.25)[[1]]
+  weight_gr_Q3_O <- quantile(LIKELIHOOD, 0.75)[[1]]
+  print (paste0("Standardabweichung:",weight_gr_sd_ordinal_data_O))
+  print (paste0("Median:",weight_gr_median_ordinal_data_O))
+  print (paste0("Mittelwert:",weight_gr_mean_ordinal_data_O))
+  print (paste0("erstes Quartil:",weight_gr_Q1_O))
+  print (paste0("drittes Quartil:",weight_gr_Q3_O))
+  print (paste0("Interquartilsabstand:",weight_gr_Q3_O - weight_gr_Q1_O))
+  print ("")
+  
+  
+  print (paste0("KLASSISCH - IMPACT"))
+  sd_ordinal_data_I <- sd(data_IMPACT)
+  median_ordinal_data_I <- median(data_IMPACT)
+  mean_ordinal_data_I <- mean(data_IMPACT)
+  Q1_I <- quantile(data_IMPACT, 0.25)[[1]]
+  Q3_I <- quantile(data_IMPACT, 0.75)[[1]]
+  print (paste0("Standardabweichung:",sd_ordinal_data_I))
+  print (paste0("Median:",median_ordinal_data_I))
+  print (paste0("Mittelwert:",mean_ordinal_data_I))
+  print (paste0("erstes Quartil:",Q1_I))
+  print (paste0("drittes Quartil:",Q3_I))
+  print (paste0("Interquartilsabstand:",Q3_I - Q1_I))
+  print ("")       
+  
+  sd_ordinal_data_O <- sd(data_OCCURRENCE)
+  median_ordinal_data_O <- median(data_OCCURRENCE)
+  mean_ordinal_data_O <- mean(data_OCCURRENCE)
+  Q1_O <- quantile(data_OCCURRENCE, 0.25)[[1]]
+  Q3_O <- quantile(data_OCCURRENCE, 0.75)[[1]]
+  print (paste0("KLASSISCH - OCCURRENCE"))
+  print (paste0("Standardabweichung:",sd_ordinal_data_O))
+  print (paste0("Median:",median_ordinal_data_O))
+  print (paste0("Mittelwert:",mean_ordinal_data_O))
+  print (paste0("erstes Quartil:",Q1_O))
+  print (paste0("drittes Quartil:",Q3_O))
+  print (paste0("Interquartilsabstand:",Q3_O - Q1_O))
+  
+  kstx1 <- data_IMPACT
+  ksty1 <- data_OCCURRENCE
+  kstx2 <- IMPACT
+  ksty2 <- LIKELIHOOD
+  
+  #print (kstx1)
+  #print (kstx2)
+  
+  # Anwenden des Kolmogorov-Smirnov-Tests
+  ks_result1 <- (ks.test(kstx1, kstx2, alternative = "two.sided", exact = NULL))
+  ks_result2 <- (ks.test(ksty1, ksty2, alternative = "two.sided", exact = NULL))
+  new_row <- data.frame(
+    Label = paste0("Szenario_", QuesId),                    
+    D_I_classicgraphic = ks_result1$statistic,
+    D_O_classicgraphic = ks_result2$statistic,
+    classic_SD_Occurrence = sd_ordinal_data_O,
+    classic_SD_Impact = sd_ordinal_data_I,
+    graphic_SD_Occurrence = gr_sd_ordinal_data_O,
+    graphic_SD_Impact = gr_sd_ordinal_data_I,
+    classic_median_Occurrence = median_ordinal_data_O,
+    classic_median_Impact = median_ordinal_data_I,
+    graphic_median_Occurrence = gr_median_ordinal_data_O,
+    graphic_median_Impact = gr_median_ordinal_data_I
+    
+  )
+  row.names(new_row) <- NULL
+  dfkst <- rbind(dfkst, new_row)
+  
+  
+  
+  
+  
 }
 ####   SCHREIBT DAS FILE write.xlsx(dfkst,'myapp/files/32_Streumaße/Streumaße.xlsx', rowNames=TRUE)
 #MEDIAN Vergleich
