@@ -15,7 +15,11 @@ for (anz in 1:number.scenarios) {
   print (actualscenario)
   #scentext <- (paste0("Scenario ", actualscenario))
   actual.df <- answers %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == actualscenario)# & ACC2SURV_ACCID == "22")
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> 08aedeb5eccd82f85733b19425df592f2cbaa2b8
   data_IMPACT <- actual.df$scaled_IMPACT
   data_OCCURRENCE <- actual.df$scaled_OCCURRENCE
   ordinal_df_IMPACT <- data.frame(value = data_IMPACT)
