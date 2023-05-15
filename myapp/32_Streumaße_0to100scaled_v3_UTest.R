@@ -9,12 +9,13 @@ dfkst <- data.frame(D_value_I = numeric(),D_value_O = numeric(), Label = charact
 answers <- read.csv(file = 'myapp/data/RQ1_corrected_scaled.csv', header=TRUE) #importiere das answers file
 all.answers <- answers %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1)
 number.scenarios <- nrow(as.data.frame(table(all.answers$QUES_ID)))
-
+scenarios <- as.data.frame(table(all.answers$QUES_ID))
 for (anz in 1:number.scenarios) {
   actualscenario =as.vector(scenarios[anz,1])
   print (actualscenario)
   #scentext <- (paste0("Scenario ", actualscenario))
-  actual.df <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == actualscenario)# & ACC2SURV_ACCID == "22")
+  actual.df <- answers %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == actualscenario)# & ACC2SURV_ACCID == "22")
+  
   data_IMPACT <- actual.df$scaled_IMPACT
   data_OCCURRENCE <- actual.df$scaled_OCCURRENCE
   ordinal_df_IMPACT <- data.frame(value = data_IMPACT)
