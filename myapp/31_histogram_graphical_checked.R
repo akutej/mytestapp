@@ -3,7 +3,7 @@ library(openxlsx)
 library(gplots)
 library(ggplot2)
 
-answerstable <- read.csv(file = 'myapp/Data/RQ1_corrected.csv', header=TRUE) #importiere das answers file
+answerstable <- read.csv(file = 'myapp/Data/RQ1_corrected_scaled.csv', header=TRUE) #importiere das answers file
 dfall <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1)
 scenarios <- as.data.frame(table(dfall$QUES_ID))
 numberscenarios  <- nrow(scenarios)
@@ -23,14 +23,14 @@ for (anz in 1:numberscenarios) {
   for (i in 1:numberofanswers){
     AccId <- df[i,"ACC2SURV_ACCID"]
     QuesId <- df[i,"QUES_ID"]
-    UncertaintyI <- df[i,"uncertaintyIPixel"]
-    UncertaintyO <- df[i,"uncertaintyOPixel"]
+    UncertaintyI <- df[i,"scaled_uncertainty_X"]
+    UncertaintyO <- df[i,"scaled_uncertainty_Y"]
     Role <- df[i,"ACC2SURV_ROLE"]
     GroupId <- df[i,"ACC2SURV_GROUPID"]
-    x.min <- df[i,"X1Pixel"]
-    x.max <- df[i,"X2Pixel"]
-    y.min <- df[i,"Y1Pixel"]
-    y.max <- df[i,"Y2Pixel"]
+    x.min <- df[i,"scaled_X1"]
+    x.max <- df[i,"scaled_X2"]
+    y.min <- df[i,"scaled_Y1"]
+    y.max <- df[i,"scaled_Y2"]
     actualvalueX <- x.min
     while (actualvalueX <= x.max){
       IMPACT <- c(IMPACT,actualvalueX)
@@ -48,21 +48,21 @@ for (anz in 1:numberscenarios) {
   
   headtitleImpact <- (paste0(scentext,"- Impact of the graphical method"))
   headtitleOcc <- (paste0(scentext,"- Probability of occurrence of the graphical method"))
-  filetitleImpact <- (paste0("myapp/pictures/31_histogramms_graphical/",scentext,"- Impact.bmp"))
-  filetitleOcc <- (paste0("myapp/pictures/31_histogramms_graphical/",scentext,"- Occurrence.bmp"))
+  filetitleImpact <- (paste0("myapp/pictures/31_histogramms_graphical/",scentext,"- Impact.png"))
+  filetitleOcc <- (paste0("myapp/pictures/31_histogramms_graphical/",scentext,"- Occurrence.png"))
   
   
 
-  bin_grenzen <- seq( 0,400)
+  bin_grenzen <- 400
   
   
   
-  bmp(file=filetitleImpact,width=1500, height=1000, res=150)
-  hist(IMPACT,breaks = bin_grenzen, main=headtitleImpact, xlab = "Werte", ylab = "Häufigkeit", xlim = c(0, 400), col = "lightblue", border = "black")
+  png(file=filetitleImpact,width=1500, height=1000, res=150)
+  hist(IMPACT,breaks = bin_grenzen, main=headtitleImpact, xlab = "Werte", ylab = "Häufigkeit", xlim = c(0, 100), col = "lightblue", border = "black")
   dev.off()
 
-  bmp(file=filetitleOcc,width=1500, height=1000, res=150)
-  hist(LIKELIHOOD,breaks = bin_grenzen, main = headtitleOcc, xlab = "Werte", ylab = "Häufigkeit", xlim = c(0, 400), col = "lightblue", border = "black")
+  png(file=filetitleOcc,width=1500, height=1000, res=150)
+  hist(LIKELIHOOD,breaks = bin_grenzen, main = headtitleOcc, xlab = "Werte", ylab = "Häufigkeit", xlim = c(0, 100), col = "lightblue", border = "black")
   dev.off()
   
     
