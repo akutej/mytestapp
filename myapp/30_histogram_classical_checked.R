@@ -15,7 +15,7 @@ numberscenarios  <- nrow(scenarios)
 
 for (anz in 1:numberscenarios) {
   actualscenario =as.vector(scenarios[anz,1])
-  scentext <- (paste0("Scenario ", actualscenario))
+  scentext <- (paste0("", actualscenario))
   print (scentext)
   df <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == actualscenario)
   actualtype <- (df$QUES_TYP[1])
@@ -27,8 +27,8 @@ for (anz in 1:numberscenarios) {
   OCCURRENCE <- (histOccurrenceclassic-0.25)
   headtitleImpact <- (paste0(scentext,"- Impact of classical method"))
   headtitleOcc <- (paste0(scentext,"- Probability of occurrence of the classical method"))
-  filetitleImpact <- (paste0("myapp/pictures/30_histogramms_classic/",scentext,"- Impact.png"))
-  filetitleOcc <- (paste0("myapp/pictures/30_histogramms_classic/",scentext,"- Occurrence.png"))
+  filetitleImpact <- (paste0("myapp/pictures/30_hist_classic/",scentext,"- Impact.png"))
+  filetitleOcc <- (paste0("myapp/pictures/30_hist_classic/",scentext,"- Occurrence.png"))
   #histImpact <- replace(histImpactclassic,,histImpactclassic-0.5)
   #histImpact <- sapply(histImpactclassic,quantile)
   
