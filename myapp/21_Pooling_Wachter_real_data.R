@@ -1,21 +1,31 @@
-# Setzen eines Seeds, damit die Ergebnisse reproduzierbar sind
-# (es werden jedesmal dieselben Zufallszahlen gezogen)
 
-set.seed(100)
+library(plotrix)
+library(dplyr)
+library(ggplot2)
+library(grid)
+library(RColorBrewer)
 
-# Erzeugen eines künstlichen Datensatzes für die Auswirkung
-n <- 50  # Anzahl an Umfrageteilnehmer
-untere.grenze <- rnorm(n,2.5,1)
-untere.grenze <- round(ifelse(untere.grenze < 0.5,0.5,untere.grenze),digits=1)
-intervallbreite <- runif(n,0.5,3)
-obere.grenze <- untere.grenze+intervallbreite
-obere.grenze <- round(ifelse(obere.grenze > 5.5,5.5,obere.grenze),digits=1)
-Daten <- data.frame(Proband=1:n,Untere.Grenze=untere.grenze,Obere.Grenze=obere.grenze)
+
+answerstable <- read.csv(file = 'myapp/Data/RQ1_corrected_scaled.csv', header=TRUE) #importiere das answers file
+
+dfall <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1)
+scenarios <- as.data.frame(table(dfall$QUES_ID))
+numberscenarios  <- nrow(scenarios)
+
+for (anz in 1:1) {#numberscenarios) {
+
+  actualscenario =as.vector(scenarios[anz,1])
+  scentext <- (paste0("", actualscenario))
+  print (scentext)
+  Daten <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == actualscenario)  
+    
+ 
+
 
 # Hinzufügen vom mü und sigma (Artikel Seite 94, Formel (1):
 
-Daten[,"mü"] <- (Daten[,"Untere.Grenze"]+Daten[,"Obere.Grenze"])/2
-Daten[,"sigma"] <- (Daten[,"Obere.Grenze"]-Daten[,"Untere.Grenze"])/6   # korrigierte Formel
+Daten[,"mü"] <- (Daten[,"scaled_X1"]+Daten[,"scaled_X2"])/2
+Daten[,"sigma"] <- (Daten[,"scaled_X2"]-Daten[,"scaled_X1"])/6   # korrigierte Formel
 
 # Pooling nach dem Algorithmus
 
@@ -36,10 +46,10 @@ p.Abbruch <- NA
 Weights <- diag(rep(1,N))
 
 # Zum Testen:
-M <- c(0.26,0.255,0.43,0.315)
-S <- c(0.03333333333333333333,0.0183333333333333333,0.03333333333333333,0.028333333333333333)
-N <- 4
-Weights <- diag(rep(1,N))
+#M <- c(0.26,0.255,0.43,0.315)
+#S <- c(0.03333333333333333333,0.0183333333333333333,0.03333333333333333,0.028333333333333333)
+#N <- 4
+#Weights <- diag(rep(1,N))
 
 # Start der for-Schleife
 S.0 <- S
@@ -74,7 +84,7 @@ for(p in 1:p.max){
     
   }
 }
-
+}
 p.Abbruch
 M
 sqrt(sum(S.0^2*Weights[1,]^2))
