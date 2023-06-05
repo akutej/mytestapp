@@ -54,7 +54,8 @@ if (actualtype == "Risiko"){
 
 thisis <- ggplot()+ 
   ggtitle(scentext)+ 
-  theme(plot.title = element_text(hjust = 0.5,color="black", size=16),#face="bold"),
+  theme(#plot.title = element_text(hjust = 0.5,color="black", size=16),#face="bold"),
+        plot.title = element_blank(),
         axis.line  = element_blank(),
         axis.ticks = element_blank(),
         axis.text  = element_blank(),
@@ -156,7 +157,9 @@ else
 {
   thisis <- ggplot()+ 
     ggtitle(scentext)+ 
-    theme(plot.title = element_text(hjust = 0.5,color="black", size=16),#face="bold"),
+    theme(
+          #plot.title = element_text(hjust = 0.5,color="black", size=16),#face="bold"),
+          plot.title = element_blank(),    
           axis.line  = element_blank(),
           axis.ticks = element_blank(),
           axis.text  = element_blank(),
@@ -262,7 +265,7 @@ else
 
 
 print(thisis)
-scenfile <- (paste0("myapp/pictures/1_classicgrid/", scentext,"_",actualtype,".png"))  
+scenfile <- (paste0("myapp/pictures/1_classicgrid_otitle/", scentext,"_",actualtype,".png"))  
 
 ggsave(filename = scenfile, device = "png", width = 25, height = 25, units = "cm",limitsize = FALSE)
 }
