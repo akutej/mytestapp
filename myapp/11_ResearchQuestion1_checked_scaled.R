@@ -161,8 +161,8 @@ for (i in 1:numberofanswers) {
         df[i,"scaled_uncertainty_XY"] <- scaled_uncertainty_X + scaled_uncertainty_Y
         df[i,"scaled_uncertainty_AREA"] <- scaled_uncertainty_X * scaled_uncertainty_Y
         df[i,"scaled_uncertainty_PERIMETER"] <- ((2 * scaled_uncertainty_X) + (2 * scaled_uncertainty_Y))
-        df[i,"scaled_uncertainty_middle_X"] <- scaledX2 + (scaled_uncertainty_X / 2)
-        df[i,"scaled_uncertainty_middle_Y"] <- scaledY2 + (scaled_uncertainty_Y / 2)
+        df[i,"scaled_uncertainty_middle_X"] <- scaledX1 + (scaled_uncertainty_X / 2)
+        df[i,"scaled_uncertainty_middle_Y"] <- scaledY1 + (scaled_uncertainty_Y / 2)
         
         
         conditionmx1 <- (df$middleX[i] >=0) & (df$middleX[i] <= 79)
