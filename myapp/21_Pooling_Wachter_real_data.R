@@ -6,7 +6,7 @@ library(grid)
 library(RColorBrewer)
 
 
-answerstable <- read.csv(file = 'myapp/Data/RQ1_corrected_scaled.csv', header=TRUE) #importiere das answers file
+answerstable <- read.csv(file = 'myapp/data/RQ1_corrected_scaled.csv', header=TRUE) #importiere das answers file
 
 dfall <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1)
 scenarios <- as.data.frame(table(dfall$QUES_ID))
@@ -87,6 +87,7 @@ for(p in 1:p.max){
 }
 p.Abbruch
 M
-sqrt(sum(S.0^2*Weights[1,]^2))
+s1 <-  sqrt(sum(S.0^2*Weights[1,]^2))
+sigma3 <-  3*(sqrt(sum(S.0^2*Weights[1,]^2)))
 Weights
 
