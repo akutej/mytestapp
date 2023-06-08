@@ -3,7 +3,7 @@ library(openxlsx)
 library(gplots)
 library(ggplot2)
 
-answerstable <- read.csv(file = 'myapp/Data/RQ1_corrected.csv', header=TRUE) #importiere das answers file
+answerstable <- read.csv(file = 'myapp/Data/RQ1_corrected_scaled.csv', header=TRUE) #importiere das answers file
 dfall <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1)
 scenarios <- as.data.frame(table(dfall$QUES_ID))
 numberscenarios  <- nrow(scenarios)
@@ -46,10 +46,13 @@ for (i in 1:numberofanswers){
   scenpic <- (paste0("myapp/pictures/17_heatmap_pixel_graphic/",scentext,"_heatmap.bmp"))
   
   mat1 <- matrix(D$count,ncol=400,nrow=400,byrow=TRUE)
+  #mat1 <- matrix(seq(0, 100, by = 0.25), ncol = 400, nrow = 400, byrow = TRUE)
   datahm <- as.matrix(mat1)  
   
   bmp(file=scenpic, width = 1000, height = 1000, units = 'px', res = 100)
-  heatmap(datahm, Colv = NA, Rowv = NA, scale="none")
+  heatmap(datahm, Colv = NA, Rowv = NA, scale="none")#,
+          #labRow = NA, labCol = NA) # Achsenbeschriftungen entfernen
+          
   dev.off()
   
   
