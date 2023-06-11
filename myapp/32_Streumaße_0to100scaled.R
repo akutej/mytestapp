@@ -6,7 +6,7 @@ library(ggplot2)
 
 dfkst <- data.frame(D_value_I = numeric(),D_value_O = numeric(), Label = character())
 
-answers <- read.csv(file = 'myapp/data/RQ1_corrected.csv', header=TRUE) #importiere das answers file
+answers <- read.csv(file = 'myapp/data/RQ1_corrected_scaled.csv', header=TRUE) #importiere das answers file
 all.answers <- answers %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1)
 number.scenarios <- nrow(as.data.frame(table(all.answers$QUES_ID)))
 

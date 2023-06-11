@@ -10,7 +10,7 @@ answers <- read.csv(file = 'myapp/data/RQ1_corrected.csv', header=TRUE) #importi
 all.answers <- answers %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1)
 number.scenarios <- nrow(as.data.frame(table(all.answers$QUES_ID)))
 
-for (anz in 1:number.scenarios) {
+for (anz in 88:88) {
   actualscenario =as.vector(scenarios[anz,1])
   print (actualscenario)
   #scentext <- (paste0("Scenario ", actualscenario))
@@ -49,12 +49,13 @@ for (anz in 1:number.scenarios) {
     UncertaintyO <- actual.df[i,"scaled_uncertainty_Y"]
     Role <- actual.df[i,"ACC2SURV_ROLE"]
     GroupId <- actual.df[i,"ACC2SURV_GROUPID"]
-    x.min <- actual.df[i,"scaled_X1"]
-    x.max <- actual.df[i,"scaled_X2"]
+    x.min <- actual.df[i,"X1Pixel"]
+    x.max <- actual.df[i,"X2Pixel"]
     y.min <- actual.df[i,"scaled_Y1"]
     y.max <- actual.df[i,"scaled_Y2"]
     actualvaluex <- x.min
     actualvaluey <- y.min
+    print (x.min)
 
     
     while (actualvaluex <= x.max){
@@ -85,7 +86,7 @@ for (anz in 1:number.scenarios) {
     
 
 }
-
+print (IMPACT)
 
 #print (ordinal_freq_IMPACT)
 #print (ordinal_freq_OCCURRENCE)
