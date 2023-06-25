@@ -76,7 +76,8 @@ for (anz in 1:1){#number.scenarios) {
   numberofanswers <- nrow(actual.df)
   #print (numberofanswers)
   
-  
+  x.daten <- data.frame(ACCID = integer(), Wert = numeric())
+  y.daten <- data.frame(ACCID = integer(), Wert = numeric())
   
     #Leere datenframes reached grid
     x_df <- data.frame()
