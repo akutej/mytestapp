@@ -69,7 +69,7 @@ answers <- read.csv(file = 'myapp/data/RQ1_corrected_scaled.csv', header=TRUE) #
 all.answers <- answers %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1)
 number.scenarios <- nrow(as.data.frame(table(all.answers$QUES_ID)))
 scenarios <- as.data.frame(table(all.answers$QUES_ID))
-for (anz in 1:1){#number.scenarios) {
+for (anz in 1:3){#number.scenarios) {
   actualscenario =as.vector(scenarios[anz,1])
   print (actualscenario)
   actual.df <- answers %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == actualscenario)# & ACC2SURV_ACCID == "22")
