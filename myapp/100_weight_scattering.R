@@ -94,7 +94,7 @@ for (anz in 1:1){#number.scenarios) {
   print(x.mittelwert <- mean(x.summary_df$x.Wahrs))
   x.ergebnis <- apply(x.summary_df[, c("x.scale", "x.Wahrs")], MARGIN = 1, FUN = prod)
   print(x.erwartungswert <- sum(x.ergebnis))
-  print (x.standardabweichung <- sd(x.erwartungswert))
+  #print (x.standardabweichung <- sd(x.erwartungswert))
   print (x.median_value <- median(x.summary_df$x.Wahrs, na.rm = TRUE))
   x.gewichtete_werte <- x.summary_df$x.scale * x.summary_df$x.Wahrs
   print (x.gewichtete_werte)

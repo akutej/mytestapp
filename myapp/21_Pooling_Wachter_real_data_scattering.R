@@ -12,7 +12,7 @@ dfall <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWER
 scenarios <- as.data.frame(table(dfall$QUES_ID))
 numberscenarios  <- nrow(scenarios)
 dfcalc <- data.frame(matrix(ncol = 9, nrow = 0))
-colnames(df) <- c("Index", "x", "x_3xSigma", "x_min", "x_max", "y", "y_3xSigma", "y_min", "y_max")
+colnames(dfcalc) <- c("Index", "x", "x_3xSigma", "x_min", "x_max", "y", "y_3xSigma", "y_min", "y_max")
 
 for (anz in 1:1){#numberscenarios) {
 
@@ -20,7 +20,7 @@ for (anz in 1:1){#numberscenarios) {
   scentext <- (paste0("", actualscenario))
   print (scentext)
   Daten <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == actualscenario)  
-    
+  numberofanswers <- nrow(Daten)  
  
 
 
@@ -200,16 +200,19 @@ sd_y <- dfcalc[1, "y_3xsigma"] / 3
 x <- seq(mean_x - 3 * sd_x, mean_x + 3 * sd_x, length = 100)
 
 # PDF für die x-Koordinaten 
-pdf_x <- dnorm(x, mean = mean_x, sd = sd_x)
+pdf_x <- dnorm(x, mean = mean_x, sd = sd_x)*(6*sd_x/length(x))*numberofanswers
+
+print (numberofanswers)
+print (sum(pdf_x))
 
 # Werte für die y-Achse generieren
 y <- seq(mean_y - 3 * sd_y, mean_y + 3 * sd_y, length = 100)
 
 # PDF für die y-Koordinaten berechnen
-pdf_y <- dnorm(y, mean = mean_y, sd = sd_y)
+pdf_y <- dnorm(y, mean = mean_y, sd = sd_y)*(6*sd_y/length(y))*numberofanswers
 
 # Histogramm für x-Koordinaten
-barplot(pdf_x, names.arg = x, col = "lightblue", border = "black", xlab = "x", ylab = "PDF", main = "Histogramm der x-Koordinaten")
+barplot(pdf_x, names.arg = x, col = "lightblue", border = "black", xlab = "x", ylab = "PDF",main = "Histogramm der x-Koordinaten")
 
 # Histogramm für y-Koordinaten
 barplot(pdf_y, names.arg = y, col = "lightblue", border = "black", xlab = "y", ylab = "PDF", main = "Histogramm der y-Koordinaten")
@@ -217,15 +220,15 @@ barplot(pdf_y, names.arg = y, col = "lightblue", border = "black", xlab = "y", y
 
 # Berechnung von Median, erstes Quartil, drittes Quartil und Interquartilrange für x-Koordinaten
 median_x <- median(dfcalc$x)
-q1_x <- quantile(dfcalc$x, 0.25)
-q3_x <- quantile(dfcalc$x, 0.75)
-iqr_x <- IQR(dfcalc$x)
+q1_x <- qnorm(0.25,mean_x,sd_x)
+q3_x <- qnorm(0.75,mean_x,sd_x)
+iqr_x <- q3_x - q1_x
 
 # Berechnung von Median, erstes Quartil, drittes Quartil und Interquartilrange für y-Koordinaten
 median_y <- median(dfcalc$y)
-q1_y <- quantile(dfcalc$y, 0.25)
-q3_y <- quantile(dfcalc$y, 0.75)
-iqr_y <- IQR(dfcalc$y)
+q1_y <- qnorm(0.25,mean_y,sd_y)
+q3_y <- qnorm(0.75,mean_y,sd_y)
+iqr_y <- q3_y - q1_y
 
 # Ausgabe der Ergebnisse
 print("x-Koordinaten:")

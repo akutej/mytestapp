@@ -13,7 +13,7 @@ x.daten <- data.frame(ACCID = numeric(),
                       scale = numeric(),
                       value = numeric())
 
-for (anz in 1:number.scenarios) {
+for (anz in 1:1){#number.scenarios) {
   
   actualscenario <- as.vector(scenarios[anz, 1])
   print(actualscenario)

@@ -347,7 +347,7 @@ for (anz in 1:3){#number.scenarios) {
   
   # Zeilen zusammenführen
   df <- rbind(df, newdfg1)
-  #df <- rbind(df, newdfrgrid)
+  df <- rbind(df, newdfrgrid)
   
   
   # Datenframe anzeigen

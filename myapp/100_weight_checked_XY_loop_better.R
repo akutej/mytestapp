@@ -79,11 +79,9 @@ for (anz in 1:number.scenarios) {
   
   grouped_x.daten <- x.df_all %>% group_by(x.scale)
   x.summary_df <- grouped_x.daten %>% summarise(x.Sum = sum(x.value))
-  x.summary_df <- x.summary_df %>%
-    mutate(x.Wahrs = x.Sum / sum(x.Sum))
+  x.summary_df <- x.summary_df %>% mutate(x.Wahrs = x.Sum / sum(x.Sum))
   
-  x.summary_df <- x.summary_df %>%
-    mutate(x.Histo = x.Wahrs * numberofanswers)
+  x.summary_df <- x.summary_df %>% mutate(x.Histo = x.Wahrs * numberofanswers)
   
   print(x.summary_df)
   
@@ -105,8 +103,8 @@ for (anz in 1:number.scenarios) {
   
   print(y.grouped)
   
-  filetitleImpact <- (paste0("myapp/pictures/100_histogramms_weightgraphical/",scentext,"- Impact.png"))
-  filetitleOcc <- (paste0("myapp/pictures/100_histogramms_weightgraphical/",scentext,"- Occurrence.png"))
+  filetitleImpact <- (paste0("myapp/pictures/100_histogramms_weightgraphical/",scentext,"- Impact_axis.png"))
+  filetitleOcc <- (paste0("myapp/pictures/100_histogramms_weightgraphical/",scentext,"- Occurrence_axis.png"))
   
   
   #barplot(grouped$x, names.arg = grouped$Group, main = "Histogramm", xlab = "X-Skala", ylab = "Summierte Y-Werte")
@@ -126,11 +124,11 @@ for (anz in 1:number.scenarios) {
   
   #barplot(grouped$x, names.arg = x_scale_labels, main = "", xlab = "", ylab = "weighted Frequency", space = 0, col = "lightblue")
   png(file=filetitleImpact,width=1500, height=1000, res=150)
-  barplot(x.grouped$x, names.arg = x.grouped$Group, main = "", xlab = "", ylab = "weighted Frequency", space = 0, col = "lightblue", xaxt = "n")
+  barplot(x.grouped$x, names.arg = x.grouped$Group, main = "", xlab = "", ylab = "weighted Frequency", space = 0, col = "lightblue")# xaxt = "n")
   dev.off()
   
   png(file=filetitleOcc,width=1500, height=1000, res=150)
-  barplot(y.grouped$x, names.arg = y.grouped$Group, main = "", xlab = "", ylab = "weighted Frequency", space = 0, col = "lightblue", xaxt = "n")
+  barplot(y.grouped$x, names.arg = y.grouped$Group, main = "", xlab = "", ylab = "weighted Frequency", space = 0, col = "lightblue")#, xaxt = "n")
   dev.off()
   
   print(sum(x.summary_df$x.Wahrs))
