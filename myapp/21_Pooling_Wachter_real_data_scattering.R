@@ -11,12 +11,13 @@ answerstable <- read.csv(file = 'myapp/data/RQ1_corrected_scaled.csv', header=TR
 dfall <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1)
 scenarios <- as.data.frame(table(dfall$QUES_ID))
 numberscenarios  <- nrow(scenarios)
-dfcalc <- data.frame(matrix(ncol = 9, nrow = 0))
-colnames(dfcalc) <- c("Index", "x", "x_3xSigma", "x_min", "x_max", "y", "y_3xSigma", "y_min", "y_max")
 
-for (anz in 1:1){#numberscenarios) {
 
+for (anz in 1:numberscenarios) {
+  dfcalc <- data.frame(matrix(ncol = 9, nrow = 0))
+  colnames(dfcalc) <- c("Index", "x", "x_3xSigma", "x_min", "x_max", "y", "y_3xSigma", "y_min", "y_max")
   actualscenario =as.vector(scenarios[anz,1])
+  scen_text <- (paste0("Scenario", actualscenario))
   scentext <- (paste0("", actualscenario))
   print (scentext)
   Daten <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == actualscenario)  
@@ -234,6 +235,7 @@ iqr_y <- q3_y - q1_y
 print("x-Koordinaten:")
 print(paste("Mittelwert:", mean_x))
 print(paste("Median:", median_x))
+print(paste("Standardabweichung:", sd_x))
 print(paste("Erstes Quartil:", q1_x))
 print(paste("Drittes Quartil:", q3_x))
 print(paste("Interquartilrange:", iqr_x))
@@ -241,9 +243,41 @@ print(paste("Interquartilrange:", iqr_x))
 print("y-Koordinaten:")
 print(paste("Mittelwert:", mean_y))
 print(paste("Median:", median_y))
+print(paste("Standardabweichung:", sd_y))
 print(paste("Erstes Quartil:", q1_y))
 print(paste("Drittes Quartil:", q3_y))
 print(paste("Interquartilrange:", iqr_y))
+
+
+# Funktion um die Werte in einer .tex Datei zu speichern
+save_to_latex <- function(actualscenario, filename, mean_x, median_x, sd_x, q1_x, q3_x, iqr_x, mean_y, median_y, sd_y, q1_y, q3_y, iqr_y) {
+  sink(filename)
+  actualscenario <- gsub(" ", "", actualscenario)
+  
+  cat(paste("\\expandafter\\newcommand\\csname meanX",actualscenario,"\\endcsname{",round(mean_x, digits = 3), "}\n", sep=""))
+  cat(paste("\\expandafter\\newcommand\\csname medianX",actualscenario,"\\endcsname{",round(median_x, digits = 3), "}\n", sep=""))
+  cat(paste("\\expandafter\\newcommand\\csname sdX",actualscenario,"\\endcsname{",round(sd_x, digits = 3), "}\n", sep=""))
+  cat(paste("\\expandafter\\newcommand\\csname qoneX",actualscenario,"\\endcsname{",round(q1_x, digits = 3), "}\n", sep=""))
+  cat(paste("\\expandafter\\newcommand\\csname qthreeX",actualscenario,"\\endcsname{",round(q3_x, digits = 3), "}\n", sep=""))
+  cat(paste("\\expandafter\\newcommand\\csname iqrX",actualscenario,"\\endcsname{",round(iqr_x, digits = 3), "}\n", sep=""))
+  cat(paste("\\expandafter\\newcommand\\csname meanY",actualscenario,"\\endcsname{",round(mean_y, digits = 3), "}\n", sep=""))
+  cat(paste("\\expandafter\\newcommand\\csname medianY",actualscenario,"\\endcsname{",round(median_y, digits = 3), "}\n", sep=""))
+  cat(paste("\\expandafter\\newcommand\\csname sdY",actualscenario,"\\endcsname{",round(sd_y, digits = 3), "}\n", sep=""))
+  cat(paste("\\expandafter\\newcommand\\csname qoneY",actualscenario,"\\endcsname{",round(q1_y, digits = 3), "}\n", sep=""))
+  cat(paste("\\expandafter\\newcommand\\csname qthreeY",actualscenario,"\\endcsname{",round(q3_y, digits = 3), "}\n", sep=""))
+  cat(paste("\\expandafter\\newcommand\\csname iqrY",actualscenario,"\\endcsname{",round(iqr_y, digits = 3), "}\n", sep=""))
+  
+  sink()
+}
+
+
+
+scenfile <- (paste0("myapp/tex/21_scattering_pooling_wachter/",scen_text,".tex")) 
+
+# Zusammenbauen des vollständigen Pfads
+
+# Aufrufen der Funktion, um die Werte in einer .tex Datei zu speichern
+save_to_latex(actualscenario,scenfile, mean_x, median_x,sd_x, q1_x, q3_x, iqr_x, mean_y, median_y,sd_y, q1_y, q3_y, iqr_y)
 
 
 }
