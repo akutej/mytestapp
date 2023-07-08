@@ -5,22 +5,22 @@ library(ggplot2)
 library(tibble)
 
 # Funktion um die Werte in einer .tex Datei zu speichern
-save_to_latex <- function(actualscenario,method,group, filename, mean_x, median_x, sd_x, q1_x, q3_x, iqr_x,min_x,max_x,range_x,mean_y, median_y, sd_y, q1_y, q3_y,iqr_y,min_y,max_y,range_y) {
+save_to_latex <- function(actualscenario,method,group, filename,median_x, sd_x,mean_x, q1_x, q3_x, iqr_x,min_x,max_x,range_x, median_y, sd_y,mean_y, q1_y, q3_y,iqr_y,min_y,max_y,range_y) {
   sink(filename)
   actualscenario <- gsub(" ", "", actualscenario)
   
-  cat(paste("\\expandafter\\newcommand\\csname ",method,"_",group,"_",actualscenario,"_meanX","\\endcsname{",round(mean_x, digits = 2), "}\n", sep=""))
   cat(paste("\\expandafter\\newcommand\\csname ",method,"_",group,"_",actualscenario,"_medianX","\\endcsname{",round(median_x, digits = 2), "}\n", sep=""))
   cat(paste("\\expandafter\\newcommand\\csname ",method,"_",group,"_",actualscenario,"_sdX","\\endcsname{",round(sd_x, digits = 2), "}\n", sep=""))
+  cat(paste("\\expandafter\\newcommand\\csname ",method,"_",group,"_",actualscenario,"_meanX","\\endcsname{",round(mean_x, digits = 2), "}\n", sep=""))
   cat(paste("\\expandafter\\newcommand\\csname ",method,"_",group,"_",actualscenario,"_qoneX","\\endcsname{",round(q1_x, digits = 2), "}\n", sep=""))
   cat(paste("\\expandafter\\newcommand\\csname ",method,"_",group,"_",actualscenario,"_qthreeX","\\endcsname{",round(q3_x, digits = 2), "}\n", sep=""))
   cat(paste("\\expandafter\\newcommand\\csname ",method,"_",group,"_",actualscenario,"_iqrX","\\endcsname{",round(iqr_x, digits = 2), "}\n", sep=""))
   cat(paste("\\expandafter\\newcommand\\csname ",method,"_",group,"_",actualscenario,"_minX","\\endcsname{",round(min_x, digits = 2), "}\n", sep=""))
   cat(paste("\\expandafter\\newcommand\\csname ",method,"_",group,"_",actualscenario,"_maxX","\\endcsname{",round(max_x, digits = 2), "}\n", sep=""))
   cat(paste("\\expandafter\\newcommand\\csname ",method,"_",group,"_",actualscenario,"_rangeX","\\endcsname{",round(range_x, digits = 2), "}\n", sep=""))
-  cat(paste("\\expandafter\\newcommand\\csname ",method,"_",group,"_",actualscenario,"_meanY","\\endcsname{",round(mean_y, digits = 2), "}\n", sep=""))
   cat(paste("\\expandafter\\newcommand\\csname ",method,"_",group,"_",actualscenario,"_medianY","\\endcsname{",round(median_y, digits = 2), "}\n", sep=""))
   cat(paste("\\expandafter\\newcommand\\csname ",method,"_",group,"_",actualscenario,"_sdY","\\endcsname{",round(sd_y, digits = 2), "}\n", sep=""))
+  cat(paste("\\expandafter\\newcommand\\csname ",method,"_",group,"_",actualscenario,"_meanY","\\endcsname{",round(mean_y, digits = 2), "}\n", sep=""))
   cat(paste("\\expandafter\\newcommand\\csname ",method,"_",group,"_",actualscenario,"_qoneY","\\endcsname{",round(q1_y, digits = 2), "}\n", sep=""))
   cat(paste("\\expandafter\\newcommand\\csname ",method,"_",group,"_",actualscenario,"_qthreeY","\\endcsname{",round(q3_y, digits = 2), "}\n", sep=""))
   cat(paste("\\expandafter\\newcommand\\csname ",method,"_",group,"_",actualscenario,"_iqrY","\\endcsname{",round(iqr_y, digits = 2), "}\n", sep=""))
