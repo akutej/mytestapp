@@ -17,7 +17,7 @@ scenarios <- as.data.frame(table(all.answers$QUES_ID))
 #                      y.scale = numeric(),
 #                      y.value = numeric())
 
-for (anz in 1:1){#number.scenarios) {
+for (anz in 1:number.scenarios) {
   
   actualscenario <- as.vector(scenarios[anz, 1])
   print(actualscenario)

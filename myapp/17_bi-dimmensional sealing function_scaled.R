@@ -4,6 +4,7 @@ library(MASS)
 library(gplots)
 library(ggplot2)
 library(ellipse)
+library(grid)
 
 dir_path <- ("myapp/files/4_heatmap")
 csv_files <- list.files(dir_path, pattern = "*scaled.csv")
@@ -29,5 +30,8 @@ for (file in csv_files) {
   png(filename = save_pic, width = 5*2000, height = 5*1800, res = 600)
   #  Plotten des Ergebnisse als Heatmap
   filled.contour(density_est)
+  pushViewport(viewport(x=1, y=0.5, width=0.15, height=1, just="center"))
+  grid.rect(gp = gpar(col = NA, fill = "white"))
+  popViewport()
   dev.off()
 }
