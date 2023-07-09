@@ -7,7 +7,7 @@ library(ggplot2)
 library(grid)
 library(RColorBrewer)
 
-answerstable <- read.csv(file = 'myapp/Data/RQ1_corrected.csv', header=TRUE) #importiere das answers file
+answerstable <- read.csv(file = 'myapp/Data/RQ1_corrected_scaled.csv', header=TRUE) #importiere das answers file
 
 dfall <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1)
 scenarios <- as.data.frame(table(dfall$QUES_ID))
@@ -265,7 +265,8 @@ else
 
 
 print(thisis)
-scenfile <- (paste0("myapp/pictures/1_classicgrid_otitle/", scentext,"_",actualtype,".png"))  
+#scenfile <- (paste0("myapp/pictures/1_classicgrid_otitle/", scentext,"_",actualtype,".png"))
+scenfile <- (paste0("myapp/pictures/1_classicgrid_otitle/", scentext,".png"))  
 
 ggsave(filename = scenfile, device = "png", width = 25, height = 25, units = "cm",limitsize = FALSE)
 }
