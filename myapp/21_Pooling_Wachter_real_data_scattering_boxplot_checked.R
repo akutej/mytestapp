@@ -14,7 +14,7 @@ numberscenarios  <- nrow(scenarios)
 dfcalc <- data.frame(Index = character(), x = numeric(), x_3xsigma = numeric(), x_min = numeric(), x_max = numeric(), y = numeric(), y_3xsigma = numeric(), y_min = numeric(), y_max = numeric())
 
 
-for (anz in 1:1){#numberscenarios) {
+for (anz in 1:numberscenarios) {
   actualscenario =as.vector(scenarios[anz,1])
   scen_text <- (paste0("Scenario", actualscenario))
   scentext <- (paste0("", actualscenario))
@@ -214,22 +214,44 @@ pdf_y <- dnorm(y, mean = mean_y, sd = sd_y)*(6*sd_y/length(y))*numberofanswers
 #
 
 
-
+filetitleImpact <- (paste0("myapp/pictures/21_hist_pooling/",scentext,"_Impact_sc1.png"))
 # Histogramm für x-Koordinaten
-barplot(pdf_x, names.arg = x, col = "lightblue", border = "black", xlab = "x", ylab = "PDF",main = "Histogramm der x-Koordinaten")
+png(file=filetitleImpact,width=1500, height=1000, res=150)
+barplot(pdf_x, names.arg = x, col = "lightblue", border = "black", xlab = "", ylab = "Frequency",main = "")
+dev.off()
 
+filetitleImpact1 <- (paste0("myapp/pictures/21_hist_pooling/",scentext,"_Impact_sc2.png"))
 #x_scale <- seq(0, 100, length = 100)
 x_scale <- seq(0, 100, by = 0.4)
 pdf_x_scale <- dnorm(x_scale, mean = mean_x, sd = sd_x)*(6*sd_x/length(x))*numberofanswers
-barplot(pdf_x_scale, names.arg = x_scale, col = "lightblue", border = "black", xlab = "x", ylab = "PDF",main = "Histogramm der x-Koordinaten")
+png(file=filetitleImpact1,width=1500, height=1000, res=150)
+barplot(pdf_x_scale, names.arg = x_scale, col = "lightblue", border = "black", xlab = "", ylab = "Frequency",main = "")#, xaxt = "n")
+# x-Skala ändern
+#axis(side = 1, at = seq(0, 100, by = 20), labels = seq(0, 100, by = 20))
+dev.off()
 
+filetitleOcc <- (paste0("myapp/pictures/21_hist_pooling/",scentext,"_Occurrence_sc1.png"))
 # Histogramm für y-Koordinaten
-barplot(pdf_y, names.arg = y, col = "lightblue", border = "black", xlab = "y", ylab = "PDF", main = "Histogramm der y-Koordinaten")
+png(file=filetitleOcc,width=1500, height=1000, res=150)
+barplot(pdf_y, names.arg = y, col = "lightblue", border = "black", xlab = "", ylab = "Frequency", main = "")
+dev.off()
 
+filetitleOcc1 <- (paste0("myapp/pictures/21_hist_pooling/",scentext,"_Occurrence_sc2.png"))
 #y_scale <- seq(0, 100, length = 100)
+
 y_scale <- seq(0, 100, by = 0.4)
-pdf_y_scale <- dnorm(y_scale, mean = mean_y, sd = sd_y)*(6*sd_y/length(y))*numberofanswers
-barplot(pdf_y_scale, names.arg = y_scale, col = "lightblue", border = "black", xlab = "x", ylab = "PDF",main = "Histogramm der y-Koordinaten")
+pdf_y_scale <- dnorm(y_scale, mean = mean_y, sd = sd_y) * (6 * sd_y / length(y)) * numberofanswers
+png(file = filetitleOcc1, width = 1500, height = 1000, res = 150)
+barplot(pdf_y_scale, names.arg = y_scale, col = "lightblue", border = "black", xlab = "", ylab = "Frequency", main = "")#, xaxt = "n")
+
+# x-Skala ändern
+#axis(side = 1, at = seq(0, 100, by = 20), labels = seq(0, 100, by = 20))
+
+dev.off()
+
+
+
+
 
 
 

@@ -24,17 +24,16 @@ for (anz in 1:numberscenarios) {
   OCCURRENCE <- df[,'scaled_uncertainty_middle_Y']
   headtitleImpact <- (paste0(scentext,"- Impact of classical method"))
   headtitleOcc <- (paste0(scentext,"- Probability of occurrence of the classical method"))
-  filetitleImpact <- (paste0("myapp/pictures/33_hist_graphic_center/",scentext,"- Impact.png"))
-  filetitleOcc <- (paste0("myapp/pictures/33_hist_graphic_center/",scentext,"- Occurrence.png"))
+  filetitleImpact <- (paste0("myapp/pictures/34_hist_graphic_center/",scentext,"- Impact.png"))
+  filetitleOcc <- (paste0("myapp/pictures/34_hist_graphic_center/",scentext,"- Occurrence.png"))
   #histImpact <- replace(histImpactclassic,,histImpactclassic-0.5)
   #histImpact <- sapply(histImpactclassic,quantile)
   
   #min_x <- min(IMPACT)
   #max_x <- max(IMPACT)
   #bin_grenzen <- seq(min_x, max_x, by = 0.25)
+  
   bin_grenzen <- seq(0, 100, by = 5)
-  
-  
   png(file=filetitleImpact,width=1500, height=1000, res=150)
   hist(IMPACT,breaks = bin_grenzen, main="", xlab = "Impact value", ylab = "Frequency", xlim = c(0, 100), col = "lightblue", border = "black")
   dev.off()
@@ -43,9 +42,9 @@ for (anz in 1:numberscenarios) {
   hist(OCCURRENCE,breaks = bin_grenzen, main = "", xlab = "Occurrence value", ylab = "Frequency", xlim = c(0, 100), col = "lightblue", border = "black")
   dev.off()
 
-  bin_grenzen <- seq(0, 100, by = 20)
-  filetitleImpact1 <- (paste0("myapp/pictures/33_hist_graphic_center/",scentext,"_steps_Impact.png"))
-  filetitleOcc1 <- (paste0("myapp/pictures/33_hist_graphic_center/",scentext,"_steps_Occurrence.png"))
+  bin_grenzen <- seq(0, 100, by = 2)
+  filetitleImpact1 <- (paste0("myapp/pictures/34_hist_graphic_center/",scentext,"_steps_Impact.png"))
+  filetitleOcc1 <- (paste0("myapp/pictures/34_hist_graphic_center/",scentext,"_steps_Occurrence.png"))
   
   
   png(file=filetitleImpact1,width=1500, height=1000, res=150)
