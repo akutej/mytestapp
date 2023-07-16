@@ -90,7 +90,8 @@ df <- data.frame(
 
 
 answers <- read.csv(file = 'myapp/data/RQ1_corrected_scaled.csv', header=TRUE) #importiere das answers file
-all.answers <- answers %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1)
+#all.answers <- answers %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1)
+all.answers <- answers %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID != "401" & QUES_ID != "402" & QUES_ID != "403")
 number.scenarios <- nrow(as.data.frame(table(all.answers$QUES_ID)))
 scenarios <- as.data.frame(table(all.answers$QUES_ID))
 
@@ -2020,7 +2021,7 @@ for (anz in 1:number.scenarios) {
   
   
   method <- "pooling"
-  group <- "nonecoreteam"
+  group <- "none core team"
   scentext <- (paste0("", actualscenario))
   scenfile <- (paste0("myapp/tex/50_scattering/",scentext,"_ncore_",method,".tex")) 
   
@@ -2068,7 +2069,7 @@ for (anz in 1:number.scenarios) {
   newdfclassic <- data.frame(
     scenario = actualscenario,
     type = actualtype,
-    group = "noncoreteam",
+    group = "non core team",
     method = "classic",
     impact_Median = classicX_metrics$Median,
     impact_StandardDeviation = classicX_metrics$StandardDeviation,
@@ -2093,7 +2094,7 @@ for (anz in 1:number.scenarios) {
   df <- rbind(df, newdfclassic)
   
   method <- "classic"
-  group <- "noncoreteam"
+  group <- "non core team"
   scentext <- (paste0("", actualscenario))
   scenfile <- (paste0("myapp/tex/50_scattering/",scentext,"_ncore_",method,".tex")) 
   
@@ -2186,7 +2187,7 @@ for (anz in 1:number.scenarios) {
   df <- rbind(df, newdfg5)
   
   method <- "graphiccentertogrid"
-  group <- "noncoreteam"
+  group <- "non core team"
   scentext <- (paste0("", actualscenario))
   scenfile <- (paste0("myapp/tex/50_scattering/",scentext,"_ncore_",method,".tex")) 
   
@@ -2248,7 +2249,7 @@ for (anz in 1:number.scenarios) {
   df <- rbind(df, newdfg2)
   
   method <- "graphiccenter"
-  group <- "nonecoreteam"
+  group <- "none core team"
   scentext <- (paste0("", actualscenario))
   scenfile <- (paste0("myapp/tex/50_scattering/",scentext,"_ncore_",method,".tex")) 
   
@@ -2332,7 +2333,7 @@ for (anz in 1:number.scenarios) {
   
   
   method <- "graphicreachedgrid"
-  group <- "noncoreteam"
+  group <- "non core team"
   scentext <- (paste0("", actualscenario))
   scenfile <- (paste0("myapp/tex/50_scattering/",scentext,"_ncore_",method,".tex")) 
   
@@ -2547,7 +2548,7 @@ for (anz in 1:number.scenarios) {
   )
   rownames(newdfweight) <- NULL
   method <- "graphicweight"
-  group <- "noncoreteam"
+  group <- "non core team"
   scentext <- (paste0("", actualscenario))
   scenfile <- (paste0("myapp/tex/50_scattering/",scentext,"_ncore_",method,".tex")) 
   
