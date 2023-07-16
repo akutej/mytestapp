@@ -438,8 +438,8 @@ for (anz in 1:number.scenarios) {
     weight.y.summary_df <- weight.y.summary_df %>% mutate(weight.y.Wahrs = weight.y.Sum / sum(weight.y.Sum))
     weight.y.summary_df <- weight.y.summary_df %>% mutate(weight.y.Histo = weight.y.Wahrs * numberofanswers)
     
-    weight.x.simulations <- sample(weight.x.summary_df$weight.x.scale, size = 10000, replace = TRUE, prob = weight.x.summary_df$weight.x.Wahrs)
-    weight.y.simulations <- sample(weight.y.summary_df$weight.y.scale, size = 10000, replace = TRUE, prob = weight.y.summary_df$weight.y.Wahrs)#500000000
+    weight.x.simulations <- sample(weight.x.summary_df$weight.x.scale, size = 10000000, replace = TRUE, prob = weight.x.summary_df$weight.x.Wahrs)
+    weight.y.simulations <- sample(weight.y.summary_df$weight.y.scale, size = 10000000, replace = TRUE, prob = weight.y.summary_df$weight.y.Wahrs)#500000000
     
     # Mittelwert berechnen
     weight.x.mean <- mean(weight.x.simulations)
