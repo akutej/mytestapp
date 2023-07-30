@@ -18,6 +18,8 @@ df['hitImp'] <- NA
 df['QuestionGroup'] <- NA
 df['uncertaintyIPixel'] <- NA
 df['uncertaintyOPixel'] <- NA
+df['uncertaintyIPercent'] <- NA
+df['uncertaintyOPercent'] <- NA
 df['uncertaintyAreaPixel'] <- NA
 df['uncertaintyPerimeterPixel'] <- NA
 df['uncertaintytotalPixel'] <- NA
@@ -131,6 +133,8 @@ for (i in 1:numberofanswers) {
         
         df[i,'uncertaintyIPixel'] <- uncertaintyIPixel
         df[i,'uncertaintyOPixel'] <- uncertaintyOPixel
+        df[i,'uncertaintyIPercent'] <- ((100/400)*uncertaintyIPixel)
+        df[i,'uncertaintyOPercent'] <- ((100/400)*uncertaintyOPixel)
         df[i,'uncertaintyAreaPixel'] <- uncertaintyAreaPixel
         df[i,'uncertaintyPerimeterPixel'] <- uncertaintyPerimeterPixel
         df[i,'uncertaintytotalPixel'] <- uncertaintytotalPixel
