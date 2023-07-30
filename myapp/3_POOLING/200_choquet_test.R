@@ -1,16 +1,13 @@
 
-
-
-
 capacity <- function(rectangle) {
-  # Berechnet die Breite und Höhe des Rechtecks.
+  # Berechnet die Breite und Höhe des Rechtecks
   width <- abs(rectangle$x2 - rectangle$x1)
   height <- abs(rectangle$y2 - rectangle$y1)
   
-  # Berechnet die Fläche.
+  # Berechnet die Fläche
   area <- width * height
   
-  # Das Gewicht ist der Kehrwert der Fläche.
+  # Das Gewicht ist der Kehrwert der Fläche
   weight <- 1 / area
   
   return(weight)
@@ -19,15 +16,15 @@ capacity <- function(rectangle) {
 
 
 choquet_integral <- function(values, weights) {
-  # Sortiert die Werte in abnehmender Reihenfolge.
+  # Sortiert die Werte in abnehmender Reihenfolge
   order <- order(values, decreasing = TRUE)
   values <- values[order]
   
-  # Behält die zugehörigen Gewichte und berechnet die kumulativen Gewichte.
+  # Behält die zugehörigen Gewichte und berechnet die kumulativen Gewichte
   weights <- weights[order]
   cumulative_weights <- cumsum(weights)
   
-  # Fügt eine Null am Anfang der kumulativen Gewichte hinzu.
+  # Fügt eine Null am Anfang der kumulativen Gewichte hinzu
   cumulative_weights <- c(0, cumulative_weights)
   
   # Berechnet das Choquet-Integral.
@@ -38,36 +35,36 @@ choquet_integral <- function(values, weights) {
 
 
 
-# Erstellt eine Liste von ausgewählten Rechtecken.
+# Liste von Test-Rechtecken
 rectangles <- list(
   list(x1 = 1, y1 = 1, x2 = 2, y2 = 2),
   list(x1 = 2, y1 = 2, x2 = 3, y2 = 3),
   list(x1 = 2, y1 = 2, x2 = 3, y2 = 3)
-  # Fügen Sie weitere Rechtecke hinzu...
+
 )
 
-# Berechnet die Gewichte für jedes Rechteck.
+# Berechnet die Gewichte für jedes Rechteck
 weights <- sapply(rectangles, capacity)
 
-# Normalisiert die Gewichte, so dass sie alle zusammen eins ergeben.
+# Normalisiert die Gewichte, so dass sie alle zusammen eins ergeben
 weights <- weights / sum(weights)
 
-# Berechnet das Choquet-Integral für alle x1, x2, y1 und y2 Werte.
+# Berechnet das Choquet-Integral für alle x1, x2, y1 und y2 Werte
 x1_integral <- choquet_integral(sapply(rectangles, function(rectangle) rectangle$x1), weights)
 x2_integral <- choquet_integral(sapply(rectangles, function(rectangle) rectangle$x2), weights)
 y1_integral <- choquet_integral(sapply(rectangles, function(rectangle) rectangle$y1), weights)
 y2_integral <- choquet_integral(sapply(rectangles, function(rectangle) rectangle$y2), weights)
 
-# Das "konsolidierte" Rechteck ist nun definiert durch die gewichteten x1, x2, y1 und y2 Werte.
+# Das "konsolidierte" Rechteck ist nun definiert durch die gewichteten x1, x2, y1 und y2 Werte
 consolidated_rectangle <- list(x1 = x1_integral, y1 = y1_integral, x2 = x2_integral, y2 = y2_integral)
 
 print (consolidated_rectangle)
 
-# Berechnet das Choquet-Integral für alle x1 Werte.
+# Berechnet das Choquet-Integral für alle x1 Werte
 x1_values <- sapply(rectangles, function(rectangle) rectangle$x1)
 x1_integral <- choquet_integral(x1_values, weights)
 
-# Berechnet die Varianz und den Standardabweichung.
+# Berechnet die Varianz und den Standardabweichung
 x1_variance <- sum(weights * (x1_values - x1_integral)^2)
 x1_std_dev <- sqrt(x1_variance)
 
