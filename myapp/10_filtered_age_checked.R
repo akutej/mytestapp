@@ -45,7 +45,7 @@ accframe4 <- accframe4 %>%
 
 #accframe3 %>% select(ACC2SURV_INFOAGE)
 accframe4 <- accframe4 %>% select(ACC2SURV_RATEGUI,ACC2SURV_INFOAGE, AGEGroup)
-#accframe4
+print (table(accframe4$AGEGroup))
 newtest2 <- aggregate(accframe4, by=list(accframe4$AGEGroup,accframe4$ACC2SURV_RATEGUI), FUN=length)
 newtest2
 

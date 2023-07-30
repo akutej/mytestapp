@@ -1,7 +1,9 @@
 
 library(dplyr)
 library(openxlsx)
-answerstable1 <- read.csv(file = 'myapp/Data/RQ1.csv', header=TRUE) #importiere das answers file
+answerstable1 <- read.csv(file = 'myapp/data/RQ1_corrected_scaled.csv', header=TRUE) #importiere das answers file
+answerstable1 <- answerstable1 %>% filter(QUES_ID != "401" & QUES_ID != "402"& QUES_ID != "403")#Nimmt meine Testdatensätze aus
+
 df <- answerstable1
 
 dfnogroup <- df %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1)
@@ -297,6 +299,7 @@ for (i in 1:numberOfusers) {
   actualuserID <- users[i,"ACC2SURV_ACCID"]
   actualuserRole <- users[i,"ACC2SURV_ROLE"]
   dfaus <- df %>% filter(QUES2SURV_METHOD == "classic" & ACC2SURV_ACCID == actualuserID & ANS2SURV_ANSWERED == 1)
+  #print (actualuserID)
   #print (dfaus)
   
   IMPOCC <- dfaus %>% filter( hitOcc == "TRUE" & hitImp == "TRUE" )
