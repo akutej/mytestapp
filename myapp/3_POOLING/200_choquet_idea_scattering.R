@@ -1,3 +1,22 @@
+library(ggplot2)
+
+
+
+# Gewichteter Median
+gewichteter_median <- function(x, w) {
+  # Sortieren der Daten
+  o <- order(x)
+  sx <- x[o]
+  sw <- w[o]
+  
+  # Berechnen der kumulativen Summe der Gewichte und finden des Indexes, der 50% überschreitet
+  cumsum_w <- cumsum(sw)
+  idx <- which.max(cumsum_w >= sum(sw)/2)
+  
+  # Rückgabe des gewichteten Medians
+  return(sx[idx])
+}
+
 # Definition der Funktion zur Berechnung der Kapazität eines Rechtecks
 capacity <- function(rectangle) {
   # Berechnet die Breite und Höhe des Rechtecks.

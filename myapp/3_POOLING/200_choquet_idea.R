@@ -1,5 +1,18 @@
 
-
+# Funktion für den gewichteter Median
+weighted.median <- function(x, w) {
+  # Sortieren der Daten
+  o <- order(x)
+  sx <- x[o]
+  sw <- w[o]
+  
+  # Berechnen der kumulativen Summe der Gewichte und finden des Indexes, der 50% überschreitet
+  cumsum_w <- cumsum(sw)
+  idx <- which.max(cumsum_w >= sum(sw)/2)
+  
+  # Rückgabe des gewichteten Medians
+  return(sx[idx])
+}
 
 
 capacity <- function(rectangle) {
@@ -46,7 +59,7 @@ rectangles <- list(
   # Fügen Sie weitere Rechtecke hinzu...
 )
 
-# Berechnet die Gewichte für jedes Rechteck.
+# Berechnung der Gewichte für jedes Rechteck.
 weights <- sapply(rectangles, capacity)
 
 # Normalisiert die Gewichte, so dass sie alle zusammen eins ergeben.
