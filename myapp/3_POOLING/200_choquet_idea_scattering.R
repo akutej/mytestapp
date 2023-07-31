@@ -143,7 +143,7 @@ df <- data.frame(x = x_werte, weights = x_weights)
 
 # Erstellen Sie ein gewichtetes Histogramm
 ploti <-ggplot(df, aes(x = x)) +
-  geom_histogram(aes(y = ..density.., weight = weights), bins = 30, fill = "lightblue", color = "black") +
+  geom_histogram(aes(y = after_stat(density), weight = weights), bins = 30, fill = "lightblue", color = "black") +
   theme_minimal() +
   labs(x = "Konsolidierte x-Werte", y = "Dichte", title = "Verteilung der konsolidierten x-Werte")
 

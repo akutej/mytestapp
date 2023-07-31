@@ -361,7 +361,7 @@ for (anz in 1:numberscenarios) {
   #plot(1, 1, type = "n", xlim = c(0, 100), ylim = c(0, 100), xlab = "", ylab = "", asp = 1,panel.first = rect(0, 0, 100, 100, col = "lightyellow"), xaxs = "i", yaxs = "i")
   
   
-  # Zeichnen Sie ein Rechteck mit den gegebenen Koordinaten
+  # Zeichnet ein Rechteck mit den gegebenen Koordinaten
   rect(xleft = rechteck$x1, ybottom = rechteck$y1, xright = rechteck$x2, ytop = rechteck$y2, col = "blue")
   #x_label <- (paste0("x = ",round(x_mittelwert, digits = 2), " ± ", round(x_standardabweichung, digits = 2)))
   #y_label <- (paste0("y = ",round(y_mittelwert, digits = 2), " ± ", round(y_standardabweichung, digits = 2)))
