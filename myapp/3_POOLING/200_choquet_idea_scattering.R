@@ -1,93 +1,67 @@
 library(ggplot2)
 
-
-
-# Gewichteter Median
-gewichteter_median <- function(x, w) {
-  # Sortieren der Daten
-  o <- order(x)
-  sx <- x[o]
-  sw <- w[o]
-  
-  # Berechnen der kumulativen Summe der Gewichte und finden des Indexes, der 50% überschreitet
-  cumsum_w <- cumsum(sw)
-  idx <- which.max(cumsum_w >= sum(sw)/2)
-  
-  # Rückgabe des gewichteten Medians
-  return(sx[idx])
-}
-
-# Definition der Funktion zur Berechnung der Kapazität eines Rechtecks
+# Funktion zur Berechnung der Kapazität der Rechtecke
 capacity <- function(rectangle) {
-  # Berechnet die Breite und Höhe des Rechtecks.
-  width <- abs(rectangle$x2 - rectangle$x1)
-  height <- abs(rectangle$y2 - rectangle$y1)
-  
-  # Berechnet die Fläche.
-  area <- width * height
-  
-  # Das Gewicht ist der Kehrwert der Fläche.
-  weight <- 1 / area
-  
-  return(weight)
+  # Berechnet die Breite und Höhe des Rechtecks
+    width <- abs(rectangle$x2 - rectangle$x1)
+    height <- abs(rectangle$y2 - rectangle$y1)
+  # Berechnet die Fläche des Rechtekcs
+    area <- width * height
+  # Das Gewicht ist der Kehrwert der Fläche
+    weight <- 1 / area
+    return(weight)
 }
 
-# Definition der Funktion für das Choquet-Integral
+# Funktion für das Choquet-Integral
 choquet_integral <- function(values, weights) {
-  # Sortiert die Werte in abnehmender Reihenfolge.
-  order <- order(values, decreasing = TRUE)
-  values <- values[order]
-  
-  # Behält die zugehörigen Gewichte und berechnet die kumulativen Gewichte.
-  weights <- weights[order]
-  cumulative_weights <- cumsum(weights)
-  
-  # Fügt eine Null am Anfang der kumulativen Gewichte hinzu.
-  cumulative_weights <- c(0, cumulative_weights)
-  
-  # Berechnet das Choquet-Integral.
-  integral <- sum(diff(cumulative_weights) * values)
-  
-  return(integral)
+  # Sortiert die Werte in abnehmender Reihenfolge
+    order <- order(values, decreasing = TRUE)
+    values <- values[order]
+  # Behält die zugehörigen Gewichte und berechnet die kumulativen Gewichte
+    weights <- weights[order]
+    cumulative_weights <- cumsum(weights)
+  # Fügt eine Null am Anfang der kumulativen Gewichte hinzu
+    cumulative_weights <- c(0, cumulative_weights)
+  # Berechnet das Choquet-Integral
+    integral <- sum(diff(cumulative_weights) * values)
+    return(integral)
 }
 
-# Erstellt eine Liste von ausgewählten Rechtecken.
-rectangles <- list(
-  list(x1 = 1, y1 = 1, x2 = 2, y2 = 2),
-  list(x1 = 2, y1 = 2, x2 = 3, y2 = 3),
-  list(x1 = 2, y1 = 2, x2 = 3, y2 = 3)
-  # Fügen Sie weitere Rechtecke hinzu...
-)
+# Meine Beispielliste von Rechtecken
+  rectangles <- list(
+    list(x1 = 1,x2 = 2,y1 = 1,y2 = 2),
+    list(x1 = 2,x2 = 3,y1 = 2,y2 = 3),
+    list(x1 = 2,x2 = 3,y1 = 2,y2 = 3)
+  )
 
-# Berechnet die Gewichte für jedes Rechteck.
-weights <- sapply(rectangles, capacity)
+# Berechnet die Gewichte für jedes Rechteck
+  weights <- sapply(rectangles, capacity)
 
-# Normalisiert die Gewichte, so dass sie alle zusammen eins ergeben.
-weights <- weights / sum(weights)
+# Normalisiert die Gewichte, so dass sie alle zusammen eins ergeben
+  weights <- weights / sum(weights)
 
-# Berechnet das Choquet-Integral für alle x1, x2, y1 und y2 Werte.
-x1_integral <- choquet_integral(sapply(rectangles, function(rectangle) rectangle$x1), weights)
-x2_integral <- choquet_integral(sapply(rectangles, function(rectangle) rectangle$x2), weights)
-y1_integral <- choquet_integral(sapply(rectangles, function(rectangle) rectangle$y1), weights)
-y2_integral <- choquet_integral(sapply(rectangles, function(rectangle) rectangle$y2), weights)
+# Berechnet das Choquet-Integral für alle x1, x2, y1 und y2 Werte
+  x1_integral <- choquet_integral(sapply(rectangles, function(rectangle) rectangle$x1), weights)
+  x2_integral <- choquet_integral(sapply(rectangles, function(rectangle) rectangle$x2), weights)
+  y1_integral <- choquet_integral(sapply(rectangles, function(rectangle) rectangle$y1), weights)
+  y2_integral <- choquet_integral(sapply(rectangles, function(rectangle) rectangle$y2), weights)
 
-# Das "konsolidierte" Rechteck ist nun definiert durch die gewichteten x1, x2, y1 und y2 Werte.
-konsolidiertes_rechteck <- list(x1 = x1_integral, y1 = y1_integral, x2 = x2_integral, y2 = y2_integral)
+# Das "konsolidierte" Rechteck ist nun definiert durch die gewichteten x1, x2, y1 und y2 Werte
+  konsolidiertes_rechteck <- list(x1 = x1_integral, x2 = x2_integral, y1 = y1_integral, y2 = y2_integral)
 
-print(konsolidiertes_rechteck)
+  print(konsolidiertes_rechteck)
 
 # Berechnet das Choquet-Integral für alle x1 Werte.
-x1_werte <- sapply(rectangles, function(rectangle) rectangle$x1)
-x1_integral <- choquet_integral(x1_werte, weights)
+  x1_werte <- sapply(rectangles, function(rectangle) rectangle$x1)
+  x1_integral <- choquet_integral(x1_werte, weights)
 
 # Berechnet die Varianz und den Standardabweichung.
-x1_median <- gewichteter_median(x1_werte, weights)
-x1_varianz <- sum(weights * (x1_werte - x1_median)^2)
-x1_standardabweichung <- sqrt(x1_varianz)
+  x1_median <- gewichteter_median(x1_werte, weights)
+  x1_varianz <- sum(weights * (x1_werte - x1_median)^2)
+  x1_standardabweichung <- sqrt(x1_varianz)
 
-print(x1_varianz)
-print(x1_standardabweichung)
-
+#print(x1_varianz)
+#print(x1_standardabweichung)
 
 ######IMPACT und OCCURRENCE ZUSAMMENGEFASST
 # Extrahiert alle X- und Y-Koordinaten
@@ -111,13 +85,29 @@ x_varianz <- sum(x_weights * (x_werte - x_average)^2)
 # Berechnung der Standardabweichung
 x_standardabweichung <- sqrt(x_varianz)
 
-print(x_varianz)
-print(x_standardabweichung)
+print(paste("Varianz von x: ",x_varianz))
+print(paste("Standardabweichung von x: ",x_standardabweichung))
 
 # Berechnung des gewichteten Mittelwerts
 x_mittelwert <- sum(x_werte * x_weights)
 
-print(x_mittelwert)
+print(paste("Mittelwert von x: ",x_mittelwert))
+
+
+#Funktion für den gewichteten Median
+gewichteter_median <- function(x, w) {
+  # Sortieren der Daten
+  o <- order(x)
+  sx <- x[o]
+  sw <- w[o]
+  
+  # Berechnen der kumulativen Summe der Gewichte und finden des Indexes, der 50% überschreitet
+  cumsum_w <- cumsum(sw)
+  idx <- which.max(cumsum_w >= sum(sw)/2)
+  
+  # Rückgabe des gewichteten Medians
+  return(sx[idx])
+}
 
 # Gewichteter Median
 gewichteter_median <- function(x, w) {
@@ -136,14 +126,14 @@ gewichteter_median <- function(x, w) {
 
 x_median <- gewichteter_median(x_werte, x_weights)
 
-print(x_median)
+print(paste("Median von x: ",x_median))
 
 # Erstellen Sie einen Dataframe aus den X-Werten und Gewichten
 df <- data.frame(x = x_werte, weights = x_weights)
 
 # Erstellen Sie ein gewichtetes Histogramm
 ploti <-ggplot(df, aes(x = x)) +
-  geom_histogram(aes(y = ..density.., weight = weights), bins = 30, fill = "lightblue", color = "black") +
+  geom_histogram(aes(y = after_stat(density), weight = weights), bins = 30, fill = "lightblue", color = "black") +
   theme_minimal() +
   labs(x = "Konsolidierte x-Werte", y = "Dichte", title = "Verteilung der konsolidierten x-Werte")
 
@@ -175,7 +165,6 @@ max_x <- gewichtete_quantile(x_werte, x_weights, 1)
 # Berechnung des Interquartilsrange und des Bereichs
 iqr <- q3 - q1
 range_x <- max_x - min_x
-
 print(paste0("Q1: ", q1))
 print(paste0("Q3: ", q3))
 print(paste0("Min: ", min_x))
