@@ -233,6 +233,12 @@ result_df_uncer <- answerstable %>%
   summarize(Durchschnitt_Unsicherheit_X = mean(scaled_uncertainty_X, na.rm = TRUE),
             Durchschnitt_Unsicherheit_Y = mean(scaled_uncertainty_Y, na.rm = TRUE))
 
+
+mean_value_x_box <- mean(answerstable$scaled_uncertainty_X, na.rm = TRUE)
+mean_value_y_box <- mean(answerstable$scaled_uncertainty_Y, na.rm = TRUE)
+# Füge den Mittelwert als roten Punkt hinzu
+
+
 # Wenn du den neuen DataFrame anzeigen möchtest
 print(result_df_uncer)
 
@@ -240,13 +246,283 @@ print(result_df_uncer)
 # Erstelle einen Boxplot für scaled_uncertainty_X
 boxplot(result_df_uncer$Durchschnitt_Unsicherheit_X, 
         main = "Boxplot für scaled_uncertainty_X",
-        ylab = "Durchschnitt_Unsicherheit_X")
+        ylab = "Durchschnitt_Unsicherheit_X",
+        outline = FALSE,
+        ylim = c(0, 100))
+      points(mean_value_x_box, col = "red", pch = 19)
 
+# Öffne eine PNG-Grafikdatei im gewünschten Ordner und definiere die Größe (in Pixeln)
+png("myapp/pictures/paper1/boxplot_IMP_all.png", width = 200, height = 500)
+      
+      # Erstelle einen Boxplot
+      boxplot(result_df_uncer$Durchschnitt_Unsicherheit_X,
+              main = "",
+              ylab = "",
+              outline = FALSE,
+              ylim = c(0, 100))    # Blende die Ausreißer aus
+              points(mean_value_x_box, col = "red", pch = 19)
+      # Schließe die PNG-Grafikdatei
+      dev.off()      
+      
+      
 # Erstelle einen Boxplot für scaled_uncertainty_Y
 boxplot(result_df_uncer$Durchschnitt_Unsicherheit_Y, 
         main = "Boxplot für scaled_uncertainty_Y",
-        ylab = "Durchschnitt_Unsicherheit_Y")
+        ylab = "Durchschnitt_Unsicherheit_Y",
+        outline = FALSE,
+        ylim = c(0, 100))  
+points(mean_value_y_box, col = "red", pch = 19)
 
+png("myapp/pictures/paper1/boxplot_OCC_all.png", width = 200, height = 500)
+
+# Erstelle einen Boxplot
+boxplot(result_df_uncer$Durchschnitt_Unsicherheit_Y,
+        main = "",
+        ylab = "",
+        outline = FALSE,
+        ylim = c(0, 100))    # Blende die Ausreißer aus
+points(mean_value_y_box, col = "red", pch = 19)
+# Schließe die PNG-Grafikdatei
+dev.off()      
+
+
+
+#*************************************************************************************
+result_df_uncer_box_admin <- answerstable %>% filter(Berufsgruppe == "Administration")
+boxplot(result_df_uncer_box_admin$scaled_uncertainty_X,
+        main = "uncertainty IMPACT",
+        ylab = "administration",
+        mean = TRUE,         # Zeige den Mittelwert
+        outline = FALSE,
+        ylim = c(0, 100))    # Blende die Ausreißer aus
+mean_value <- mean(result_df_uncer_box_admin$scaled_uncertainty_X, na.rm = TRUE)
+# Füge den Mittelwert als roten Punkt hinzu
+points(mean_value, col = "red", pch = 19)
+
+png("myapp/pictures/paper1/boxplot_IMP_adm.png", width = 200, height = 500)
+
+# Erstelle einen Boxplot
+boxplot(result_df_uncer_box_admin$scaled_uncertainty_X,
+        main = "",
+        ylab = "",
+        outline = FALSE,
+        ylim = c(0, 100))    # Blende die Ausreißer aus
+points(mean_value, col = "red", pch = 19)
+# Schließe die PNG-Grafikdatei
+dev.off() 
+
+
+
+boxplot(result_df_uncer_box_admin$scaled_uncertainty_Y,
+        main = "uncertainty OCCURRENCE",
+        ylab = "administration",
+        mean = TRUE,         # Zeige den Mittelwert
+        outline = FALSE,
+        ylim = c(0, 100))    # Blende die Ausreißer aus
+mean_value <- mean(result_df_uncer_box_admin$scaled_uncertainty_Y, na.rm = TRUE)
+
+# Füge den Mittelwert als roten Punkt hinzu
+points(mean_value, col = "red", pch = 19)
+
+png("myapp/pictures/paper1/boxplot_OCC_adm.png", width = 200, height = 500)
+
+# Erstelle einen Boxplot
+boxplot(result_df_uncer_box_admin$scaled_uncertainty_Y,
+        main = "",
+        ylab = "",
+        outline = FALSE,
+        ylim = c(0, 100))    # Blende die Ausreißer aus
+points(mean_value, col = "red", pch = 19)
+# Schließe die PNG-Grafikdatei
+dev.off() 
+
+#*************************************************************************************
+
+
+#*************************************************************************************
+result_df_uncer_box_med <- answerstable %>% filter(Berufsgruppe == "medical")
+boxplot(result_df_uncer_box_med$scaled_uncertainty_X,
+        main = "uncertainty IMPACT",
+        ylab = "medical",
+        mean = TRUE,         # Zeige den Mittelwert
+        outline = FALSE)    # Blende die Ausreißer aus
+mean_value <- mean(result_df_uncer_box_med$scaled_uncertainty_X, na.rm = TRUE)
+# Füge den Mittelwert als roten Punkt hinzu
+points(mean_value, col = "red", pch = 19)
+
+png("myapp/pictures/paper1/boxplot_IMP_med.png", width = 200, height = 500)
+
+# Erstelle einen Boxplot
+boxplot(result_df_uncer_box_med$scaled_uncertainty_X,
+        main = "",
+        ylab = "",
+        outline = FALSE,
+        ylim = c(0, 100))    # Blende die Ausreißer aus
+points(mean_value, col = "red", pch = 19)
+# Schließe die PNG-Grafikdatei
+dev.off() 
+
+boxplot(result_df_uncer_box_med$scaled_uncertainty_X,
+        main = "",
+        ylab = "",
+        mean = TRUE,         # Zeige den Mittelwert
+        outline = FALSE)    # Blende die Ausreißer aus
+mean_value <- mean(result_df_uncer_box_med$scaled_uncertainty_Y, na.rm = TRUE)
+
+# Füge den Mittelwert als roten Punkt hinzu
+points(mean_value, col = "red", pch = 19)
+
+png("myapp/pictures/paper1/boxplot_OCC_med.png", width = 200, height = 500)
+
+# Erstelle einen Boxplot
+boxplot(result_df_uncer_box_med$scaled_uncertainty_Y,
+        main = "",
+        ylab = "",
+        outline = FALSE,
+        ylim = c(0, 100))    # Blende die Ausreißer aus
+points(mean_value, col = "red", pch = 19)
+# Schließe die PNG-Grafikdatei
+dev.off() 
+
+#*************************************************************************************
+
+
+#*************************************************************************************
+result_df_uncer_box_care <- answerstable %>% filter(Berufsgruppe == "caregiver")
+boxplot(result_df_uncer_box_care$scaled_uncertainty_X,
+        main = "uncertainty IMPACT",
+        ylab = "caregiver",
+        mean = TRUE,         # Zeige den Mittelwert
+        outline = FALSE)    # Blende die Ausreißer aus
+mean_value <- mean(result_df_uncer_box_care$scaled_uncertainty_X, na.rm = TRUE)
+# Füge den Mittelwert als roten Punkt hinzu
+points(mean_value, col = "red", pch = 19)
+png("myapp/pictures/paper1/boxplot_IMP_care.png", width = 200, height = 500)
+
+# Erstelle einen Boxplot
+boxplot(result_df_uncer_box_care$scaled_uncertainty_X,
+        main = "",
+        ylab = "",
+        outline = FALSE,
+        ylim = c(0, 100))    # Blende die Ausreißer aus
+points(mean_value, col = "red", pch = 19)
+# Schließe die PNG-Grafikdatei
+dev.off() 
+
+boxplot(result_df_uncer_box_care$scaled_uncertainty_Y,
+        main = "uncertainty OCCURRENCE",
+        ylab = "caregiver",
+        mean = TRUE,         # Zeige den Mittelwert
+        outline = FALSE)    # Blende die Ausreißer aus
+mean_value <- mean(result_df_uncer_box_care$scaled_uncertainty_Y, na.rm = TRUE)
+
+# Füge den Mittelwert als roten Punkt hinzu
+points(mean_value, col = "red", pch = 19)
+png("myapp/pictures/paper1/boxplot_OCC_care.png", width = 200, height = 500)
+
+# Erstelle einen Boxplot
+boxplot(result_df_uncer_box_care$scaled_uncertainty_Y,
+        main = "",
+        ylab = "",
+        outline = FALSE,
+        ylim = c(0, 100))    # Blende die Ausreißer aus
+points(mean_value, col = "red", pch = 19)
+# Schließe die PNG-Grafikdatei
+dev.off() 
+
+
+#*************************************************************************************
+
+#*************************************************************************************
+result_df_uncer_box_mgmt <- answerstable %>% filter(Berufsgruppe == "management")
+boxplot(result_df_uncer_box_mgmt$scaled_uncertainty_X,
+        main = "uncertainty IMPACT",
+        ylab = "management",
+        mean = TRUE,         # Zeige den Mittelwert
+        outline = FALSE)    # Blende die Ausreißer aus
+mean_value <- mean(result_df_uncer_box_mgmt$scaled_uncertainty_X, na.rm = TRUE)
+# Füge den Mittelwert als roten Punkt hinzu
+points(mean_value, col = "red", pch = 19)
+png("myapp/pictures/paper1/boxplot_IMP_mgmt.png", width = 200, height = 500)
+
+# Erstelle einen Boxplot
+boxplot(result_df_uncer_box_mgmt$scaled_uncertainty_X,
+        main = "",
+        ylab = "",
+        outline = FALSE,
+        ylim = c(0, 100))    # Blende die Ausreißer aus
+points(mean_value, col = "red", pch = 19)
+# Schließe die PNG-Grafikdatei
+dev.off() 
+
+
+boxplot(result_df_uncer_box_mgmt$scaled_uncertainty_Y,
+        main = "uncertainty OCCURRENCE",
+        ylab = "management",
+        mean = TRUE,         # Zeige den Mittelwert
+        outline = FALSE)    # Blende die Ausreißer aus
+mean_value <- mean(result_df_uncer_box_mgmt$scaled_uncertainty_Y, na.rm = TRUE)
+
+# Füge den Mittelwert als roten Punkt hinzu
+points(mean_value, col = "red", pch = 19)
+
+png("myapp/pictures/paper1/boxplot_OCC_mgmt.png", width = 200, height = 500)
+
+# Erstelle einen Boxplot
+boxplot(result_df_uncer_box_mgmt$scaled_uncertainty_Y,
+        main = "",
+        ylab = "",
+        outline = FALSE,
+        ylim = c(0, 100))    # Blende die Ausreißer aus
+points(mean_value, col = "red", pch = 19)
+# Schließe die PNG-Grafikdatei
+dev.off() 
+#*************************************************************************************
+
+
+#*************************************************************************************
+result_df_uncer_box_tec <- answerstable %>% filter(Berufsgruppe == "technician")
+boxplot(result_df_uncer_box_tec$scaled_uncertainty_X,
+        main = "uncertainty IMPACT",
+        ylab = "technician",
+        mean = TRUE,         # Zeige den Mittelwert
+        outline = FALSE)    # Blende die Ausreißer aus
+mean_value <- mean(result_df_uncer_box_tec$scaled_uncertainty_X, na.rm = TRUE)
+# Füge den Mittelwert als roten Punkt hinzu
+points(mean_value, col = "red", pch = 19)
+png("myapp/pictures/paper1/boxplot_IMP_tec.png", width = 200, height = 500)
+
+# Erstelle einen Boxplot
+boxplot(result_df_uncer_box_tec$scaled_uncertainty_X,
+        main = "",
+        ylab = "",
+        outline = FALSE,
+        ylim = c(0, 100))    # Blende die Ausreißer aus
+points(mean_value, col = "red", pch = 19)
+# Schließe die PNG-Grafikdatei
+dev.off() 
+
+boxplot(result_df_uncer_box_tec$scaled_uncertainty_Y,
+        main = "uncertainty OCCURRENCE",
+        ylab = "technician",
+        mean = TRUE,         # Zeige den Mittelwert
+        outline = FALSE)    # Blende die Ausreißer aus
+mean_value <- mean(result_df_uncer_box_tec$scaled_uncertainty_Y, na.rm = TRUE)
+
+# Füge den Mittelwert als roten Punkt hinzu
+points(mean_value, col = "red", pch = 19)
+png("myapp/pictures/paper1/boxplot_OCC_tec.png", width = 200, height = 500)
+
+# Erstelle einen Boxplot
+boxplot(result_df_uncer_box_tec$scaled_uncertainty_Y,
+        main = "",
+        ylab = "",
+        outline = FALSE,
+        ylim = c(0, 100))    # Blende die Ausreißer aus
+points(mean_value, col = "red", pch = 19)
+# Schließe die PNG-Grafikdatei
+dev.off() 
+#*************************************************************************************
 
 
 result_df_uncer_job <- answerstable %>%
@@ -255,8 +531,13 @@ result_df_uncer_job <- answerstable %>%
             Durchschnitt_Unsicherheit_Y = mean(scaled_uncertainty_Y, na.rm = TRUE))
 
 result_df_uncer_job_all <- answerstable %>%
-  summarize(Durchschnitt_Unsicherheit_X = mean(scaled_uncertainty_X, na.rm = TRUE),
-            Durchschnitt_Unsicherheit_Y = mean(scaled_uncertainty_Y, na.rm = TRUE))
+  summarize(Durchschnitt_Unsicherheit_X = round(mean(scaled_uncertainty_X, na.rm = TRUE),1),
+            Durchschnitt_Unsicherheit_Y = round(mean(scaled_uncertainty_Y, na.rm = TRUE),1))
+
+
+result_df_uncer_job_all <- result_df_uncer_job_all %>%
+  mutate(Berufsgruppe = "Gesamt")  %>%
+  select(Berufsgruppe, everything())
 
 
 # Füge die Gesamtzeile zu result_df_uncer_job hinzu
