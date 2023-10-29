@@ -22,6 +22,15 @@ numberofuser.coreteam <- length(unique(df.coreteam$ACC2SURV_ACCID))
 numberofuser.noncoreteam <- length(unique(df.noncoreteam$ACC2SURV_ACCID))
 users <- unique(df.all$ACC2SURV_ACCID)
 
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# p WERT Berechnung -> category gepaarter t Test +++++++++++++++++++++++++
+# Checken ob Unterschied statisch relevant ist
+# bei jeder Person IMPACT / OCCURRENCE
+
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
 kategorien <- sort(unique(answerstable$QUES_CATEGORY_english))
 print(kategorien)
 
@@ -607,18 +616,7 @@ result_by_job <- result %>%
 
 # Zeigen Sie das resultierende Datenframe
 print(result_by_job, n = Inf)
-#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#+
-#+
-#+
-#+
-# p WERT Berechnung -> category gepaarter t Test +++++++++++++++++++++++++
-# Checken ob Unterschied statisch relevant ist
-# bei jeder Person IMPACT / OCCURRENCE
-
-
-#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
+#newnewnewnewnew
 #gerundeter_df <- rbind(output, output2)
 #scentext <- paste0("usercomparison")
 
