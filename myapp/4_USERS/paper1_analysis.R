@@ -46,6 +46,31 @@ summenzeile <- c(QUES_CATEGORY_english = "Overall Average",
 ergebnis <- rbind(ergebnis, summenzeile)
 print(ergebnis)
 
+#****************************************PErsonenauswertung
+result_personenauswertung <- answerstable %>%
+  group_by(Berufsgruppe) %>%
+  summarize(Anz_X = n_distinct(ACC2SURV_ACCID, na.rm = TRUE))
+
+print(result_personenauswertung)
+
+result_personenauswertung <- answerstable %>%
+  group_by(ACC2SURV_ROLE) %>%
+  summarize(Anz_X = n_distinct(ACC2SURV_ACCID, na.rm = TRUE))
+
+print(result_personenauswertung)
+
+# Gemeinsame Analyse
+result_personenauswertung <- answerstable %>%
+  group_by(Berufsgruppe, ACC2SURV_ROLE) %>%
+  summarize(Anz_X = n_distinct(ACC2SURV_ACCID, na.rm = TRUE),
+            .groups = 'drop') # Verhindert das Drucken einer zusätzlichen Gruppierungsnachricht
+
+print(result_personenauswertung)
+
+
+
+print ("Hier Ende")
+#****************************************PErsonenauswertung ENDE
 
 
 
@@ -546,7 +571,53 @@ result_df_uncer_job <- rbind(result_df_uncer_job, result_df_uncer_job_all)
 # Wenn du den neuen DataFrame anzeigen möchtest
 print(result_df_uncer_job)
 
+#Quotientenbildung+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+result <- answerstable %>%
+  # Gruppierung der Daten nach AccID
+  group_by(ACC2SURV_ACCID) %>%
+  # Zusammenfassung der Ergebnisse für jede AccID
+  summarise(
+    Berufsgruppe = first(Berufsgruppe),  # Behalten Sie die Information zur Berufsgruppe
+    # Zählen der 'wahren' Overlaps und Berechnen der Summe von percent_uncertainty für 'impact'
+    count_true_overlap_impact = sum(hitImp == TRUE, na.rm = TRUE),
+    count_false_overlap_impact = sum(hitImp == FALSE, na.rm = TRUE),
+    total_percent_uncertainty_impact = sum(uncertaintyIPercent, na.rm = TRUE),
+    # Zählen der 'wahren' Overlaps und Berechnen der Summe von percent_uncertainty für 'occurrence'
+    count_true_overlap_occurrence = sum(hitOcc == TRUE, na.rm = TRUE),
+    count_false_overlap_occurrence = sum(hitOcc == FALSE, na.rm = TRUE),
+    total_percent_uncertainty_occurrence = sum(uncertaintyOPercent, na.rm = TRUE)
+  ) %>%
+  # Berechnen des endgültigen Quotienten nach der Zusammenfassung
+  mutate(
+    quotient_impact = ifelse(total_percent_uncertainty_impact > 0, (100/(count_true_overlap_impact+count_false_overlap_impact)*count_true_overlap_impact) / total_percent_uncertainty_impact, NA),
+    quotient_occurrence = ifelse(total_percent_uncertainty_occurrence > 0, (100/(count_true_overlap_occurrence+count_false_overlap_occurrence)*count_true_overlap_occurrence) / total_percent_uncertainty_occurrence, NA)
+  ) %>%
+  select(ACC2SURV_ACCID, Berufsgruppe, quotient_impact, quotient_occurrence)  # Behalten Sie nur die benötigten Spalten
+
+# Zeigen Sie das resultierende Datenframe
+print(result, n = 65)
+
+result_by_job <- result %>%
+  group_by(Berufsgruppe) %>%
+  summarise(
+    avg_quotient_impact = mean(quotient_impact, na.rm = TRUE),
+    avg_quotient_occurrence = mean(quotient_occurrence, na.rm = TRUE)
+  )
+
+# Zeigen Sie das resultierende Datenframe
+print(result_by_job, n = Inf)
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#+
+#+
+#+
+#+
+# p WERT Berechnung -> category gepaarter t Test +++++++++++++++++++++++++
+# Checken ob Unterschied statisch relevant ist
+# bei jeder Person IMPACT / OCCURRENCE
+
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 #gerundeter_df <- rbind(output, output2)
 #scentext <- paste0("usercomparison")
