@@ -1,6 +1,6 @@
 
 library(dplyr)
-library(openxlsx)
+
 answerstable1 <- read.csv(file = 'myapp/data/RQ1_corrected_scaled.csv', header=TRUE) #importiere das answers file
 answerstable1 <- answerstable1 %>% filter(QUES_ID != "401" & QUES_ID != "402"& QUES_ID != "403")#Nimmt meine Testdatensätze aus
 
