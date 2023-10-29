@@ -125,7 +125,7 @@ print (paste0( perO, "% der Antworten überschneiden sich in der Eintrittswahrsc
 
 uncertaintyIoverall <- 0
 for (i in 1:numberofanswers) {
-  uncertaintyelement <- dfnogroup[i,"uncertaintyIPercent"]
+  uncertaintyelement <- dfnogroupx[i,"uncertaintyIPercent"]
   uncertaintyIoverall <- uncertaintyIoverall + uncertaintyelement
 }
 
@@ -135,7 +135,7 @@ print (paste0( uncertaintyIoverall, " Prozent durchschnittliche Unsicherheit in 
 
 uncertaintyOoverall <- 0
 for (m in 1:numberofanswers) {
-  uncertaintyelement <- dfnogroup[m,"uncertaintyOPercent"]
+  uncertaintyelement <- dfnogroupx[m,"uncertaintyOPercent"]
   uncertaintyOoverall <- uncertaintyOoverall + uncertaintyelement
 }
 uncertaintyOoverall <- round((uncertaintyOoverall / numberofanswers),digits=2)
@@ -168,7 +168,7 @@ print (paste0( perO, "% der Antworten überschneiden sich in der Eintrittswahrsc
 
 uncertaintyIoverall <- 0
 for (i in 1:numberofanswers) {
-  uncertaintyelement <- dfnogroup[i,"uncertaintyIPercent"]
+  uncertaintyelement <- dfnogroupc[i,"uncertaintyIPercent"]
   uncertaintyIoverall <- uncertaintyIoverall + uncertaintyelement
 }
 
@@ -178,7 +178,7 @@ print (paste0( uncertaintyIoverall, " Prozent durchschnittliche Unsicherheit in 
 
 uncertaintyOoverall <- 0
 for (m in 1:numberofanswers) {
-  uncertaintyelement <- dfnogroup[m,"uncertaintyOPercent"]
+  uncertaintyelement <- dfnogroupc[m,"uncertaintyOPercent"]
   uncertaintyOoverall <- uncertaintyOoverall + uncertaintyelement
 }
 uncertaintyOoverall <- round((uncertaintyOoverall / numberofanswers),digits=2)
@@ -211,7 +211,7 @@ print (paste0( perO, "% der Antworten überschneiden sich in der Eintrittswahrsc
 
 uncertaintyIoverall <- 0
 for (i in 1:numberofanswers) {
-  uncertaintyelement <- dfnogroup[i,"uncertaintyIPercent"]
+  uncertaintyelement <- dfnogroupv[i,"uncertaintyIPercent"]
   uncertaintyIoverall <- uncertaintyIoverall + uncertaintyelement
 }
 
@@ -221,7 +221,7 @@ print (paste0( uncertaintyIoverall, " Prozent durchschnittliche Unsicherheit in 
 
 uncertaintyOoverall <- 0
 for (m in 1:numberofanswers) {
-  uncertaintyelement <- dfnogroup[m,"uncertaintyOPercent"]
+  uncertaintyelement <- dfnogroupv[m,"uncertaintyOPercent"]
   uncertaintyOoverall <- uncertaintyOoverall + uncertaintyelement
 }
 uncertaintyOoverall <- round((uncertaintyOoverall / numberofanswers),digits=2)
@@ -254,7 +254,7 @@ print (paste0( perO, "% der Antworten überschneiden sich in der Eintrittswahrsc
 
 uncertaintyIoverall <- 0
 for (i in 1:numberofanswers) {
-  uncertaintyelement <- dfnogroup[i,"uncertaintyIPercent"]
+  uncertaintyelement <- dfnogroupb[i,"uncertaintyIPercent"]
   uncertaintyIoverall <- uncertaintyIoverall + uncertaintyelement
 }
 
@@ -264,7 +264,7 @@ print (paste0( uncertaintyIoverall, " Prozent durchschnittliche Unsicherheit in 
 
 uncertaintyOoverall <- 0
 for (m in 1:numberofanswers) {
-  uncertaintyelement <- dfnogroup[m,"uncertaintyOPercent"]
+  uncertaintyelement <- dfnogroupb[m,"uncertaintyOPercent"]
   uncertaintyOoverall <- uncertaintyOoverall + uncertaintyelement
 }
 uncertaintyOoverall <- round((uncertaintyOoverall / numberofanswers),digits=2)
@@ -381,8 +381,8 @@ plot (plotEintritt,main="Empirische Verteilung - Überschneidung Eintrittswahrsc
 hist(histuncertI)
 hist(histuncertO)
 #hist(histuncertO)
-hist(dfnogroup$uncertaintyIPercent,main="Unsicherheit Auswirkung",breaks=20)
-hist(dfnogroup$uncertaintyOPercent,main="Unsicherheit Eintrittswahrscheinlichkeit",breaks=20)
+hist(dfnogroup$uncertaintyIPercent,main="Uncertainty of the Impact",breaks=20)
+hist(dfnogroup$uncertaintyOPercent,main="Uncertainty of the Probability of Occurrence",breaks=20)
 
 
 dfnogroup1 <- dfnogroup %>% filter(ACC2SURV_ROLE == "1")
