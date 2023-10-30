@@ -1,5 +1,4 @@
 
-library(plotrix)
 library(dplyr)
 library(ggplot2)
 library(grid)
@@ -57,6 +56,13 @@ for (category in categories) {
 #ungepaarter Wilcox Test************************
 ct1.values <- (df.coreteam$uncertaintyIPercent)
 ct2.values <- (df.nonecoreteam$uncertaintyIPercent)
+print (ct1.values)
+print (ct2.values)
+wilcox_result.table2 <- wilcox.test(ct1.values, ct2.values, paired = FALSE)
+print (wilcox_result.table2)
+
+ct1.values <- (df.coreteam$uncertaintyOPercent)
+ct2.values <- (df.nonecoreteam$uncertaintyOPercent)
 print (ct1.values)
 print (ct2.values)
 wilcox_result.table2 <- wilcox.test(ct1.values, ct2.values, paired = FALSE)

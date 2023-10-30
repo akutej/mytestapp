@@ -1,5 +1,4 @@
 
-library(plotrix)
 library(dplyr)
 library(ggplot2)
 library(grid)
@@ -591,11 +590,11 @@ result <- answerstable %>%
     # Zählen der 'wahren' Overlaps und Berechnen der Summe von percent_uncertainty für 'impact'
     count_true_overlap_impact = sum(hitImp == TRUE, na.rm = TRUE),
     count_false_overlap_impact = sum(hitImp == FALSE, na.rm = TRUE),
-    total_percent_uncertainty_impact = sum(uncertaintyIPercent, na.rm = TRUE),
+    total_percent_uncertainty_impact = median(uncertaintyIPercent, na.rm = TRUE),
     # Zählen der 'wahren' Overlaps und Berechnen der Summe von percent_uncertainty für 'occurrence'
     count_true_overlap_occurrence = sum(hitOcc == TRUE, na.rm = TRUE),
     count_false_overlap_occurrence = sum(hitOcc == FALSE, na.rm = TRUE),
-    total_percent_uncertainty_occurrence = sum(uncertaintyOPercent, na.rm = TRUE)
+    total_percent_uncertainty_occurrence = median(uncertaintyOPercent, na.rm = TRUE)
   ) %>%
   # Berechnen des endgültigen Quotienten nach der Zusammenfassung
   mutate(
@@ -610,8 +609,8 @@ print(result, n = 65)
 result_by_job <- result %>%
   group_by(Berufsgruppe) %>%
   summarise(
-    avg_quotient_impact = mean(quotient_impact, na.rm = TRUE),
-    avg_quotient_occurrence = mean(quotient_occurrence, na.rm = TRUE)
+    avg_quotient_impact = median(quotient_impact, na.rm = TRUE),
+    avg_quotient_occurrence = median(quotient_occurrence, na.rm = TRUE)
   )
 
 # Zeigen Sie das resultierende Datenframe
