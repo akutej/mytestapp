@@ -69,6 +69,22 @@ wilcox_result.table2 <- wilcox.test(ct1.values, ct2.values, paired = FALSE)
 print (wilcox_result.table2)
 #df.nonecoreteam
 
+# chi2Test percent of overlaps
+
+
+
+ct1.values <- sum(df.coreteam$hitImp == TRUE | df.coreteam$hitImp == FALSE)
+ct1.values.yes <- sum(df.coreteam$hitImp == TRUE)
+ct1.values.not <- sum(df.coreteam$hitImp == FALSE)
+
+#ct2.values <- (df.nonecoreteam$uncertaintyOPercent)
+print (ct1.values)
+print (ct1.values.yes)
+print (ct1.values.not)
+#print (ct2.values)
+#wilcox_result.table2 <- wilcox.test(ct1.values, ct2.values, paired = FALSE)
+#print (wilcox_result.table2)
+
 
 
 
