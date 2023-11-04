@@ -52,6 +52,14 @@ for (category in categories) {
   print(wilcox_result) 
 }
 
+overall_zwischen1 <- (answerstable$uncertaintyIPercent)
+overall_zwischen2 <- (answerstable$uncertaintyOPercent)
+wilcox_overall <- wilcox.test(overall_zwischen1, overall_zwischen2, paired = TRUE)
+print ("****GESAMT***")
+print(wilcox_overall) 
+print ("*************")
+
+
 
 #ungepaarter Wilcox Test************************
 ct1.values <- (df.coreteam$uncertaintyIPercent)
