@@ -544,6 +544,8 @@ i_gruppen <- factor(rep(c("admi", "care", "mana","medi","tech"), times = c(n_i_a
 o_daten <- c(o_admi,o_care,o_mana,o_medi,o_tech)
 o_gruppen <- factor(rep(c("admi", "care", "mana","medi","tech"), times = c(n_o_admi,n_o_care,n_o_mana,n_o_medi,n_o_tech))) # 'times' gibt die Anzahl pro Gruppe an
 
+
+
 # Durchführung des Kruskal-Wallis-Tests
 i_kruskal_test <- kruskal.test(i_daten, i_gruppen)
 o_kruskal_test <- kruskal.test(o_daten, o_gruppen)
@@ -551,10 +553,104 @@ o_kruskal_test <- kruskal.test(o_daten, o_gruppen)
 print(i_kruskal_test)
 print(o_kruskal_test)
 
+#*DIFFERENCE IMPACT**************************************************************************************
+
+answers_adm_X_all <-  round(mean(answerstable$scaled_distance_CtoG_X[answerstable$Berufsgruppe == "Administration"], na.rm = TRUE),2)
+answers_adm_Y_all <-  round(mean(answerstable$scaled_distance_CtoG_Y[answerstable$Berufsgruppe == "Administration"], na.rm = TRUE),2)
+
+answers_care_X_all <-  round(mean(answerstable$scaled_distance_CtoG_X[answerstable$Berufsgruppe == "caregiver"], na.rm = TRUE),2)
+answers_care_Y_all <-  round(mean(answerstable$scaled_distance_CtoG_Y[answerstable$Berufsgruppe == "caregiver"], na.rm = TRUE),2)
+
+answers_mgt_X_all <-  round(mean(answerstable$scaled_distance_CtoG_X[answerstable$Berufsgruppe == "management"], na.rm = TRUE),2)
+answers_mgt_Y_all <-  round(mean(answerstable$scaled_distance_CtoG_Y[answerstable$Berufsgruppe == "management"], na.rm = TRUE),2)
+
+answers_med_X_all <-  round(mean(answerstable$scaled_distance_CtoG_X[answerstable$Berufsgruppe == "medical"], na.rm = TRUE),2)
+answers_med_Y_all <-  round(mean(answerstable$scaled_distance_CtoG_Y[answerstable$Berufsgruppe == "medical"], na.rm = TRUE),2)
+
+answers_tec_X_all <-  round(mean(answerstable$scaled_distance_CtoG_X[answerstable$Berufsgruppe == "technician"], na.rm = TRUE),2)
+answers_tec_Y_all <-  round(mean(answerstable$scaled_distance_CtoG_Y[answerstable$Berufsgruppe == "technician"], na.rm = TRUE),2)
+
+answers_X_all <-  round(mean(answerstable$scaled_distance_CtoG_X, na.rm = TRUE),2)
+answers_Y_all <-  round(mean(answerstable$scaled_distance_CtoG_Y, na.rm = TRUE),2)
+
+
+cat (answers_adm_X_all,answers_adm_Y_all,"\n")
+cat (answers_care_X_all,answers_care_Y_all,"\n")
+cat (answers_mgt_X_all,answers_mgt_Y_all,"\n")
+cat (answers_med_X_all,answers_med_Y_all,"\n")
+cat (answers_tec_X_all,answers_tec_Y_all,"\n")
+cat (answers_X_all,answers_Y_all,"\n")
+
+answers_adm_X_all <-  median(answerstable$scaled_distance_CtoG_X[answerstable$Berufsgruppe == "Administration"], na.rm = TRUE)
+answers_adm_Y_all <-  median(answerstable$scaled_distance_CtoG_Y[answerstable$Berufsgruppe == "Administration"], na.rm = TRUE)
+
+answers_care_X_all <-  median(answerstable$scaled_distance_CtoG_X[answerstable$Berufsgruppe == "caregiver"], na.rm = TRUE)
+answers_care_Y_all <-  median(answerstable$scaled_distance_CtoG_Y[answerstable$Berufsgruppe == "caregiver"], na.rm = TRUE)
+
+answers_mgt_X_all <-  median(answerstable$scaled_distance_CtoG_X[answerstable$Berufsgruppe == "management"], na.rm = TRUE)
+answers_mgt_Y_all <-  median(answerstable$scaled_distance_CtoG_Y[answerstable$Berufsgruppe == "management"], na.rm = TRUE)
+
+answers_med_X_all <-  median(answerstable$scaled_distance_CtoG_X[answerstable$Berufsgruppe == "medical"], na.rm = TRUE)
+answers_med_Y_all <-  median(answerstable$scaled_distance_CtoG_Y[answerstable$Berufsgruppe == "medical"], na.rm = TRUE)
+
+answers_tec_X_all <-  median(answerstable$scaled_distance_CtoG_X[answerstable$Berufsgruppe == "technician"], na.rm = TRUE)
+answers_tec_Y_all <-  median(answerstable$scaled_distance_CtoG_Y[answerstable$Berufsgruppe == "technician"], na.rm = TRUE)
+
+answers_X_all <-  median(answerstable$scaled_distance_CtoG_X, na.rm = TRUE)
+answers_Y_all <-  median(answerstable$scaled_distance_CtoG_Y, na.rm = TRUE)
+
+
+cat (answers_adm_X_all,answers_adm_Y_all,"\n")
+cat (answers_care_X_all,answers_care_Y_all,"\n")
+cat (answers_mgt_X_all,answers_mgt_Y_all,"\n")
+cat (answers_med_X_all,answers_med_Y_all,"\n")
+cat (answers_tec_X_all,answers_tec_Y_all,"\n")
+cat (answers_X_all,answers_Y_all,"\n")
 
 
 
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# p WERT Berechnung -> category gepaarter  WILCOXON Test +++++++++++++++++++++++++
+# Checken ob Unterschied statisch relevant ist
+# bei jeder DIFFERENCE IMPACT / OCCURRENCE
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+i_admi <- (answerstable$scaled_distance_CtoG_X[answerstable$Berufsgruppe == "Administration"])
+o_admi <- (answerstable$scaled_distance_CtoG_Y[answerstable$Berufsgruppe == "Administration"])
+i_care <- (answerstable$scaled_distance_CtoG_X[answerstable$Berufsgruppe == "caregiver"])
+o_care <- (answerstable$scaled_distance_CtoG_Y[answerstable$Berufsgruppe == "caregiver"])
+i_mana <- (answerstable$scaled_distance_CtoG_X[answerstable$Berufsgruppe == "management"])
+o_mana <- (answerstable$scaled_distance_CtoG_Y[answerstable$Berufsgruppe == "management"])
+i_medi <- (answerstable$scaled_distance_CtoG_X[answerstable$Berufsgruppe == "medical"])
+o_medi <- (answerstable$scaled_distance_CtoG_Y[answerstable$Berufsgruppe == "medical"])
+i_tech <- (answerstable$scaled_distance_CtoG_X[answerstable$Berufsgruppe == "technician"])
+o_tech <- (answerstable$scaled_distance_CtoG_Y[answerstable$Berufsgruppe == "technician"])
+
+print ("Administration")
+wilcox_admi <- wilcox.test(i_admi, o_admi, paired = TRUE)
+print (wilcox_admi)
+
+print ("Caregiver")
+wilcox_care <- wilcox.test(i_care, o_care, paired = TRUE)
+print (wilcox_care)
+
+print ("Management")
+wilcox_mana <- wilcox.test(i_mana, o_mana, paired = TRUE)
+print (wilcox_mana)
+
+print ("Medical")
+wilcox_medi <- wilcox.test(i_medi, o_medi, paired = TRUE)
+print (wilcox_medi)
+
+print ("Technician")
+wilcox_tech <- wilcox.test(i_tech, o_tech, paired = TRUE)
+print (wilcox_tech)
+
+print ("Overall")
+overall_zwischen1 <- (answerstable$scaled_distance_CtoG_X)
+overall_zwischen2 <- (answerstable$scaled_distance_CtoG_Y)
+wilcox_overall <- wilcox.test(overall_zwischen1, overall_zwischen2, paired = TRUE)
+print (wilcox_overall)
 
 
 
