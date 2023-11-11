@@ -8,6 +8,7 @@ library(gplots)
 library(tibble)
 library(readxl)
 library(stats)
+library(FSA)
 
 
 answerstable <- read.xlsx('myapp/data/RQ1_corrected_scaled_2.xlsx') #importiert das answers file
@@ -258,7 +259,10 @@ dimnames(imp_daten_admi_care) <- list(Team = c("admi", "care"),
 # Anzeigen der Tabelle
 print (imp_daten_admi_care)
 print ("IMPACT ADMINISTRATOR CAREGIVER")
-print (chisq.test(imp_daten_admi_care))
+result_imp_daten_admi_care <- (chisq.test(imp_daten_admi_care))
+print (result_imp_daten_admi_care)
+p_imp_daten_admi_care <- result_imp_daten_admi_care$p.value
+
 # Erstellen der Matrix
 occ_daten_admi_care <- matrix(c(occ_admi.values.yes, occ_admi.values.not, occ_care.values.yes, occ_care.values.not), # die Zahlen hier sollten Ihre beobachteten Häufigkeiten sein
                               nrow = 2,           # zwei Zeilen für die zwei Teams
@@ -269,7 +273,10 @@ dimnames(occ_daten_admi_care) <- list(Team = c("admi", "care"),
 # Anzeigen der Tabelle
 print (occ_daten_admi_care)
 print ("OCCURRENCE ADMINISTRATOR CAREGIVER")
-print (chisq.test(occ_daten_admi_care))
+result_occ_daten_admi_care <- (chisq.test(occ_daten_admi_care))
+print (result_occ_daten_admi_care)
+p_occ_daten_admi_care <- result_occ_daten_admi_care$p.value
+
 
 # Erstellen der Matrix
 imp_daten_admi_mana <- matrix(c(imp_admi.values.yes, imp_admi.values.not, imp_mana.values.yes, imp_mana.values.not), # die Zahlen hier sollten Ihre beobachteten Häufigkeiten sein
@@ -282,7 +289,10 @@ dimnames(imp_daten_admi_mana) <- list(Team = c("admi", "mana"),
 # Anzeigen der Tabelle
 print (imp_daten_admi_mana)
 print ("IMPACT ADMINISTRATOR MANAGER")
-print (chisq.test(imp_daten_admi_mana))
+result_imp_daten_admi_mana <- (chisq.test(imp_daten_admi_mana))
+print (result_imp_daten_admi_mana)
+p_imp_daten_admi_mana <- result_imp_daten_admi_mana$p.value
+
 
 # Erstellen der Matrix
 occ_daten_admi_mana <- matrix(c(occ_admi.values.yes, occ_admi.values.not, occ_mana.values.yes, occ_mana.values.not), # die Zahlen hier sollten Ihre beobachteten Häufigkeiten sein
@@ -296,7 +306,9 @@ dimnames(occ_daten_admi_mana) <- list(Team = c("admi", "mana"),
 # Anzeigen der Tabelle
 print (occ_daten_admi_mana)
 print ("OCCURRENCE ADMINISTRATOR MANAGER")
-print (chisq.test(occ_daten_admi_mana))
+result_occ_daten_admi_mana <- (chisq.test(occ_daten_admi_mana))
+print (result_occ_daten_admi_mana)
+p_occ_daten_admi_mana <- result_occ_daten_admi_mana$p.value
 
 # Erstellen der Matrix
 imp_daten_admi_medi <- matrix(c(imp_admi.values.yes, imp_admi.values.not, imp_medi.values.yes, imp_medi.values.not), # die Zahlen hier sollten Ihre beobachteten Häufigkeiten sein
@@ -310,7 +322,11 @@ dimnames(imp_daten_admi_medi) <- list(Team = c("admi", "medi"),
 # Anzeigen der Tabelle
 print (imp_daten_admi_medi)
 print ("IMPACT ADMINISTRATOR MEDICAL")
-print (chisq.test(imp_daten_admi_medi))
+result_imp_daten_admi_medi <- (chisq.test(imp_daten_admi_medi))
+print (result_imp_daten_admi_medi)
+p_imp_daten_admi_medi <- result_imp_daten_admi_medi$p.value
+
+
 # Erstellen der Matrix
 occ_daten_admi_medi <- matrix(c(occ_admi.values.yes, occ_admi.values.not, occ_medi.values.yes, occ_medi.values.not), # die Zahlen hier sollten Ihre beobachteten Häufigkeiten sein
                               nrow = 2,           # zwei Zeilen für die zwei Teams
@@ -323,7 +339,9 @@ dimnames(occ_daten_admi_medi) <- list(Team = c("admi", "medi"),
 # Anzeigen der Tabelle
 print (occ_daten_admi_medi)
 print ("OCCURRENCE ADMINISTRATOR MEDICAL")
-print (chisq.test(occ_daten_admi_medi))
+result_occ_daten_admi_medi <- (chisq.test(occ_daten_admi_medi))
+print (result_occ_daten_admi_medi)
+p_occ_daten_admi_medi <- result_occ_daten_admi_medi$p.value
 
 # Erstellen der Matrix
 imp_daten_admi_tech <- matrix(c(imp_admi.values.yes, imp_admi.values.not, imp_tech.values.yes, imp_tech.values.not), # die Zahlen hier sollten Ihre beobachteten Häufigkeiten sein
@@ -337,7 +355,10 @@ dimnames(imp_daten_admi_tech) <- list(Team = c("admi", "tech"),
 # Anzeigen der Tabelle
 print (imp_daten_admi_tech)
 print ("IMPACT ADMINISTRATOR TECHNICAL")
-print (chisq.test(imp_daten_admi_tech))
+result_imp_daten_admi_tech <- (chisq.test(imp_daten_admi_tech))
+print (result_imp_daten_admi_tech)
+p_imp_daten_admi_tech <- result_imp_daten_admi_tech$p.value
+
 # Erstellen der Matrix
 occ_daten_admi_tech <- matrix(c(occ_admi.values.yes, occ_admi.values.not, occ_tech.values.yes, occ_tech.values.not), # die Zahlen hier sollten Ihre beobachteten Häufigkeiten sein
                               nrow = 2,           # zwei Zeilen für die zwei Teams
@@ -350,7 +371,9 @@ dimnames(occ_daten_admi_tech) <- list(Team = c("admi", "tech"),
 # Anzeigen der Tabelle
 print (occ_daten_admi_tech)
 print ("OCCURRENCE ADMINISTRATOR TECHNICAL")
-print (chisq.test(occ_daten_admi_tech))
+result_occ_daten_admi_tech <- (chisq.test(occ_daten_admi_tech))
+print (result_occ_daten_admi_tech)
+p_occ_daten_admi_tech <- result_occ_daten_admi_tech$p.value
 
 # Erstellen der Matrix
 imp_daten_care_mana <- matrix(c(imp_care.values.yes, imp_care.values.not, imp_mana.values.yes, imp_mana.values.not), # die Zahlen hier sollten Ihre beobachteten Häufigkeiten sein
@@ -364,7 +387,11 @@ dimnames(imp_daten_care_mana) <- list(Team = c("care", "mana"),
 # Anzeigen der Tabelle
 print (imp_daten_care_mana)
 print ("IMPACT CAREGIVER MANAGER")
-print (chisq.test(imp_daten_care_mana))
+result_imp_daten_care_mana <- (chisq.test(imp_daten_care_mana))
+print (result_imp_daten_care_mana)
+p_imp_daten_care_mana <- result_imp_daten_care_mana$p.value
+
+
 # Erstellen der Matrix
 occ_daten_care_mana <- matrix(c(occ_care.values.yes, occ_care.values.not, occ_mana.values.yes, occ_mana.values.not), # die Zahlen hier sollten Ihre beobachteten Häufigkeiten sein
                               nrow = 2,           # zwei Zeilen für die zwei Teams
@@ -377,7 +404,10 @@ dimnames(occ_daten_care_mana) <- list(Team = c("care", "mana"),
 # Anzeigen der Tabelle
 print (occ_daten_care_mana)
 print ("OCCURRENCE CAREGIVER MANAGER")
-print (chisq.test(occ_daten_care_mana))
+result_occ_daten_care_mana <- (chisq.test(occ_daten_care_mana))
+print (result_occ_daten_care_mana)
+p_occ_daten_care_mana <- result_occ_daten_care_mana$p.value
+
 
 # Erstellen der Matrix
 imp_daten_care_medi <- matrix(c(imp_care.values.yes, imp_care.values.not, imp_medi.values.yes, imp_medi.values.not), # die Zahlen hier sollten Ihre beobachteten Häufigkeiten sein
@@ -391,7 +421,11 @@ dimnames(imp_daten_care_medi) <- list(Team = c("care", "medi"),
 # Anzeigen der Tabelle
 print (imp_daten_care_medi)
 print ("IMPACT CAREGIVER MEDICAL")
-print (chisq.test(imp_daten_care_medi))
+result_imp_daten_care_medi <- (chisq.test(imp_daten_care_medi))
+print (result_imp_daten_care_medi)
+p_imp_daten_care_medi <- result_imp_daten_care_medi$p.value
+
+
 # Erstellen der Matrix
 occ_daten_care_medi <- matrix(c(occ_care.values.yes, occ_care.values.not, occ_medi.values.yes, occ_medi.values.not), # die Zahlen hier sollten Ihre beobachteten Häufigkeiten sein
                               nrow = 2,           # zwei Zeilen für die zwei Teams
@@ -404,7 +438,9 @@ dimnames(occ_daten_care_medi) <- list(Team = c("care", "medi"),
 # Anzeigen der Tabelle
 print (occ_daten_care_medi)
 print ("OCCURRENCE CAREGIVER MEDICAL")
-print (chisq.test(occ_daten_care_medi))
+result_occ_daten_care_medi <- (chisq.test(occ_daten_care_medi))
+print (result_occ_daten_care_medi)
+p_occ_daten_care_medi <- result_occ_daten_care_medi$p.value
 
 # Erstellen der Matrix
 imp_daten_care_tech <- matrix(c(imp_care.values.yes, imp_care.values.not, imp_tech.values.yes, imp_tech.values.not), # die Zahlen hier sollten Ihre beobachteten Häufigkeiten sein
@@ -418,7 +454,9 @@ dimnames(imp_daten_care_tech) <- list(Team = c("care", "tech"),
 # Anzeigen der Tabelle
 print (imp_daten_care_tech)
 print ("IMPACT CAREGIVER TECHNICAL")
-print (chisq.test(imp_daten_care_tech))
+result_imp_daten_care_tech <- (chisq.test(imp_daten_care_tech))
+print (result_imp_daten_care_tech)
+p_imp_daten_care_tech <- result_imp_daten_care_tech$p.value
 # Erstellen der Matrix
 occ_daten_care_tech <- matrix(c(occ_care.values.yes, occ_care.values.not, occ_tech.values.yes, occ_tech.values.not), # die Zahlen hier sollten Ihre beobachteten Häufigkeiten sein
                               nrow = 2,           # zwei Zeilen für die zwei Teams
@@ -431,7 +469,9 @@ dimnames(occ_daten_care_tech) <- list(Team = c("care", "tech"),
 # Anzeigen der Tabelle
 print (occ_daten_care_tech)
 print ("OCCURRENCE CAREGIVER TECHNICAL")
-print (chisq.test(occ_daten_care_tech))
+result_occ_daten_care_tech <- (chisq.test(occ_daten_care_tech))
+print (result_occ_daten_care_tech)
+p_occ_daten_care_tech <- result_occ_daten_care_tech$p.value
 
 # Erstellen der Matrix
 imp_daten_mana_medi <- matrix(c(imp_mana.values.yes, imp_mana.values.not, imp_medi.values.yes, imp_medi.values.not), # die Zahlen hier sollten Ihre beobachteten Häufigkeiten sein
@@ -445,7 +485,10 @@ dimnames(imp_daten_mana_medi) <- list(Team = c("mana", "medi"),
 # Anzeigen der Tabelle
 print (imp_daten_mana_medi)
 print ("IMPACT MANAGER MEDICAL")
-print (chisq.test(imp_daten_mana_medi))
+result_imp_daten_mana_medi <- (chisq.test(imp_daten_mana_medi))
+print (result_imp_daten_mana_medi)
+p_imp_daten_mana_medi <- result_imp_daten_mana_medi$p.value
+
 # Erstellen der Matrix
 occ_daten_mana_medi <- matrix(c(occ_mana.values.yes, occ_mana.values.not, occ_medi.values.yes, occ_medi.values.not), # die Zahlen hier sollten Ihre beobachteten Häufigkeiten sein
                               nrow = 2,           # zwei Zeilen für die zwei Teams
@@ -458,7 +501,9 @@ dimnames(occ_daten_mana_medi) <- list(Team = c("mana", "medi"),
 # Anzeigen der Tabelle
 print (occ_daten_mana_medi)
 print ("OCCURRENCE MANAGER MEDICAL")
-print (chisq.test(occ_daten_mana_medi))
+result_occ_daten_mana_medi <- (chisq.test(occ_daten_mana_medi))
+print (result_occ_daten_mana_medi)
+p_occ_daten_mana_medi <- result_occ_daten_mana_medi$p.value
 
 # Erstellen der Matrix
 imp_daten_mana_tech <- matrix(c(imp_mana.values.yes, imp_mana.values.not, imp_tech.values.yes, imp_tech.values.not), # die Zahlen hier sollten Ihre beobachteten Häufigkeiten sein
@@ -472,7 +517,10 @@ dimnames(imp_daten_mana_tech) <- list(Team = c("mana", "tech"),
 # Anzeigen der Tabelle
 print (imp_daten_mana_tech)
 print ("IMPACT MANAGER TECHNICAL")
-print (chisq.test(imp_daten_mana_tech))
+result_imp_daten_mana_tech <- (chisq.test(imp_daten_mana_tech))
+print (result_imp_daten_mana_tech)
+p_imp_daten_mana_tech <- result_imp_daten_mana_tech$p.value
+
 # Erstellen der Matrix
 occ_daten_mana_tech <- matrix(c(occ_mana.values.yes, occ_mana.values.not, occ_tech.values.yes, occ_tech.values.not), # die Zahlen hier sollten Ihre beobachteten Häufigkeiten sein
                               nrow = 2,           # zwei Zeilen für die zwei Teams
@@ -485,8 +533,9 @@ dimnames(occ_daten_mana_tech) <- list(Team = c("mana", "tech"),
 # Anzeigen der Tabelle
 print (occ_daten_mana_tech)
 print ("OCCURRENCE MANAGER TECHNICAL")
-print (chisq.test(occ_daten_mana_tech))
-
+result_occ_daten_mana_tech <- (chisq.test(occ_daten_mana_tech))
+print (result_occ_daten_mana_tech)
+p_occ_daten_mana_tech <- result_occ_daten_mana_tech$p.value
 
 # Erstellen der Matrix
 imp_daten_medi_tech <- matrix(c(imp_medi.values.yes, imp_medi.values.not, imp_tech.values.yes, imp_tech.values.not), # die Zahlen hier sollten Ihre beobachteten Häufigkeiten sein
@@ -500,7 +549,10 @@ dimnames(imp_daten_medi_tech) <- list(Team = c("medi", "tech"),
 # Anzeigen der Tabelle
 print (imp_daten_medi_tech)
 print ("IMPACT MEDICAL TECHNICAL")
-print (chisq.test(imp_daten_medi_tech))
+result_imp_daten_medi_tech <- (chisq.test(imp_daten_medi_tech))
+print (result_imp_daten_medi_tech)
+p_imp_daten_medi_tech <- result_imp_daten_medi_tech$p.value
+
 # Erstellen der Matrix
 occ_daten_medi_tech <- matrix(c(occ_medi.values.yes, occ_medi.values.not, occ_tech.values.yes, occ_tech.values.not), # die Zahlen hier sollten Ihre beobachteten Häufigkeiten sein
                               nrow = 2,           # zwei Zeilen für die zwei Teams
@@ -513,7 +565,9 @@ dimnames(occ_daten_medi_tech) <- list(Team = c("medi", "tech"),
 # Anzeigen der Tabelle
 print (occ_daten_medi_tech)
 print ("OCCURRENCE MEDICAL TECHNICAL")
-print (chisq.test(occ_daten_medi_tech))
+result_occ_daten_medi_tech <- (chisq.test(occ_daten_medi_tech))
+print (result_occ_daten_medi_tech)
+p_occ_daten_medi_tech <- result_occ_daten_medi_tech$p.value
 
 
 #****************************************************
@@ -652,7 +706,64 @@ overall_zwischen2 <- (answerstable$scaled_distance_CtoG_Y)
 wilcox_overall <- wilcox.test(overall_zwischen1, overall_zwischen2, paired = TRUE)
 print (wilcox_overall)
 
+#************************CHI2 Test über alle Berufsgruppen
 
+df_jobgroup <- answerstable$Berufsgruppe
+df_hitnohit_imp <- answerstable$hitImp
+df_hitnohit_occ <- answerstable$hitOcc
+
+#print (df_jobgroup)
+#print (df_hitnohit_imp)
+
+# Erstellen einer 2x5 Kontingenztafel
+table_data_imp <- table(df_jobgroup, df_hitnohit_imp)
+table_data_occ <- table(df_jobgroup, df_hitnohit_occ)
+
+# Durchführung des Chi-Quadrat-Tests
+chi2_test_imp <- chisq.test(table_data_imp)
+print (chi2_test_imp)
+
+chi2_test_occ <- chisq.test(table_data_occ)
+print (chi2_test_occ)
+
+
+print (p_imp_daten_admi_care)
+print (p_occ_daten_admi_care)
+print (p_imp_daten_admi_mana)
+print (p_occ_daten_admi_mana)
+print (p_imp_daten_admi_medi)
+print (p_occ_daten_admi_medi)
+print (p_imp_daten_admi_tech)
+print (p_occ_daten_admi_tech)
+print (p_imp_daten_care_mana)
+print (p_occ_daten_care_mana)
+print (p_imp_daten_care_medi)
+print (p_occ_daten_care_medi)
+print (p_imp_daten_care_tech)
+print (p_occ_daten_care_tech)
+print (p_imp_daten_mana_medi)
+print (p_occ_daten_mana_medi)
+print (p_imp_daten_mana_tech)
+print (p_occ_daten_mana_tech)
+print (p_imp_daten_medi_tech)
+print (p_occ_daten_medi_tech)
+
+print ("WERTE")
+p_imp_all <- c(p_imp_daten_admi_care,p_imp_daten_admi_mana,p_imp_daten_admi_medi,p_imp_daten_admi_tech,p_imp_daten_care_mana,p_imp_daten_care_medi,p_imp_daten_care_tech,p_imp_daten_mana_medi,p_imp_daten_mana_tech,p_imp_daten_medi_tech)
+print (p_imp_all)
+print ("KORREKTUREN")
+p_corr_imp_all <- (p.adjust(p_imp_all,method="BH"))
+for (p in p_corr_imp_all) {
+  print(p)
+}
+
+p_occ_all <- c(p_occ_daten_admi_care,p_occ_daten_admi_mana,p_occ_daten_admi_medi,p_occ_daten_admi_tech,p_occ_daten_care_mana,p_occ_daten_care_medi,p_occ_daten_care_tech,p_occ_daten_mana_medi,p_occ_daten_mana_tech,p_occ_daten_medi_tech)
+print (p_occ_all)
+print ("KORREKTUREN")
+p_corr_occ_all <- (p.adjust(p_occ_all,method="BH"))
+for (p in p_corr_occ_all) {
+  print(p)
+}
 
 
 
