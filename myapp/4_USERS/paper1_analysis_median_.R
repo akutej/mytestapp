@@ -212,7 +212,7 @@ print (df)
 
 #QUES_CATEGORY_english
 
-print("")
+
 print (numberofuser.all)
 
 
@@ -344,6 +344,7 @@ cat (answers_X_chance,answers_X_risk,answers_X_all,answers_Y_chance,answers_Y_ri
 
 unique_accids <- unique(answerstable$ACC2SURV_ACCID)
 print (unique_accids)
+
 print (length(unique_accids))
 
 
@@ -361,6 +362,7 @@ mean_value_y_box <- mean(answerstable$scaled_uncertainty_Y, na.rm = TRUE)
 
 
 # Wenn du den neuen DataFrame anzeigen möchtest
+
 print(result_df_uncer)
 
 
@@ -701,6 +703,7 @@ result_by_job <- result %>%
     avg_quotient_occurrence = median(quotient_occurrence, na.rm = TRUE)
   )
 
+print("Das sollte diese Berechnung der Kennzahl sein")
 # Zeigen Sie das resultierende Datenframe
 print(result_by_job, n = Inf)
 #newnewnewnewnew
