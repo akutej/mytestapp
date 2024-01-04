@@ -25,7 +25,8 @@ numberofuser.nonecoreteam <- length(unique(df.nonecoreteam$ACC2SURV_ACCID))
 users <- unique(df.all$ACC2SURV_ACCID)
 
 
-print ("Risiko")
+
+
 
 print ("Median CORE & NONECORE TEAM")
 gesamt <- as.integer(sum(!is.na(answerstable$ACC2SURV_ROLE)))
