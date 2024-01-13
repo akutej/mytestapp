@@ -12,7 +12,7 @@ answerstable <- read.xlsx('myapp/data/RQ1_corrected_scaled_2.xlsx') #importiert 
 answerstable <- answerstable %>% filter(QUES_ID != "401" & QUES_ID != "402"& QUES_ID != "403")#Nimmt meine Testdatensätze aus
 answerstable <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & (ACC2SURV_ROLE  == 1 | ACC2SURV_ROLE  == 2))#filtert die Daten und gibt nur die beantworteten aus #& QUES_ID == actualscenario)# & ACC2SURV_ACCID == "22")
 #answerstable <- answerstable %>% filter(QUES_TYP == "Risiko")
-#answerstable <- answerstable %>% filter(QUES_TYP == "Chance")
+answerstable <- answerstable %>% filter(QUES_TYP == "Chance")
 
 
 df.all <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & (ACC2SURV_ROLE  == 1 | ACC2SURV_ROLE  == 2))#filtert die Daten und gibt nur die beantworteten aus #& QUES_ID == actualscenario)# & ACC2SURV_ACCID == "22")
@@ -65,6 +65,31 @@ df <- data.frame(
   nonecoreteam = c(as.character(gesamt_nct),nct_unc_I,nct_unc_O,nct_hitImp,nct_perc_overlap_Imp,nct_hitOcc,nct_perc_overlap_Occ))
 
 print (df)
+
+
+t_all_unc_I <- (answerstable$uncertaintyIPercent[answerstable$ACC2SURV_ROLE == 1 |  answerstable$ACC2SURV_ROLE == 2 ])
+t_all_unc_O <- (answerstable$uncertaintyOPercent[answerstable$ACC2SURV_ROLE == 1 | answerstable$ACC2SURV_ROLE == 2])
+t_ct_unc_I <- (answerstable$uncertaintyIPercent[answerstable$ACC2SURV_ROLE == 1])
+t_ct_unc_O <- (answerstable$uncertaintyOPercent[answerstable$ACC2SURV_ROLE == 1])
+t_nct_unc_I <- (answerstable$uncertaintyIPercent[answerstable$ACC2SURV_ROLE == 2])
+t_nct_unc_O <- (answerstable$uncertaintyOPercent[answerstable$ACC2SURV_ROLE == 2])
+
+
+
+print("ALL")
+print (wilcox.test(t_all_unc_I, t_all_unc_O, paired = TRUE))
+print("CORE")
+print (wilcox.test(t_ct_unc_I, t_ct_unc_O, paired = TRUE))
+print("NONECORE")
+print (wilcox.test(t_nct_unc_I, t_nct_unc_O, paired = TRUE))
+
+
+
+
+
+
+
+
 
 print ("start ungepaarter WILCOXON TEST*************")
 

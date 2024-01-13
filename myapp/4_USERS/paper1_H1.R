@@ -65,6 +65,9 @@ df <- data.frame(
 
 print (df)
 
+print (binom.test(all_hitImp, gesamt, p = 1, alternative = "two.sided"))
+print (binom.test(all_hitOcc, gesamt, p = 1, alternative = "two.sided"))
+
 print ("RISIKO")
 
 print ("Median CORE & NONECORE TEAM")
@@ -105,6 +108,9 @@ df <- data.frame(
 
 print (df)
 
+print (binom.test(all_hitImp, gesamt, p = 1, alternative = "two.sided"))
+print (binom.test(all_hitOcc, gesamt, p = 1, alternative = "two.sided"))
+
 print ("CHANCE")
 
 print ("Median CORE & NONECORE TEAM")
@@ -144,3 +150,7 @@ df <- data.frame(
   noncoreteam = c(as.character(gesamt_nct),nct_unc_I,nct_unc_O,nct_hitImp,nct_perc_overlap_Imp,nct_hitOcc,nct_perc_overlap_Occ))
 
 print (df)
+
+print (binom.test(all_hitImp, gesamt, p = 1, alternative = "two.sided"))
+print (binom.test(all_hitOcc, gesamt, p = 1, alternative = "two.sided"))
+

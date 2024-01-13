@@ -12,7 +12,7 @@ answerstable <- read.xlsx('myapp/data/RQ1_corrected_scaled_2.xlsx') #importiert 
 answerstable <- answerstable %>% filter(QUES_ID != "401" & QUES_ID != "402"& QUES_ID != "403")#Nimmt meine Testdatensätze aus
 answerstable <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & (ACC2SURV_ROLE  == 1 | ACC2SURV_ROLE  == 2))#filtert die Daten und gibt nur die beantworteten aus #& QUES_ID == actualscenario)# & ACC2SURV_ACCID == "22")
 #answerstable <- answerstable %>% filter(QUES_TYP == "Risiko")
-answerstable <- answerstable %>% filter(QUES_TYP == "Chance")
+#answerstable <- answerstable %>% filter(QUES_TYP == "Chance")
 
 
 df.all <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & (ACC2SURV_ROLE  == 1 | ACC2SURV_ROLE  == 2))#filtert die Daten und gibt nur die beantworteten aus #& QUES_ID == actualscenario)# & ACC2SURV_ACCID == "22")
@@ -78,6 +78,41 @@ job_manage_UncImp <- round(median(answerstable$uncertaintyIPercent[answerstable$
 job_medic_UncImp <- round(median(answerstable$uncertaintyIPercent[answerstable$Berufsgruppe == "medical"], na.rm = TRUE),2)
 job_tech_UncImp <- round(median(answerstable$uncertaintyIPercent[answerstable$Berufsgruppe == "technician"], na.rm = TRUE),2)
 
+
+j_all_UncOcc <- answerstable$uncertaintyOPercent
+j_admin_UncOcc <- (answerstable$uncertaintyOPercent[answerstable$Berufsgruppe == "Administration"])
+j_care_UncOcc <- (answerstable$uncertaintyOPercent[answerstable$Berufsgruppe == "caregiver"])
+j_manage_UncOcc <- (answerstable$uncertaintyOPercent[answerstable$Berufsgruppe == "management"])
+j_medic_UncOcc <- (answerstable$uncertaintyOPercent[answerstable$Berufsgruppe == "medical"])
+j_tech_UncOcc <- (answerstable$uncertaintyOPercent[answerstable$Berufsgruppe == "technician"])
+
+j_all_UncImp <- answerstable$uncertaintyIPercent
+j_admin_UncImp <- (answerstable$uncertaintyIPercent[answerstable$Berufsgruppe == "Administration"])
+j_care_UncImp <- (answerstable$uncertaintyIPercent[answerstable$Berufsgruppe == "caregiver"])
+j_manage_UncImp <- (answerstable$uncertaintyIPercent[answerstable$Berufsgruppe == "management"])
+j_medic_UncImp <- (answerstable$uncertaintyIPercent[answerstable$Berufsgruppe == "medical"])
+j_tech_UncImp <- (answerstable$uncertaintyIPercent[answerstable$Berufsgruppe == "technician"])
+
+
+
+print ("ADMIN")
+print (wilcox.test(j_admin_UncImp, j_admin_UncOcc, paired = TRUE))
+print ("CARE")
+print (wilcox.test(j_care_UncImp, j_care_UncOcc, paired = TRUE))
+print ("MANAGE")
+print (wilcox.test(j_manage_UncImp, j_manage_UncOcc, paired = TRUE))
+print ("MEDIC")
+print (wilcox.test(j_medic_UncImp, j_medic_UncOcc, paired = TRUE))
+print ("TECH")
+print (wilcox.test(j_tech_UncImp, j_tech_UncOcc, paired = TRUE))
+print ("ALL")
+print (wilcox.test(j_all_UncImp, j_all_UncOcc, paired = TRUE))
+
+
+
+
+
+
 job_all_perhitImp <- round((100/(sum(!is.na(answerstable$ACC2SURV_ROLE)))*job_all_hitImp),2)
 job_admin_perhitImp <- round((100/(sum(answerstable$Berufsgruppe == "Administration"))*job_admin_hitImp),2)
 job_care_perhitImp <- round((100/(sum(answerstable$Berufsgruppe == "caregiver"))*job_care_hitImp),2)
@@ -91,8 +126,6 @@ job_care_perhitOcc <- round((100/(sum(answerstable$Berufsgruppe == "caregiver"))
 job_manage_perhitOcc <- round((100/(sum(answerstable$Berufsgruppe == "management"))*job_manage_hitOcc),2) 
 job_medic_perhitOcc <- round((100/(sum(answerstable$Berufsgruppe == "medical"))*job_medic_hitOcc),2)
 job_tech_perhitOcc <- round((100/(sum(answerstable$Berufsgruppe == "technician"))*job_tech_hitOcc),2)
-
-
 
 job_df <- data.frame(
   Category = c("number of persons", 
