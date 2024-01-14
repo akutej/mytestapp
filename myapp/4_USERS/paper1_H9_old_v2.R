@@ -15,14 +15,6 @@ answerstable <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV
 
 answerstableR <- answerstable %>% filter(QUES_TYP == "Risiko")
 R.QUESID <- (unique(answerstableR$QUES_ID))
-#print (R.QUESID)
-answerstableC <- answerstable %>% filter(QUES_TYP == "Chance")
-
-#anzahl <- nrow(answerstableR.G1)
-#print (anzahl)
-
-answerstableC.G1 <- answerstableC %>% filter(ACC2SURV_GROUPID == 1)
-answerstableC.G2 <- answerstableC %>% filter(ACC2SURV_GROUPID == 2)
 
 
 
@@ -41,9 +33,16 @@ for (ques_id in R.QUESID) {
   classic.result.O.R <- wilcox.test(classic.G1.OCCURRENCE.R, classic.G2.OCCURRENCE.R)
   print (classic.result.O.R$p.value)
   
-    
 }
 
+
+answerstableC <- answerstable %>% filter(QUES_TYP == "Chance")
+
+#anzahl <- nrow(answerstableR.G1)
+#print (anzahl)
+
+answerstableC.G1 <- answerstableC %>% filter(ACC2SURV_GROUPID == 1)
+answerstableC.G2 <- answerstableC %>% filter(ACC2SURV_GROUPID == 2)
 
 
 classic.G1.IMPACT.C <- (answerstableC.G1$scaled_IMPACT)

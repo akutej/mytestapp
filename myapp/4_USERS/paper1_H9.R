@@ -11,148 +11,246 @@ library(readxl)
 answerstable <- read.xlsx('myapp/data/RQ1_corrected_scaled_2.xlsx') #importiert das answers file
 answerstable <- answerstable %>% filter(QUES_ID != "401" & QUES_ID != "402"& QUES_ID != "403")#Nimmt meine Testdatensätze aus
 answerstable <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & (ACC2SURV_ROLE  == 1 | ACC2SURV_ROLE  == 2))#filtert die Daten und gibt nur die beantworteten aus #& QUES_ID == actualscenario)# & ACC2SURV_ACCID == "22")
+
+
 answerstableR <- answerstable %>% filter(QUES_TYP == "Risiko")
+R.QUESID <- (unique(answerstableR$QUES_ID))
+
+names.R <- c(
+  "Ques_ID",
+  "Anzahl_Overall",
+  "Anzahl_Group1",
+  "Anzahl_Group2",
+  "p_Value_Impact",
+  "p_Value_Occurrence",
+  "method",
+  "type"
+)
+
+result.R <- data.frame(matrix(ncol = length(names.R), nrow = 0))
+colnames(result.R) <- names.R
+
+
+for (ques_id in R.QUESID) {
+
+  answerstableR.all <- answerstableR %>% filter(QUES_ID == ques_id)
+  answerstableR.G1 <- answerstableR %>% filter(ACC2SURV_ROLE  == 1  & QUES_ID == ques_id)
+  answerstableR.G2 <- answerstableR %>% filter(ACC2SURV_ROLE  == 2  & QUES_ID == ques_id)
+  
+  anzahl.all <- nrow(answerstableR.all)
+  anzahl.G1 <- nrow(answerstableR.G1)
+  anzahl.G2 <- nrow(answerstableR.G2)
+  
+  classic.G1.IMPACT.R <- (answerstableR.G1$scaled_IMPACT)
+  classic.G2.IMPACT.R <- (answerstableR.G2$scaled_IMPACT)
+  classic.G1.OCCURRENCE.R <- (answerstableR.G1$scaled_OCCURRENCE)
+  classic.G2.OCCURRENCE.R <- (answerstableR.G2$scaled_OCCURRENCE)
+  
+  result.I <- wilcox.test(classic.G1.IMPACT.R, classic.G2.IMPACT.R,alternative = "two.sided")
+  result.O <- wilcox.test(classic.G1.OCCURRENCE.R, classic.G2.OCCURRENCE.R,alternative = "two.sided")
+
+  result.R.DF <- data.frame(
+    ques_id,
+    anzahl.all,
+    anzahl.G1,
+    anzahl.G2,
+    result.I$p.value,
+    result.O$p.value,
+    method = "classic",
+    type = "risk"
+  )
+  row.names(result.R.DF) <- NULL
+  result.R <- rbind(result.R, result.R.DF)
+  
+  
+}
+
+print (result.R)
+
+
 answerstableC <- answerstable %>% filter(QUES_TYP == "Chance")
+C.QUESID <- (unique(answerstableC$QUES_ID))
+
+names.C <- c(
+  "Ques_ID",
+  "Anzahl_Overall",
+  "Anzahl_Group1",
+  "Anzahl_Group2",
+  "p_Value_Impact",
+  "p_Value_Occurrence",
+  "method",
+  "type"
+)
+
+result.C <- data.frame(matrix(ncol = length(names.C), nrow = 0))
+colnames(result.C) <- names.C
 
 
-df.all <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & (ACC2SURV_ROLE  == 1 | ACC2SURV_ROLE  == 2))#filtert die Daten und gibt nur die beantworteten aus #& QUES_ID == actualscenario)# & ACC2SURV_ACCID == "22")
-df.coreteam <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & ACC2SURV_ROLE  == 1) # nur Kernteam
-df.noncoreteam <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & ACC2SURV_ROLE  == 2) # nur nichtKernteam
+for (ques_id in C.QUESID) {
+  
+  answerstableC.all <- answerstableC %>% filter(QUES_ID == ques_id)
+  answerstableC.G1 <- answerstableC %>% filter(ACC2SURV_ROLE  == 1  & QUES_ID == ques_id)
+  answerstableC.G2 <- answerstableC %>% filter(ACC2SURV_ROLE  == 2  & QUES_ID == ques_id)
+  
+  anzahl.all <- nrow(answerstableC.all)
+  anzahl.G1 <- nrow(answerstableC.G1)
+  anzahl.G2 <- nrow(answerstableC.G2)
+  
+  classic.G1.IMPACT.C <- (answerstableC.G1$scaled_IMPACT)
+  classic.G2.IMPACT.C <- (answerstableC.G2$scaled_IMPACT)
+  classic.G1.OCCURRENCE.C <- (answerstableC.G1$scaled_OCCURRENCE)
+  classic.G2.OCCURRENCE.C <- (answerstableC.G2$scaled_OCCURRENCE)
+  
+  result.I <- wilcox.test(classic.G1.IMPACT.C, classic.G2.IMPACT.C)
+  result.O <- wilcox.test(classic.G1.OCCURRENCE.C, classic.G2.OCCURRENCE.C)
+  
+  
+  result.C.DF <- data.frame(
+    ques_id,
+    anzahl.all,
+    anzahl.G1,
+    anzahl.G2,
+    result.I$p.value,
+    result.O$p.value,
+    method = "classic",
+    type = "chance"
+  )
+  row.names(result.C.DF) <- NULL
+  result.C <- rbind(result.C, result.C.DF)
+  
+  
+}
 
-numberofuser.all <- length(unique(df.all$ACC2SURV_ACCID)) #Anzahl der Gesamtuser
-numberofuser.coreteam <- length(unique(df.coreteam$ACC2SURV_ACCID))
-numberofuser.noncoreteam <- length(unique(df.noncoreteam$ACC2SURV_ACCID))
-users <- unique(df.all$ACC2SURV_ACCID)
-
-
-print ("OVERALL")
-
-print ("Median CORE & NONECORE TEAM")
-gesamt <- as.integer(sum(!is.na(answerstable$ACC2SURV_ROLE)))
-gesamt_ct <- as.integer(sum(answerstable$ACC2SURV_ROLE == 1, na.rm = TRUE))
-gesamt_nct <- as.integer(sum(answerstable$ACC2SURV_ROLE == 2, na.rm = TRUE))
-all_uncI <- (answerstable$uncertaintyIPercent[answerstable$ACC2SURV_ROLE == 1 |  answerstable$ACC2SURV_ROLE == 2 ])
-all_uncO <- (answerstable$uncertaintyOPercent[answerstable$ACC2SURV_ROLE == 1 | answerstable$ACC2SURV_ROLE == 2])
-all_unc_I <- round(median(answerstable$uncertaintyIPercent[answerstable$ACC2SURV_ROLE == 1 |  answerstable$ACC2SURV_ROLE == 2 ], na.rm = TRUE),2)
-all_unc_O <- round(median(answerstable$uncertaintyOPercent[answerstable$ACC2SURV_ROLE == 1 | answerstable$ACC2SURV_ROLE == 2], na.rm = TRUE),2)
-ct_unc_I <- round(median(answerstable$uncertaintyIPercent[answerstable$ACC2SURV_ROLE == 1], na.rm = TRUE),2)
-ct_unc_O <- round(median(answerstable$uncertaintyOPercent[answerstable$ACC2SURV_ROLE == 1], na.rm = TRUE),2)
-nct_unc_I <- round(median(answerstable$uncertaintyIPercent[answerstable$ACC2SURV_ROLE == 2], na.rm = TRUE),2)
-nct_unc_O <- round(median(answerstable$uncertaintyOPercent[answerstable$ACC2SURV_ROLE == 2], na.rm = TRUE),2)
-all_hitImp <- as.integer(sum(answerstable$hitImp, na.rm = TRUE),2)
-ct_hitImp <- as.integer(sum(answerstable$hitImp[answerstable$ACC2SURV_ROLE == 1], na.rm = TRUE),2)
-nct_hitImp <- as.integer(sum(answerstable$hitImp[answerstable$ACC2SURV_ROLE == 2], na.rm = TRUE),2)
-all_hitOcc <- as.integer(sum(answerstable$hitOcc, na.rm = TRUE),2)
-ct_hitOcc <- as.integer(sum(answerstable$hitOcc[answerstable$ACC2SURV_ROLE == 1], na.rm = TRUE),2)
-nct_hitOcc <- as.integer(sum(answerstable$hitOcc[answerstable$ACC2SURV_ROLE == 2], na.rm = TRUE),2)
-all_perc_overlap_Imp <- round(((100/gesamt)*all_hitImp),2)
-ct_perc_overlap_Imp <- round(((100/gesamt_ct)*ct_hitImp),2)
-nct_perc_overlap_Imp <- round(((100/gesamt_nct)*nct_hitImp),2) 
-all_perc_overlap_Occ <- round(((100/gesamt)*all_hitOcc),2)
-ct_perc_overlap_Occ <- round(((100/gesamt_ct)*ct_hitOcc),2)
-nct_perc_overlap_Occ <- round(((100/gesamt_nct)*nct_hitOcc),2) 
-
-
-df <- data.frame(
-  Category = c("number of answers", 
-               "percent uncertainty in impact/potential", 
-               "percent uncertainty in probability of occurrence", 
-               "number of overlaps in impact/potential", 
-               "percent of overlaps in impact/potential", 
-               "number of overlaps in probability of occurrence", 
-               "percent of overlaps in probability of occurrence"),
-  overall = c(as.character(gesamt),all_unc_I,all_unc_O,all_hitImp,all_perc_overlap_Imp,all_hitOcc,all_perc_overlap_Occ))
- # coreteam = c(as.character(gesamt_ct),ct_unc_I,ct_unc_O,ct_hitImp,ct_perc_overlap_Imp,ct_hitOcc,ct_perc_overlap_Occ), 
-#  noncoreteam = c(as.character(gesamt_nct),nct_unc_I,nct_unc_O,nct_hitImp,nct_perc_overlap_Imp,nct_hitOcc,nct_perc_overlap_Occ))
-
-print (df)
-
-print (wilcox.test(all_uncI, all_uncO, paired = TRUE))
-
-print ("RISK")
-
-print ("Median CORE & NONECORE TEAM")
-gesamt <- as.integer(sum(!is.na(answerstableR$ACC2SURV_ROLE)))
-gesamt_ct <- as.integer(sum(answerstableR$ACC2SURV_ROLE == 1, na.rm = TRUE))
-gesamt_nct <- as.integer(sum(answerstableR$ACC2SURV_ROLE == 2, na.rm = TRUE))
-all_uncI <- (answerstableR$uncertaintyIPercent[answerstableR$ACC2SURV_ROLE == 1 |  answerstableR$ACC2SURV_ROLE == 2 ])
-all_uncO <- (answerstableR$uncertaintyOPercent[answerstableR$ACC2SURV_ROLE == 1 | answerstableR$ACC2SURV_ROLE == 2])
-all_unc_I <- round(median(answerstableR$uncertaintyIPercent[answerstableR$ACC2SURV_ROLE == 1 |  answerstableR$ACC2SURV_ROLE == 2 ], na.rm = TRUE),2)
-all_unc_O <- round(median(answerstableR$uncertaintyOPercent[answerstableR$ACC2SURV_ROLE == 1 | answerstableR$ACC2SURV_ROLE == 2], na.rm = TRUE),2)
-ct_unc_I <- round(median(answerstableR$uncertaintyIPercent[answerstableR$ACC2SURV_ROLE == 1], na.rm = TRUE),2)
-ct_unc_O <- round(median(answerstableR$uncertaintyOPercent[answerstableR$ACC2SURV_ROLE == 1], na.rm = TRUE),2)
-nct_unc_I <- round(median(answerstableR$uncertaintyIPercent[answerstableR$ACC2SURV_ROLE == 2], na.rm = TRUE),2)
-nct_unc_O <- round(median(answerstableR$uncertaintyOPercent[answerstableR$ACC2SURV_ROLE == 2], na.rm = TRUE),2)
-all_hitImp <- as.integer(sum(answerstableR$hitImp, na.rm = TRUE),2)
-ct_hitImp <- as.integer(sum(answerstableR$hitImp[answerstableR$ACC2SURV_ROLE == 1], na.rm = TRUE),2)
-nct_hitImp <- as.integer(sum(answerstableR$hitImp[answerstableR$ACC2SURV_ROLE == 2], na.rm = TRUE),2)
-all_hitOcc <- as.integer(sum(answerstableR$hitOcc, na.rm = TRUE),2)
-ct_hitOcc <- as.integer(sum(answerstableR$hitOcc[answerstableR$ACC2SURV_ROLE == 1], na.rm = TRUE),2)
-nct_hitOcc <- as.integer(sum(answerstableR$hitOcc[answerstableR$ACC2SURV_ROLE == 2], na.rm = TRUE),2)
-all_perc_overlap_Imp <- round(((100/gesamt)*all_hitImp),2)
-ct_perc_overlap_Imp <- round(((100/gesamt_ct)*ct_hitImp),2)
-nct_perc_overlap_Imp <- round(((100/gesamt_nct)*nct_hitImp),2) 
-all_perc_overlap_Occ <- round(((100/gesamt)*all_hitOcc),2)
-ct_perc_overlap_Occ <- round(((100/gesamt_ct)*ct_hitOcc),2)
-nct_perc_overlap_Occ <- round(((100/gesamt_nct)*nct_hitOcc),2) 
+print (result.C)
 
 
-df <- data.frame(
-  Category = c("number of answers", 
-               "percent uncertainty in impact/potential", 
-               "percent uncertainty in probability of occurrence", 
-               "number of overlaps in impact/potential", 
-               "percent of overlaps in impact/potential", 
-               "number of overlaps in probability of occurrence", 
-               "percent of overlaps in probability of occurrence"),
-  overall = c(as.character(gesamt),all_unc_I,all_unc_O,all_hitImp,all_perc_overlap_Imp,all_hitOcc,all_perc_overlap_Occ))
-# coreteam = c(as.character(gesamt_ct),ct_unc_I,ct_unc_O,ct_hitImp,ct_perc_overlap_Imp,ct_hitOcc,ct_perc_overlap_Occ), 
-#  noncoreteam = c(as.character(gesamt_nct),nct_unc_I,nct_unc_O,nct_hitImp,nct_perc_overlap_Imp,nct_hitOcc,nct_perc_overlap_Occ))
+#GRAPHIC
+answerstableR <- answerstable %>% filter(QUES_TYP == "Risiko")
+R.QUESID <- (unique(answerstableR$QUES_ID))
 
-print (df)
+names.R <- c(
+  "Ques_ID",
+  "Anzahl_Overall",
+  "Anzahl_Group1",
+  "Anzahl_Group2",
+  "p_Value_Impact",
+  "p_Value_Occurrence",
+  "method",
+  "type"
+)
 
-print (wilcox.test(all_uncI, all_uncO, paired = TRUE))
-
-print ("CHANCE")
-
-print ("Median CORE & NONECORE TEAM")
-gesamt <- as.integer(sum(!is.na(answerstableC$ACC2SURV_ROLE)))
-gesamt_ct <- as.integer(sum(answerstableC$ACC2SURV_ROLE == 1, na.rm = TRUE))
-gesamt_nct <- as.integer(sum(answerstableC$ACC2SURV_ROLE == 2, na.rm = TRUE))
-all_uncI <- (answerstableC$uncertaintyIPercent[answerstableC$ACC2SURV_ROLE == 1 |  answerstableC$ACC2SURV_ROLE == 2 ])
-all_uncO <- (answerstableC$uncertaintyOPercent[answerstableC$ACC2SURV_ROLE == 1 | answerstableC$ACC2SURV_ROLE == 2])
-all_unc_I <- round(median(answerstableC$uncertaintyIPercent[answerstableC$ACC2SURV_ROLE == 1 |  answerstableC$ACC2SURV_ROLE == 2 ], na.rm = TRUE),2)
-all_unc_O <- round(median(answerstableC$uncertaintyOPercent[answerstableC$ACC2SURV_ROLE == 1 | answerstableC$ACC2SURV_ROLE == 2], na.rm = TRUE),2)
-ct_unc_I <- round(median(answerstableC$uncertaintyIPercent[answerstableC$ACC2SURV_ROLE == 1], na.rm = TRUE),2)
-ct_unc_O <- round(median(answerstableC$uncertaintyOPercent[answerstableC$ACC2SURV_ROLE == 1], na.rm = TRUE),2)
-nct_unc_I <- round(median(answerstableC$uncertaintyIPercent[answerstableC$ACC2SURV_ROLE == 2], na.rm = TRUE),2)
-nct_unc_O <- round(median(answerstableC$uncertaintyOPercent[answerstableC$ACC2SURV_ROLE == 2], na.rm = TRUE),2)
-all_hitImp <- as.integer(sum(answerstableC$hitImp, na.rm = TRUE),2)
-ct_hitImp <- as.integer(sum(answerstableC$hitImp[answerstableC$ACC2SURV_ROLE == 1], na.rm = TRUE),2)
-nct_hitImp <- as.integer(sum(answerstableC$hitImp[answerstableC$ACC2SURV_ROLE == 2], na.rm = TRUE),2)
-all_hitOcc <- as.integer(sum(answerstableC$hitOcc, na.rm = TRUE),2)
-ct_hitOcc <- as.integer(sum(answerstableC$hitOcc[answerstableC$ACC2SURV_ROLE == 1], na.rm = TRUE),2)
-nct_hitOcc <- as.integer(sum(answerstableC$hitOcc[answerstableC$ACC2SURV_ROLE == 2], na.rm = TRUE),2)
-all_perc_overlap_Imp <- round(((100/gesamt)*all_hitImp),2)
-ct_perc_overlap_Imp <- round(((100/gesamt_ct)*ct_hitImp),2)
-nct_perc_overlap_Imp <- round(((100/gesamt_nct)*nct_hitImp),2) 
-all_perc_overlap_Occ <- round(((100/gesamt)*all_hitOcc),2)
-ct_perc_overlap_Occ <- round(((100/gesamt_ct)*ct_hitOcc),2)
-nct_perc_overlap_Occ <- round(((100/gesamt_nct)*nct_hitOcc),2) 
+g.result.R <- data.frame(matrix(ncol = length(names.R), nrow = 0))
+colnames(g.result.R) <- names.R
 
 
-df <- data.frame(
-  Category = c("number of answers", 
-               "percent uncertainty in impact/potential", 
-               "percent uncertainty in probability of occurrence", 
-               "number of overlaps in impact/potential", 
-               "percent of overlaps in impact/potential", 
-               "number of overlaps in probability of occurrence", 
-               "percent of overlaps in probability of occurrence"),
-  overall = c(as.character(gesamt),all_unc_I,all_unc_O,all_hitImp,all_perc_overlap_Imp,all_hitOcc,all_perc_overlap_Occ))
-# coreteam = c(as.character(gesamt_ct),ct_unc_I,ct_unc_O,ct_hitImp,ct_perc_overlap_Imp,ct_hitOcc,ct_perc_overlap_Occ), 
-#  noncoreteam = c(as.character(gesamt_nct),nct_unc_I,nct_unc_O,nct_hitImp,nct_perc_overlap_Imp,nct_hitOcc,nct_perc_overlap_Occ))
+for (ques_id in R.QUESID) {
+  
+  g.answerstableR.all <- answerstableR %>% filter(QUES_ID == ques_id)
+  g.answerstableR.G1 <- answerstableR %>% filter(ACC2SURV_ROLE  == 1  & QUES_ID == ques_id)
+  g.answerstableR.G2 <- answerstableR %>% filter(ACC2SURV_ROLE  == 2  & QUES_ID == ques_id)
+  
+  anzahl.all <- nrow(g.answerstableR.all)
+  anzahl.G1 <- nrow(g.answerstableR.G1)
+  anzahl.G2 <- nrow(g.answerstableR.G2)
+  
+  
+  g.G1.IMPACT.R <- (g.answerstableR.G1$scaled_uncertainty_middle_X)
+  g.G2.IMPACT.R <- (g.answerstableR.G2$scaled_uncertainty_middle_X)
+  
+  g.G1.OCCURRENCE.R <- (g.answerstableR.G1$scaled_uncertainty_middle_Y)
+  g.G2.OCCURRENCE.R <- (g.answerstableR.G2$scaled_uncertainty_middle_Y)
+  
+  result.I <- wilcox.test(g.G1.IMPACT.R, g.G2.IMPACT.R)
+  result.O <- wilcox.test(g.G1.OCCURRENCE.R, g.G2.OCCURRENCE.R)
+  
+  g.result.R.DF <- data.frame(
+    ques_id,
+    anzahl.all,
+    anzahl.G1,
+    anzahl.G2,
+    result.I$p.value,
+    result.O$p.value,
+    method = "graphic",
+    type = "risk"
+  )
+  row.names(g.result.R.DF) <- NULL
+  g.result.R <- rbind(g.result.R, g.result.R.DF)
+  
+  
+}
 
-print (df)
+print (g.result.R)
 
-print (wilcox.test(all_uncI, all_uncO, paired = TRUE))
+
+answerstableC <- answerstable %>% filter(QUES_TYP == "Chance")
+C.QUESID <- (unique(answerstableC$QUES_ID))
+
+names.C <- c(
+  "Ques_ID",
+  "Anzahl_Overall",
+  "Anzahl_Group1",
+  "Anzahl_Group2",
+  "p_Value_Impact",
+  "p_Value_Occurrence",
+  "method",
+  "type"
+)
+
+g.result.C <- data.frame(matrix(ncol = length(names.C), nrow = 0))
+colnames(g.result.C) <- names.C
+
+
+for (ques_id in C.QUESID) {
+  
+  g.answerstableC.all <- answerstableC %>% filter(QUES_ID == ques_id)
+  g.answerstableC.G1 <- answerstableC %>% filter(ACC2SURV_ROLE  == 1  & QUES_ID == ques_id)
+  g.answerstableC.G2 <- answerstableC %>% filter(ACC2SURV_ROLE  == 2  & QUES_ID == ques_id)
+  
+  anzahl.all <- nrow(g.answerstableC.all)
+  anzahl.G1 <- nrow(g.answerstableC.G1)
+  anzahl.G2 <- nrow(g.answerstableC.G2)
+  
+  
+  g.G1.IMPACT.C <- (g.answerstableC.G1$scaled_uncertainty_middle_X)
+  g.G2.IMPACT.C <- (g.answerstableC.G2$scaled_uncertainty_middle_X)
+  
+  g.G1.OCCURRENCE.C <- (g.answerstableC.G1$scaled_uncertainty_middle_Y)
+  g.G2.OCCURRENCE.C <- (g.answerstableC.G2$scaled_uncertainty_middle_Y)
+  
+  result.I <- wilcox.test(g.G1.IMPACT.C, g.G2.IMPACT.C)
+  result.O <- wilcox.test(g.G1.OCCURRENCE.C, g.G2.OCCURRENCE.C)
+  
+  g.result.C.DF <- data.frame(
+    ques_id,
+    anzahl.all,
+    anzahl.G1,
+    anzahl.G2,
+    result.I$p.value,
+    result.O$p.value,
+    method = "graphic",
+    type = "chance"
+  )
+  row.names(g.result.C.DF) <- NULL
+  g.result.C <- rbind(g.result.C, g.result.C.DF)
+  
+  
+}
+
+print (g.result.C)
+
+
+
+allresult.R <- data.frame(matrix(ncol = length(names.R), nrow = 0))
+allresult.R <- rbind(allresult.R,result.R)
+allresult.R <- rbind(allresult.R,result.C)
+allresult.R <- rbind(allresult.R,g.result.R)
+allresult.R <- rbind(allresult.R,g.result.C)
+
+scenfile <- paste0("myapp/files/test/h9.xlsx")
+wb <- createWorkbook()
+addWorksheet(wb, "Sheet1")
+writeData(wb, "Sheet1", allresult.R)
+saveWorkbook(wb, file = scenfile, overwrite = TRUE)
+
+  
+
