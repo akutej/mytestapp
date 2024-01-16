@@ -320,3 +320,188 @@ wb <- createWorkbook()
 addWorksheet(wb, "Sheet1")
 writeData(wb, "Sheet1", allresult.R)
 saveWorkbook(wb, file = scenfile, overwrite = TRUE)
+
+c.A.allresult <- allresult.R %>% filter(method == "classic")
+c.R.allresult <- allresult.R %>% filter(method == "classic" & type == "risk")
+c.C.allresult <- allresult.R %>% filter(method == "classic" & type == "chance")
+g.A.allresult <- allresult.R %>% filter(method == "graphic")
+g.R.allresult <- allresult.R %>% filter(method == "graphic" & type == "risk")
+g.C.allresult <- allresult.R %>% filter(method == "graphic" & type == "chance")
+
+
+
+# Zählen der Anzahl der Einträge, bei denen result.I.p.value < 0.05 ist
+anzahl_signifikant_I <- sum(c.A.allresult$result.I.p.value < 0.05)
+
+# Zählen der Anzahl der Einträge, bei denen result.O.p.value < 0.05 ist
+anzahl_signifikant_O <- sum(c.A.allresult$result.O.p.value < 0.05)
+
+# Gesamtanzahl der Einträge im DataFrame
+gesamtanzahl <- nrow(c.A.allresult)
+
+# Prozentsatz der statistisch signifikanten Einträge für result.I.p.value
+prozentsatz_signifikant_I <- (anzahl_signifikant_I / gesamtanzahl) * 100
+
+# Prozentsatz der statistisch signifikanten Einträge für result.O.p.value
+prozentsatz_signifikant_O <- (anzahl_signifikant_O / gesamtanzahl) * 100
+
+durchschnitt_I_pValue <- mean(c.A.allresult$result.I.p.value)
+durchschnitt_O_pValue <- mean(c.A.allresult$result.O.p.value)
+
+# Ergebnisse 
+cat("KLASSISCH - ALL\n")
+cat("Anzahl der Einträge", gesamtanzahl, "\n")
+cat("Anzahl statistisch signifikanter Einträge für result.I.p.value:", anzahl_signifikant_I, "\n")
+cat("Prozentsatz statistisch signifikanter Einträge für result.I.p.value:", prozentsatz_signifikant_I, "%\n")
+cat("Anzahl statistisch signifikanter Einträge für result.O.p.value:", anzahl_signifikant_O, "\n")
+cat("Prozentsatz statistisch signifikanter Einträge für result.O.p.value:", prozentsatz_signifikant_O, "%\n")
+cat("Durchschnitt p-Value für Impact:", durchschnitt_I_pValue, "\n")
+cat("Durchschnitt p-Value für Occurrence:", durchschnitt_O_pValue, "%\n")
+
+
+
+# Zählen der Anzahl der Einträge, bei denen result.I.p.value < 0.05 ist
+anzahl_signifikant_I <- sum(c.R.allresult$result.I.p.value < 0.05)
+
+# Zählen der Anzahl der Einträge, bei denen result.O.p.value < 0.05 ist
+anzahl_signifikant_O <- sum(c.R.allresult$result.O.p.value < 0.05)
+
+# Gesamtanzahl der Einträge im DataFrame
+gesamtanzahl <- nrow(c.R.allresult)
+
+# Prozentsatz der statistisch signifikanten Einträge für result.I.p.value
+prozentsatz_signifikant_I <- (anzahl_signifikant_I / gesamtanzahl) * 100
+
+# Prozentsatz der statistisch signifikanten Einträge für result.O.p.value
+prozentsatz_signifikant_O <- (anzahl_signifikant_O / gesamtanzahl) * 100
+
+durchschnitt_I_pValue <- mean(c.R.allresult$result.I.p.value)
+durchschnitt_O_pValue <- mean(c.R.allresult$result.O.p.value)
+
+# Ergebnisse 
+cat("KLASSISCH - RISIKO\n")
+cat("Anzahl der Einträge", gesamtanzahl, "\n")
+cat("Anzahl statistisch signifikanter Einträge für result.I.p.value:", anzahl_signifikant_I, "\n")
+cat("Prozentsatz statistisch signifikanter Einträge für result.I.p.value:", prozentsatz_signifikant_I, "%\n")
+cat("Anzahl statistisch signifikanter Einträge für result.O.p.value:", anzahl_signifikant_O, "\n")
+cat("Prozentsatz statistisch signifikanter Einträge für result.O.p.value:", prozentsatz_signifikant_O, "%\n")
+cat("Durchschnitt p-Value für Impact:", durchschnitt_I_pValue, "\n")
+cat("Durchschnitt p-Value für Occurrence:", durchschnitt_O_pValue, "%\n")
+
+
+# Zählen der Anzahl der Einträge, bei denen result.I.p.value < 0.05 ist
+anzahl_signifikant_I <- sum(c.C.allresult$result.I.p.value < 0.05)
+
+# Zählen der Anzahl der Einträge, bei denen result.O.p.value < 0.05 ist
+anzahl_signifikant_O <- sum(c.C.allresult$result.O.p.value < 0.05)
+
+# Gesamtanzahl der Einträge im DataFrame
+gesamtanzahl <- nrow(c.C.allresult)
+
+# Prozentsatz der statistisch signifikanten Einträge für result.I.p.value
+prozentsatz_signifikant_I <- (anzahl_signifikant_I / gesamtanzahl) * 100
+
+# Prozentsatz der statistisch signifikanten Einträge für result.O.p.value
+prozentsatz_signifikant_O <- (anzahl_signifikant_O / gesamtanzahl) * 100
+
+durchschnitt_I_pValue <- mean(c.C.allresult$result.I.p.value)
+durchschnitt_O_pValue <- mean(c.C.allresult$result.O.p.value)
+
+# Ergebnisse 
+cat("KLASSISCH - CHANCE\n")
+cat("Anzahl der Einträge", gesamtanzahl, "\n")
+cat("Anzahl statistisch signifikanter Einträge für result.I.p.value:", anzahl_signifikant_I, "\n")
+cat("Prozentsatz statistisch signifikanter Einträge für result.I.p.value:", prozentsatz_signifikant_I, "%\n")
+cat("Anzahl statistisch signifikanter Einträge für result.O.p.value:", anzahl_signifikant_O, "\n")
+cat("Prozentsatz statistisch signifikanter Einträge für result.O.p.value:", prozentsatz_signifikant_O, "%\n")
+cat("Durchschnitt p-Value für Impact:", durchschnitt_I_pValue, "\n")
+cat("Durchschnitt p-Value für Occurrence:", durchschnitt_O_pValue, "%\n")
+
+
+
+# Zählen der Anzahl der Einträge, bei denen result.I.p.value < 0.05 ist
+anzahl_signifikant_I <- sum(g.A.allresult$result.I.p.value < 0.05)
+
+# Zählen der Anzahl der Einträge, bei denen result.O.p.value < 0.05 ist
+anzahl_signifikant_O <- sum(g.A.allresult$result.O.p.value < 0.05)
+
+# Gesamtanzahl der Einträge im DataFrame
+gesamtanzahl <- nrow(g.A.allresult)
+
+# Prozentsatz der statistisch signifikanten Einträge für result.I.p.value
+prozentsatz_signifikant_I <- (anzahl_signifikant_I / gesamtanzahl) * 100
+
+# Prozentsatz der statistisch signifikanten Einträge für result.O.p.value
+prozentsatz_signifikant_O <- (anzahl_signifikant_O / gesamtanzahl) * 100
+
+durchschnitt_I_pValue <- mean(g.A.allresult$result.I.p.value)
+durchschnitt_O_pValue <- mean(g.A.allresult$result.O.p.value)
+
+# Ergebnisse 
+cat("GRAPHISCH - ALL\n")
+cat("Anzahl der Einträge", gesamtanzahl, "\n")
+cat("Anzahl statistisch signifikanter Einträge für result.I.p.value:", anzahl_signifikant_I, "\n")
+cat("Prozentsatz statistisch signifikanter Einträge für result.I.p.value:", prozentsatz_signifikant_I, "%\n")
+cat("Anzahl statistisch signifikanter Einträge für result.O.p.value:", anzahl_signifikant_O, "\n")
+cat("Prozentsatz statistisch signifikanter Einträge für result.O.p.value:", prozentsatz_signifikant_O, "%\n")
+cat("Durchschnitt p-Value für Impact:", durchschnitt_I_pValue, "\n")
+cat("Durchschnitt p-Value für Occurrence:", durchschnitt_O_pValue, "%\n")
+
+
+# Zählen der Anzahl der Einträge, bei denen result.I.p.value < 0.05 ist
+anzahl_signifikant_I <- sum(g.R.allresult$result.I.p.value < 0.05)
+
+# Zählen der Anzahl der Einträge, bei denen result.O.p.value < 0.05 ist
+anzahl_signifikant_O <- sum(g.R.allresult$result.O.p.value < 0.05)
+
+# Gesamtanzahl der Einträge im DataFrame
+gesamtanzahl <- nrow(g.R.allresult)
+
+# Prozentsatz der statistisch signifikanten Einträge für result.I.p.value
+prozentsatz_signifikant_I <- (anzahl_signifikant_I / gesamtanzahl) * 100
+
+# Prozentsatz der statistisch signifikanten Einträge für result.O.p.value
+prozentsatz_signifikant_O <- (anzahl_signifikant_O / gesamtanzahl) * 100
+
+
+durchschnitt_I_pValue <- mean(g.R.allresult$result.I.p.value)
+durchschnitt_O_pValue <- mean(g.R.allresult$result.O.p.value)
+
+# Ergebnisse 
+cat("GRAPHISCH - RISK\n")
+cat("Anzahl der Einträge", gesamtanzahl, "\n")
+cat("Anzahl statistisch signifikanter Einträge für result.I.p.value:", anzahl_signifikant_I, "\n")
+cat("Prozentsatz statistisch signifikanter Einträge für result.I.p.value:", prozentsatz_signifikant_I, "%\n")
+cat("Anzahl statistisch signifikanter Einträge für result.O.p.value:", anzahl_signifikant_O, "\n")
+cat("Prozentsatz statistisch signifikanter Einträge für result.O.p.value:", prozentsatz_signifikant_O, "%\n")
+cat("Durchschnitt p-Value für Impact:", durchschnitt_I_pValue, "\n")
+cat("Durchschnitt p-Value für Occurrence:", durchschnitt_O_pValue, "%\n")
+
+
+# Zählen der Anzahl der Einträge, bei denen result.I.p.value < 0.05 ist
+anzahl_signifikant_I <- sum(g.C.allresult$result.I.p.value < 0.05)
+
+# Zählen der Anzahl der Einträge, bei denen result.O.p.value < 0.05 ist
+anzahl_signifikant_O <- sum(g.C.allresult$result.O.p.value < 0.05)
+
+# Gesamtanzahl der Einträge im DataFrame
+gesamtanzahl <- nrow(g.C.allresult)
+
+# Prozentsatz der statistisch signifikanten Einträge für result.I.p.value
+prozentsatz_signifikant_I <- (anzahl_signifikant_I / gesamtanzahl) * 100
+
+# Prozentsatz der statistisch signifikanten Einträge für result.O.p.value
+prozentsatz_signifikant_O <- (anzahl_signifikant_O / gesamtanzahl) * 100
+
+durchschnitt_I_pValue <- mean(g.C.allresult$result.I.p.value)
+durchschnitt_O_pValue <- mean(g.C.allresult$result.O.p.value)
+
+# Ergebnisse 
+cat("GRAPHISCH - CHANCE\n")
+cat("Anzahl der Einträge", gesamtanzahl, "\n")
+cat("Anzahl statistisch signifikanter Einträge für result.I.p.value:", anzahl_signifikant_I, "\n")
+cat("Prozentsatz statistisch signifikanter Einträge für result.I.p.value:", prozentsatz_signifikant_I, "%\n")
+cat("Anzahl statistisch signifikanter Einträge für result.O.p.value:", anzahl_signifikant_O, "\n")
+cat("Prozentsatz statistisch signifikanter Einträge für result.O.p.value:", prozentsatz_signifikant_O, "%\n")
+cat("Durchschnitt p-Value für Impact:", durchschnitt_I_pValue, "\n")
+cat("Durchschnitt p-Value für Occurrence:", durchschnitt_O_pValue, "%\n")
