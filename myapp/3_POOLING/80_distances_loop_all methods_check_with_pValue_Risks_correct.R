@@ -67,6 +67,7 @@ distance.df_all <- data.frame(
 answers <- read.csv(file = 'myapp/data/RQ1_corrected_scaled.csv', header=TRUE) #importiere das answers file
 all.answers <- answers %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID != "401" & QUES_ID != "402" & QUES_ID != "403")
 all.answers <- all.answers %>% filter(QUES_TYP == "Risiko")
+#all.answers <- all.answers %>% filter(QUES_ID == "281" )
 number.scenarios <- nrow(as.data.frame(table(all.answers$QUES_ID)))
 scenarios <- as.data.frame(table(all.answers$QUES_ID))
 
@@ -661,8 +662,21 @@ for (anz in 1:number.scenarios) {
           v_M1_OCC <- get (value_M1_OCC)
           v_M2_OCC <- get (value_M2_OCC)
          
-          new.x.test <- (ks.test(v_M1_IMP, v_M2_IMP, alternative = "two.sided", exact = NULL)) 
-          new.y.test <- (ks.test(v_M1_OCC, v_M2_OCC, alternative = "two.sided", exact = NULL)) 
+          if (M2=="pooling")
+          { 
+            new.x.test <- ks.test(v_M1_IMP, "pnorm", mean = pooling.x, sd = pooling.sd_x, alternative = "two.sided", exact = NULL)
+            new.y.test <- ks.test(v_M1_OCC, "pnorm", mean = pooling.x, sd = pooling.sd_x, alternative = "two.sided", exact = NULL)
+            
+          }
+          else 
+          {
+            new.x.test <- (ks.test(v_M1_IMP, v_M2_IMP, alternative = "two.sided", exact = NULL))   
+            new.y.test <- (ks.test(v_M1_OCC, v_M2_OCC, alternative = "two.sided", exact = NULL)) 
+          }
+          
+          
+          
+          
           new.D.value.x <- new.x.test$statistic
           get.x.value <- (new.D.value.x[[1]])
           p_wert.x <- new.x.test$p.value

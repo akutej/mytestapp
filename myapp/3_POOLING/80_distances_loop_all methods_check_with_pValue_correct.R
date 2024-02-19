@@ -51,20 +51,21 @@ distance.df <- data.frame(
   type = character(0),
   method1 = character(0),
   method2 = character(0),
-  distance = numeric(0))
+  distance = numeric(0),
+  pValue = numeric(0))
 
 distance.df_all <- data.frame(
   scenario = character(0),
   type = character(0),
   method1 = character(0),
   method2 = character(0),
-  distance = numeric(0))
+  distance = numeric(0),
+  pValue = numeric(0))
 
 
 
 answers <- read.csv(file = 'myapp/data/RQ1_corrected_scaled.csv', header=TRUE) #importiere das answers file
 all.answers <- answers %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID != "401" & QUES_ID != "402" & QUES_ID != "403")
-all.answers <- all.answers %>% filter(QUES_ID == "281" )
 number.scenarios <- nrow(as.data.frame(table(all.answers$QUES_ID)))
 scenarios <- as.data.frame(table(all.answers$QUES_ID))
 
@@ -375,7 +376,7 @@ for (anz in 1:number.scenarios) {
       weight.y.df_all <- rbind(weight.y.df_all, weight.y.df_prod)
     
     
-    #Datenframes für die anderen Teile (nicht weight)
+    #Datenframes für die anderen Teie (nicht weight)
     x_user_werte <- seq(x.min, x.max, by = 0.25)
     y_user_werte <- seq(y.min, y.max, by = 0.25)
   
@@ -658,15 +659,27 @@ for (anz in 1:number.scenarios) {
           v_M2_IMP <- get (value_M2_IMP)
           v_M1_OCC <- get (value_M1_OCC)
           v_M2_OCC <- get (value_M2_OCC)
-         
-          new.x.test <- (ks.test(v_M1_IMP, v_M2_IMP, alternative = "two.sided", exact = NULL)) 
-          new.y.test <- (ks.test(v_M1_OCC, v_M2_OCC, alternative = "two.sided", exact = NULL)) 
+          
+          if (M2=="pooling")
+          { 
+            new.x.test <- ks.test(v_M1_IMP, "pnorm", mean = pooling.x, sd = pooling.sd_x, alternative = "two.sided", exact = NULL)
+            new.y.test <- ks.test(v_M1_OCC, "pnorm", mean = pooling.x, sd = pooling.sd_x, alternative = "two.sided", exact = NULL)
+            
+          }
+          else 
+          {
+            new.x.test <- (ks.test(v_M1_IMP, v_M2_IMP, alternative = "two.sided", exact = NULL))   
+            new.y.test <- (ks.test(v_M1_OCC, v_M2_OCC, alternative = "two.sided", exact = NULL)) 
+          }
+          
           new.D.value.x <- new.x.test$statistic
           get.x.value <- (new.D.value.x[[1]])
-          distance.df <- bind_rows(distance.df, data.frame(scenario = actualscenario, type = "IMPACT" , method1 = M1, method2 = M2 , distance = get.x.value ))  
+          p_wert.x <- new.x.test$p.value
+          distance.df <- bind_rows(distance.df, data.frame(scenario = actualscenario, type = "IMPACT" , method1 = M1, method2 = M2 , distance = get.x.value, pValue = p_wert.x))  
           new.D.value.y <- new.y.test$statistic
           get.y.value <- (new.D.value.y[[1]])
-          distance.df <- bind_rows(distance.df, data.frame(scenario = actualscenario, type = "OCCURRENCE" , method1 = M1, method2 = M2 , distance = get.y.value ))  
+          p_wert.y <- new.y.test$p.value
+          distance.df <- bind_rows(distance.df, data.frame(scenario = actualscenario, type = "OCCURRENCE" , method1 = M1, method2 = M2 , distance = get.y.value, pValue = p_wert.y))  
        
         }
       }
@@ -685,13 +698,13 @@ runde_wenn_numerisch <- function(x) {
 
 gerundeter_df <- as.data.frame(lapply(distance.df, runde_wenn_numerisch))
 
-print("TABELLE")
-print(gerundeter_df)
+#print("TABELLE")
+#print(gerundeter_df)
 
 scentext <- paste0("Streumaße")
-scenfile <- paste0("myapp/files/80_distances/distances.xlsx")
+scenfile <- paste0("myapp/files/80_distances/distances_pValue.xlsx")
 
-write.csv(gerundeter_df, file = paste0("myapp/files/80_distances/distances.csv"), row.names = TRUE)
+write.csv(gerundeter_df, file = paste0("myapp/files/80_distances/distances_pValue.csv"), row.names = TRUE)
 
 # Erstellt einen neuen Workbook und füge den transponierten Dataframe ein
 wb <- createWorkbook()
@@ -709,9 +722,9 @@ summary_df <- aggregate(distance ~ type + method1 + method2, data = gerundeter_d
 print(summary_df)
 
 scentext <- paste0("Streumaße")
-scenfile <- paste0("myapp/files/80_distances/distances_aggregate1.xlsx")
+scenfile <- paste0("myapp/files/80_distances/distances_aggregate1_pValue.xlsx")
 
-write.csv(summary_df, file = paste0("myapp/files/80_distances/distances_aggregate1.csv"), row.names = TRUE)
+write.csv(summary_df, file = paste0("myapp/files/80_distances/distances_aggregate1_pValue.csv"), row.names = TRUE)
 
 # Erstellt einen neuen Workbook und füge den transponierten Dataframe ein
 wb <- createWorkbook()
@@ -727,9 +740,9 @@ new_summary_df <- aggregate(distance ~ type + method1 + method2, data = gerundet
 # Ausgabe des zusammengefassten Dataframes
 print(new_summary_df)
 scentext <- paste0("Streumaße")
-scenfile <- paste0("myapp/files/80_distances/distances_aggregate2.xlsx")
+scenfile <- paste0("myapp/files/80_distances/distances_aggregate2_pValue.xlsx")
 
-write.csv(new_summary_df, file = paste0("myapp/files/80_distances/distances_aggregate2.csv"), row.names = TRUE)
+write.csv(new_summary_df, file = paste0("myapp/files/80_distances/distances_aggregate2_pValue.csv"), row.names = TRUE)
 
 # Erstellt einen neuen Workbook und füge den transponierten Dataframe ein
 wb <- createWorkbook()

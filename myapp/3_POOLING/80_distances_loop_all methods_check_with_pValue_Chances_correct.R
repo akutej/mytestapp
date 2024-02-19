@@ -66,6 +66,7 @@ distance.df_all <- data.frame(
 
 answers <- read.csv(file = 'myapp/data/RQ1_corrected_scaled.csv', header=TRUE) #importiere das answers file
 all.answers <- answers %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID != "401" & QUES_ID != "402" & QUES_ID != "403")
+#all.answers <- answers %>% filter(QUES_ID == "287")
 all.answers <- all.answers %>% filter(QUES_TYP == "Chance")
 number.scenarios <- nrow(as.data.frame(table(all.answers$QUES_ID)))
 scenarios <- as.data.frame(table(all.answers$QUES_ID))
@@ -661,11 +662,26 @@ for (anz in 1:number.scenarios) {
           v_M1_OCC <- get (value_M1_OCC)
           v_M2_OCC <- get (value_M2_OCC)
          
-          new.x.test <- (ks.test(v_M1_IMP, v_M2_IMP, alternative = "two.sided", exact = NULL)) 
-          new.y.test <- (ks.test(v_M1_OCC, v_M2_OCC, alternative = "two.sided", exact = NULL)) 
+          if (M1=="pooling" || M2=="pooling")
+          { 
+            new.x.test <- ks.test(v_M1_IMP, "pnorm", mean = pooling.x, sd = pooling.sd_x, alternative = "two.sided", exact = NULL)
+            new.y.test <- ks.test(v_M1_OCC, "pnorm", mean = pooling.x, sd = pooling.sd_x, alternative = "two.sided", exact = NULL)
+            
+          }
+          else 
+          {
+            new.x.test <- (ks.test(v_M1_IMP, v_M2_IMP, alternative = "two.sided", exact = NULL))   
+            new.y.test <- (ks.test(v_M1_OCC, v_M2_OCC, alternative = "two.sided", exact = NULL)) 
+          }
+          
           new.D.value.x <- new.x.test$statistic
           get.x.value <- (new.D.value.x[[1]])
           p_wert.x <- new.x.test$p.value
+          #print (M1)
+          #print (M2)
+          #print (new.x.test)
+          #print (new.D.value.x)
+          #print (p_wert.x)
           distance.df <- bind_rows(distance.df, data.frame(scenario = actualscenario, type = "IMPACT" , method1 = M1, method2 = M2 , distance = get.x.value, pValue = p_wert.x))  
           new.D.value.y <- new.y.test$statistic
           get.y.value <- (new.D.value.y[[1]])
@@ -710,7 +726,7 @@ saveWorkbook(wb, file = scenfile, overwrite = TRUE)
 summary_df <- aggregate(distance ~ type + method1 + method2, data = gerundeter_df, FUN = mean)
 
 # Ausgabe des zusammengefassten Dataframes
-print(summary_df)
+#print(summary_df)
 
 scentext <- paste0("Streumaße")
 scenfile <- paste0("myapp/files/80_distances/distances_aggregate1_pValue_Chances.xlsx")
@@ -729,7 +745,7 @@ saveWorkbook(wb, file = scenfile, overwrite = TRUE)
 new_summary_df <- aggregate(distance ~ type + method1 + method2, data = gerundeter_df, FUN = sum)
 
 # Ausgabe des zusammengefassten Dataframes
-print(new_summary_df)
+#print(new_summary_df)
 scentext <- paste0("Streumaße")
 scenfile <- paste0("myapp/files/80_distances/distances_aggregate2_pValue_Chances.xlsx")
 
