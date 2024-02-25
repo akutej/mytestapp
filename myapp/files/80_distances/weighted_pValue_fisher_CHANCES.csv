@@ -1,0 +1,13 @@
+"","category","combined_p_value"
+"1","IMP.classic.weighted",7.84005236830291e-22
+"2","OCC.classic.weighted",5.24740623236579e-33
+"3","IMP.area.weighted",0.703052131352385
+"4","OCC.area.weighted",0.920344841538762
+"5","IMP.center.weighted",0.992911731538053
+"6","OCC.center.weighted",0.998641647920823
+"7","IMP.centertogrid.weighted",1.29644112430293e-13
+"8","OCC.centertogrid.weighted",1.35231571131613e-11
+"9","IMP.reachedgrid.weighted",5.99268623193326e-17
+"10","OCC.reachedgrid.weighted",9.56408463166062e-12
+"11","IMP.pooling.weighted",0
+"12","OCC.pooling.weighted",4.19843996804549e-239

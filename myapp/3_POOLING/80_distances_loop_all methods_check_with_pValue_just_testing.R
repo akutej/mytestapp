@@ -62,18 +62,13 @@ distance.df_all <- data.frame(
   distance = numeric(0),
   pValue = numeric(0))
 
-special.distance.df <- data.frame(
-  scenario = character(0),
-  type = character(0),
-  method1 = character(0),
-  method2 = character(0),
-  distance = numeric(0),
-  pValue = numeric(0))
+
 
 answers <- read.csv(file = 'myapp/data/RQ1_corrected_scaled.csv', header=TRUE) #importiere das answers file
-all.answers <- answers %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID != "401" & QUES_ID != "402" & QUES_ID != "403")
-all.answers <- all.answers %>% filter(QUES_TYP == "Risiko")
-#all.answers <- all.answers %>% filter(QUES_ID == "281" )
+#all.answers <- answers %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID != "401" & QUES_ID != "402" & QUES_ID != "403")
+#all.answers <- all.answers %>% filter(QUES_TYP == "Risiko")
+all.answers <- answers %>% filter(QUES_ID == "281")
+print (all.answers)
 number.scenarios <- nrow(as.data.frame(table(all.answers$QUES_ID)))
 scenarios <- as.data.frame(table(all.answers$QUES_ID))
 
@@ -506,7 +501,7 @@ for (anz in 1:number.scenarios) {
   #print("TABELLE")
   #print(df)
   
-  
+
   
   ######VERTEILUNGEN
       #KLASSICH
@@ -610,8 +605,13 @@ for (anz in 1:number.scenarios) {
       
       
       
+      #print ("gewichtet")
       
-      
+      #weightx <- weight.x.df_all$weight.x.value
+      #weighty <- weight.y.df_all$weight.y.value
+      #print (actual.df$scaled_uncertainty_middle_X)
+      #print (classicX_metrics)
+      #print (weight.x.simulations)
       
       #KLASSICH
       # classicX_metrics
@@ -641,123 +641,6 @@ for (anz in 1:number.scenarios) {
       #distance.df_all <- rbind(distance.df_all, distance.df)
   
       # Liste der Methoden
-      
-      
-      
-      #Anpassung für weighted damit der p-Wert berechnet werden kann
-      
-      
-      
-      p_values.x <- numeric(10000)
-      p_values.y <- numeric(10000)
-      p.x.weighted.classic <- numeric(10000)
-      p.y.weighted.classic <- numeric(10000)
-      p.x.weighted.area <- numeric(10000)
-      p.y.weighted.area <- numeric(10000)
-      p.x.weighted.center <- numeric(10000)
-      p.y.weighted.center <- numeric(10000)
-      p.x.weighted.centertogrid <- numeric(10000)
-      p.y.weighted.centertogrid <- numeric(10000)
-      p.x.weighted.reachedgrid <- numeric(10000)
-      p.y.weighted.reachedgrid <- numeric(10000)
-      p.x.weighted.pooling <- numeric(10000)
-      p.y.weighted.pooling <- numeric(10000)
-      
-      
-      # Schleife, um den Prozess 10.000 Mal zu wiederholen
-      for(i in 1:10000) {
-        # Zieht eine Stichprobe
-        sample_values.x <- sample(weight.x.simulations, numberofanswers, replace = TRUE)
-        sample_values.y <- sample(weight.y.simulations, numberofanswers, replace = TRUE)
-        # Führe den Kolmogorov-Smirnov-Test durch
-        
-        
-        x.weighted.classic <- ks.test(classicX_metrics, sample_values.x, alternative = "two.sided", exact = NULL)
-        y.weighted.classic <- ks.test(classicY_metrics, sample_values.y, alternative = "two.sided", exact = NULL)
-        x.weighted.area <- ks.test(areax, sample_values.x, alternative = "two.sided", exact = NULL)
-        y.weighted.area <- ks.test(areay, sample_values.y, alternative = "two.sided", exact = NULL)
-        x.weighted.center <- ks.test(middlegridx, sample_values.x, alternative = "two.sided", exact = NULL)
-        y.weighted.center <- ks.test(middlegridy, sample_values.y, alternative = "two.sided", exact = NULL)
-        x.weighted.centertogrid <- ks.test(graphiccentertoclassicX_metrics, sample_values.x, alternative = "two.sided", exact = NULL)
-        y.weighted.centertogrid <- ks.test(graphiccentertoclassicY_metrics, sample_values.y, alternative = "two.sided", exact = NULL)
-        x.weighted.reachedgrid <- ks.test(graphic_gridreach_X_metrics, sample_values.x, alternative = "two.sided", exact = NULL)
-        y.weighted.reachedgrid <- ks.test(graphic_gridreach_Y_metrics, sample_values.y, alternative = "two.sided", exact = NULL)
-        x.weighted.pooling <- ks.test(sample_values.x, "pnorm", mean = pooling.x, sd = pooling.sd_x, alternative = "two.sided", exact = NULL)
-        y.weighted.pooling <- ks.test(sample_values.y, "pnorm", mean = pooling.y, sd = pooling.sd_y, alternative = "two.sided", exact = NULL)
-        
-        
-        # Speichere den p-Wert
-        p.x.weighted.classic[i] <- x.weighted.classic$p.value
-        p.y.weighted.classic[i] <- y.weighted.classic$p.value
-        p.x.weighted.area[i] <- x.weighted.area$p.value
-        p.y.weighted.area[i] <- y.weighted.area$p.value
-        p.x.weighted.center[i] <- x.weighted.center$p.value
-        p.y.weighted.center[i] <- y.weighted.center$p.value
-        p.x.weighted.centertogrid[i] <- x.weighted.centertogrid$p.value
-        p.y.weighted.centertogrid[i] <- y.weighted.centertogrid$p.value
-        p.x.weighted.reachedgrid[i] <- x.weighted.reachedgrid$p.value
-        p.y.weighted.reachedgrid[i] <- y.weighted.reachedgrid$p.value
-        p.x.weighted.pooling[i] <- x.weighted.pooling$p.value
-        p.y.weighted.pooling[i] <- y.weighted.pooling$p.value
-        
-        
-        
-      }
-      
-      # Berechne den Durchschnitt der p-Werte
-      average_p.x.weighted.classic <- mean(p.x.weighted.classic)
-      average_p.y.weighted.classic <- mean(p.y.weighted.classic)
-      average_p.x.weighted.area <- mean(p.x.weighted.area)
-      average_p.y.weighted.area <- mean(p.y.weighted.area)
-      average_p.x.weighted.center <- mean(p.x.weighted.center)
-      average_p.y.weighted.center <- mean(p.y.weighted.center)
-      average_p.x.weighted.centertogrid <- mean(p.x.weighted.centertogrid)
-      average_p.y.weighted.centertogrid <- mean(p.y.weighted.centertogrid)
-      average_p.x.weighted.reachedgrid <- mean(p.x.weighted.reachedgrid)
-      average_p.y.weighted.reachedgrid <- mean(p.y.weighted.reachedgrid)
-      average_p.x.weighted.pooling <- mean(p.x.weighted.pooling)
-      average_p.y.weighted.pooling <- mean(p.y.weighted.pooling)
-      
-      # Zeige den Durchschnitt der p-Werte
-      print ("WEIGHTED - CLASSIC")
-      print(average_p.x.weighted.classic)
-      print(average_p.y.weighted.classic)
-      special.distance.df <- bind_rows(special.distance.df, data.frame(scenario = actualscenario, type = "IMPACT" , method1 = "classic", method2 = "weighted" , pValue = average_p.x.weighted.classic))  
-      special.distance.df <- bind_rows(special.distance.df, data.frame(scenario = actualscenario, type = "OCCURRENCE" , method1 = "classic", method2 = "weighted" , pValue = average_p.y.weighted.classic))  
-      cat("\n")
-      print ("WEIGHTED - AREA")
-      print(average_p.x.weighted.area)
-      print(average_p.y.weighted.area)
-      special.distance.df <- bind_rows(special.distance.df, data.frame(scenario = actualscenario, type = "IMPACT" , method1 = "area", method2 = "weighted" , pValue = average_p.x.weighted.area))  
-      special.distance.df <- bind_rows(special.distance.df, data.frame(scenario = actualscenario, type = "OCCURRENCE" , method1 = "area", method2 = "weighted" , pValue = average_p.y.weighted.area))  
-      cat("\n")
-      print ("WEIGHTED - CENTER")
-      print(average_p.x.weighted.center)
-      print(average_p.y.weighted.center)
-      special.distance.df <- bind_rows(special.distance.df, data.frame(scenario = actualscenario, type = "IMPACT" , method1 = "center", method2 = "weighted" , pValue = average_p.x.weighted.center))  
-      special.distance.df <- bind_rows(special.distance.df, data.frame(scenario = actualscenario, type = "OCCURRENCE" , method1 = "center", method2 = "weighted" , pValue = average_p.y.weighted.center))  
-      cat("\n") 
-      print ("WEIGHTED - CENTERTOGRID")
-      print(average_p.x.weighted.centertogrid)
-      print(average_p.y.weighted.centertogrid)
-      special.distance.df <- bind_rows(special.distance.df, data.frame(scenario = actualscenario, type = "IMPACT" , method1 = "centertogrid", method2 = "weighted" , pValue = average_p.x.weighted.centertogrid))  
-      special.distance.df <- bind_rows(special.distance.df, data.frame(scenario = actualscenario, type = "OCCURRENCE" , method1 = "centertogrid", method2 = "weighted" , pValue = average_p.y.weighted.centertogrid))  
-      cat("\n") 
-      print ("WEIGHTED - REACHEDGRID")
-      print(average_p.x.weighted.reachedgrid)
-      print(average_p.y.weighted.reachedgrid)
-      special.distance.df <- bind_rows(special.distance.df, data.frame(scenario = actualscenario, type = "IMPACT" , method1 = "reachedgrid", method2 = "weighted" , pValue = average_p.x.weighted.reachedgrid))  
-      special.distance.df <- bind_rows(special.distance.df, data.frame(scenario = actualscenario, type = "OCCURRENCE" , method1 = "reachedgrid", method2 = "weighted" , pValue = average_p.y.weighted.reachedgrid))  
-      cat("\n") 
-      print ("WEIGHTED - POOLING")
-      print(average_p.x.weighted.pooling)
-      print(average_p.y.weighted.pooling)
-      special.distance.df <- bind_rows(special.distance.df, data.frame(scenario = actualscenario, type = "IMPACT" , method1 = "pooling", method2 = "weighted" , pValue = average_p.x.weighted.pooling))  
-      special.distance.df <- bind_rows(special.distance.df, data.frame(scenario = actualscenario, type = "OCCURRENCE" , method1 = "pooling", method2 = "weighted" , pValue = average_p.y.weighted.pooling))  
-      cat("\n") 
-      
-      
-      
       methods <- c("classic", "area", "center", "centertogrid", "reachedgrid", "weighted", "pooling")
       name_DF_IMP <- c("classicX_metrics", "areax", "middlegridx", "graphiccentertoclassicX_metrics", "graphic_gridreach_X_metrics", "weight.x.simulations", "pooling.x")
       name_DF_IMP2 <- c("-","-","-","-","-","-","pooling.sd_x")
@@ -830,9 +713,9 @@ gerundeter_df <- as.data.frame(lapply(distance.df, runde_wenn_numerisch))
 #print(gerundeter_df)
 
 scentext <- paste0("Streumaße")
-scenfile <- paste0("myapp/files/80_distances/distances_pValue_Risks.xlsx")
+scenfile <- paste0("myapp/files/80_distances/distances_pValue_just_testing.xlsx")
 
-write.csv(gerundeter_df, file = paste0("myapp/files/80_distances/distances_pValue_Risks.csv"), row.names = TRUE)
+write.csv(gerundeter_df, file = paste0("myapp/files/80_distances/distances_pValue_just_testing.csv"), row.names = TRUE)
 
 # Erstellt einen neuen Workbook und füge den transponierten Dataframe ein
 wb <- createWorkbook()
@@ -850,9 +733,9 @@ summary_df <- aggregate(distance ~ type + method1 + method2, data = gerundeter_d
 print(summary_df)
 
 scentext <- paste0("Streumaße")
-scenfile <- paste0("myapp/files/80_distances/distances_aggregate1_pValue_Risks.xlsx")
+scenfile <- paste0("myapp/files/80_distances/distances_aggregate1_pValue_just_testing.xlsx")
 
-write.csv(summary_df, file = paste0("myapp/files/80_distances/distances_aggregate1_pValue_Risks.csv"), row.names = TRUE)
+write.csv(summary_df, file = paste0("myapp/files/80_distances/distances_aggregate1_pValue_just_testing.csv"), row.names = TRUE)
 
 # Erstellt einen neuen Workbook und füge den transponierten Dataframe ein
 wb <- createWorkbook()
@@ -868,9 +751,9 @@ new_summary_df <- aggregate(distance ~ type + method1 + method2, data = gerundet
 # Ausgabe des zusammengefassten Dataframes
 print(new_summary_df)
 scentext <- paste0("Streumaße")
-scenfile <- paste0("myapp/files/80_distances/distances_aggregate2_pValue_Risks.xlsx")
+scenfile <- paste0("myapp/files/80_distances/distances_aggregate2_pValue_just_testing.xlsx")
 
-write.csv(new_summary_df, file = paste0("myapp/files/80_distances/distances_aggregate2_pValue_Risks.csv"), row.names = TRUE)
+write.csv(new_summary_df, file = paste0("myapp/files/80_distances/distances_aggregate2_pValue_just_testing.csv"), row.names = TRUE)
 
 # Erstellt einen neuen Workbook und füge den transponierten Dataframe ein
 wb <- createWorkbook()
@@ -880,18 +763,4 @@ writeData(wb, "Sheet1", new_summary_df)
 # Speichern des Workbooks als XLSX-Datei
 saveWorkbook(wb, file = scenfile, overwrite = TRUE)
 
-#print (special.distance.df)
-
-scentext <- paste0("weighted")
-scenfile <- paste0("myapp/files/80_distances/weighted_pValue_Risks.xlsx")
-
-write.csv(special.distance.df, file = paste0("myapp/files/80_distances/weighted_pValue_Risks.csv"), row.names = TRUE)
-
-# Erstellt einen neuen Workbook und füge den transponierten Dataframe ein
-wb <- createWorkbook()
-addWorksheet(wb, "Sheet1")
-writeData(wb, "Sheet1", special.distance.df)
-
-# Speichern des Workbooks als XLSX-Datei
-saveWorkbook(wb, file = scenfile, overwrite = TRUE)
 
