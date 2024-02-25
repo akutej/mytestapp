@@ -1,4 +1,3 @@
-
 library(dplyr)
 library(ggplot2)
 library(grid)
@@ -36,7 +35,7 @@ for (ques_id in R.QUESID) {
   new <- polyserial(classic, graphic.center, ML = FALSE, control = list(), 
              std.err = FALSE, maxcor=.9999, bins=4, start, thresholds=FALSE)
   
-  print (new)
+  #print (new)
   
 }
 
