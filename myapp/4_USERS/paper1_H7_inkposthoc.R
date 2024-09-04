@@ -11,8 +11,8 @@ library(readxl)
 answerstable <- read.xlsx('myapp/data/RQ1_corrected_scaled_2.xlsx') #importiert das answers file
 answerstable <- answerstable %>% filter(QUES_ID != "401" & QUES_ID != "402"& QUES_ID != "403")#Nimmt meine Testdatensätze aus
 answerstable <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & (ACC2SURV_ROLE  == 1 | ACC2SURV_ROLE  == 2))#filtert die Daten und gibt nur die beantworteten aus #& QUES_ID == actualscenario)# & ACC2SURV_ACCID == "22")
-answerstable <- answerstable %>% filter(QUES_TYP == "Risiko")
-#answerstable <- answerstable %>% filter(QUES_TYP == "Chance")
+#answerstable <- answerstable %>% filter(QUES_TYP == "Risiko")
+answerstable <- answerstable %>% filter(QUES_TYP == "Chance")
 
 
 df.all <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & (ACC2SURV_ROLE  == 1 | ACC2SURV_ROLE  == 2))#filtert die Daten und gibt nur die beantworteten aus #& QUES_ID == actualscenario)# & ACC2SURV_ACCID == "22")
@@ -113,6 +113,8 @@ job_df <- data.frame(
 
 print (job_df)
 
+
+
 #write.csv(gerundeter_df, file = paste0("myapp/files/300_users/",scentext,".csv"), row.names = TRUE)
 # Erstelle einen neuen Workbook und füge den transponierten Dataframe ein
 
@@ -186,5 +188,33 @@ print (chi2_test_imp)
 chi2_test_occ <- chisq.test(table_data_occ)
 print (chi2_test_occ)
 
+
+
+
+post_data_impact <- data.frame(
+  Job_Group = i_gruppen,
+  Uncertainty_Impact = i_daten
+)
+
+post_data_occurrence <- data.frame(
+  Job_Group = o_gruppen,
+  Uncertainty_Occurrence = o_daten
+)
+
+
+kw_test_impact <- kruskal.test(Uncertainty_Impact ~ Job_Group, data = post_data_impact)
+dunn_test_impact <- dunnTest(Uncertainty_Impact ~ Job_Group, data = post_data_impact, method = "bonferroni")
+
+kw_test_occurrence <- kruskal.test(Uncertainty_Occurrence ~ Job_Group, data = post_data_occurrence)
+dunn_test_occurrence <- dunnTest(Uncertainty_Occurrence ~ Job_Group, data = post_data_occurrence, method = "bonferroni")
+
+
+# Ausgabe der Kruskal-Wallis-Tests
+print(kw_test_impact)
+print(kw_test_occurrence)
+
+# Ausgabe der Dunn-Tests
+print(dunn_test_impact)
+print(dunn_test_occurrence)
 
 
