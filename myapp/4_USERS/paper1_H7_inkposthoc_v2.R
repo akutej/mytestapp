@@ -9,10 +9,10 @@ library(FSA) # for Dunn test
 
 # Function to format p-values
 format_p_value <- function(p) {
-  if (p < 0.001) {
-    "<0.001"  # Show as less than 0.001 if very small
+  if (p < 0.0001) {
+    "<0.0001"  # Show as less than 0.001 if very small
   } else {
-    formatC(p, format = "f", digits = 3)  # Format with 3 decimal places
+    formatC(p, format = "f", digits = 4)  # Format with 3 decimal places
   }
 }
 
@@ -20,8 +20,8 @@ format_p_value <- function(p) {
 answerstable <- read.xlsx('myapp/data/RQ1_corrected_scaled_2.xlsx') 
 answerstable <- answerstable %>% filter(QUES_ID != "401" & QUES_ID != "402" & QUES_ID != "403") # Removing test datasets
 answerstable <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & (ACC2SURV_ROLE == 1 | ACC2SURV_ROLE == 2)) 
-answerstable <- answerstable %>% filter(QUES_TYP == "Risiko")
-#answerstable <- answerstable %>% filter(QUES_TYP == "Chance") # Only considering "Chance" question types
+#answerstable <- answerstable %>% filter(QUES_TYP == "Risiko")
+answerstable <- answerstable %>% filter(QUES_TYP == "Chance") # Only considering "Chance" question types
 
 df.all <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & (ACC2SURV_ROLE == 1 | ACC2SURV_ROLE == 2))
 df.coreteam <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & ACC2SURV_ROLE == 1) 
