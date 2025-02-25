@@ -8,7 +8,7 @@ library(grid)
 library(RColorBrewer)
 
 answerstable <- read.csv(file = 'myapp/Data/RQ1_corrected_scaled.csv', header=TRUE) #importiere das answers file
-
+answerstable <- answerstable %>% filter(QUES_ID == "359")
 dfall <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1)
 scenarios <- as.data.frame(table(dfall$QUES_ID))
 #print(scenarios)
@@ -65,20 +65,20 @@ thisis <- ggplot()+
         panel.border = element_blank(),
         panel.background = element_blank()
         )+
-  xlim(-150,400)+
-  ylim(0,530)+
-  geom_rect(aes(xmin=-150, xmax=0, ymin=0, ymax=80),fill="lightgrey", color="black", alpha=1)+
-  geom_rect(aes(xmin=-150, xmax=0, ymin=80, ymax=160),fill="lightgrey", color="black", alpha=1)+
-  geom_rect(aes(xmin=-150, xmax=0, ymin=160, ymax=240),fill="lightgrey", color="black", alpha=1)+
-  geom_rect(aes(xmin=-150, xmax=0, ymin=240, ymax=320),fill="lightgrey", color="black", alpha=1)+
-  geom_rect(aes(xmin=-150, xmax=0, ymin=320, ymax=400),fill="lightgrey", color="black", alpha=1)+
-  geom_rect(aes(xmin=-150, xmax=-100, ymin=0, ymax=400),fill="grey", color="black", alpha=1)+
-  geom_rect(aes(xmin=0, xmax=80, ymin=400, ymax=480),fill="lightgrey", color="black", alpha=1)+
-  geom_rect(aes(xmin=80, xmax=160, ymin=400, ymax=480),fill="lightgrey", color="black", alpha=1)+
-  geom_rect(aes(xmin=160, xmax=240, ymin=400, ymax=480),fill="lightgrey", color="black", alpha=1)+
-  geom_rect(aes(xmin=240, xmax=320, ymin=400, ymax=480),fill="lightgrey", color="black", alpha=1)+
-  geom_rect(aes(xmin=320, xmax=400, ymin=400, ymax=480),fill="lightgrey", color="black", alpha=1)+
-  geom_rect(aes(xmin=0, xmax=400, ymin=480, ymax=530),fill="grey", color="black", alpha=1)+
+  xlim(-100,400)+
+  ylim(0,500)+
+  geom_rect(aes(xmin=-50, xmax=0, ymin=0, ymax=80),fill="lightgrey", color="black", alpha=1)+
+  geom_rect(aes(xmin=-50, xmax=0, ymin=80, ymax=160),fill="lightgrey", color="black", alpha=1)+
+  geom_rect(aes(xmin=-50, xmax=0, ymin=160, ymax=240),fill="lightgrey", color="black", alpha=1)+
+  geom_rect(aes(xmin=-50, xmax=0, ymin=240, ymax=320),fill="lightgrey", color="black", alpha=1)+
+  geom_rect(aes(xmin=-50, xmax=0, ymin=320, ymax=400),fill="lightgrey", color="black", alpha=1)+
+  geom_rect(aes(xmin=-100, xmax=-50, ymin=0, ymax=400),fill="grey", color="black", alpha=1)+
+  geom_rect(aes(xmin=0, xmax=80, ymin=400, ymax=450),fill="lightgrey", color="black", alpha=1)+
+  geom_rect(aes(xmin=80, xmax=160, ymin=400, ymax=450),fill="lightgrey", color="black", alpha=1)+
+  geom_rect(aes(xmin=160, xmax=240, ymin=400, ymax=450),fill="lightgrey", color="black", alpha=1)+
+  geom_rect(aes(xmin=240, xmax=320, ymin=400, ymax=450),fill="lightgrey", color="black", alpha=1)+
+  geom_rect(aes(xmin=320, xmax=400, ymin=400, ymax=450),fill="lightgrey", color="black", alpha=1)+
+  geom_rect(aes(xmin=0, xmax=400, ymin=450, ymax=500),fill="grey", color="black", alpha=1)+
   
   geom_rect(aes(xmin=0, xmax=80, ymin=0, ymax=80),fill="green", color="black", alpha=1)+
   geom_rect(aes(xmin=0, xmax=80, ymin=80, ymax=160),fill="green", color="black", alpha=1)+
@@ -106,50 +106,50 @@ thisis <- ggplot()+
   geom_rect(aes(xmin=320, xmax=400, ymin=240, ymax=320),fill="red", color="black", alpha=1)+
   geom_rect(aes(xmin=320, xmax=400, ymin=320, ymax=400),fill="red", color="black", alpha=1)+
   
-  geom_text(aes(x = 40, y = 40, label = classicgrid[1]),size = 10)+
-  geom_text(aes(x = 40, y = 120, label = classicgrid[2]),size = 10)+
-  geom_text(aes(x = 40, y = 200, label = classicgrid[3]),size = 10)+
-  geom_text(aes(x = 40, y = 280, label = classicgrid[4]),size = 10)+
-  geom_text(aes(x = 40, y = 360, label = classicgrid[5]),size = 10)+
+  geom_text(aes(x = 40, y = 40, label = classicgrid[1]),size = 12)+
+  geom_text(aes(x = 40, y = 120, label = classicgrid[2]),size = 12)+
+  geom_text(aes(x = 40, y = 200, label = classicgrid[3]),size = 12)+
+  geom_text(aes(x = 40, y = 280, label = classicgrid[4]),size = 12)+
+  geom_text(aes(x = 40, y = 360, label = classicgrid[5]),size = 12)+
   
-  geom_text(aes(x = 120, y = 40, label = classicgrid[6]),size = 10)+
-  geom_text(aes(x = 120, y = 120, label = classicgrid[7]),size = 10)+
-  geom_text(aes(x = 120, y = 200, label = classicgrid[8]),size = 10)+
-  geom_text(aes(x = 120, y = 280, label = classicgrid[9]),size = 10)+
-  geom_text(aes(x = 120, y = 360, label = classicgrid[10]),size = 10)+
+  geom_text(aes(x = 120, y = 40, label = classicgrid[6]),size = 12)+
+  geom_text(aes(x = 120, y = 120, label = classicgrid[7]),size = 12)+
+  geom_text(aes(x = 120, y = 200, label = classicgrid[8]),size = 12)+
+  geom_text(aes(x = 120, y = 280, label = classicgrid[9]),size = 12)+
+  geom_text(aes(x = 120, y = 360, label = classicgrid[10]),size = 12)+
   
-  geom_text(aes(x = 200, y = 40, label = classicgrid[11]),size = 10)+
-  geom_text(aes(x = 200, y = 120, label = classicgrid[12]),size = 10)+
-  geom_text(aes(x = 200, y = 200, label = classicgrid[13]),size = 10)+
-  geom_text(aes(x = 200, y = 280, label = classicgrid[14]),size = 10)+
-  geom_text(aes(x = 200, y = 360, label = classicgrid[15]),size = 10)+
+  geom_text(aes(x = 200, y = 40, label = classicgrid[11]),size = 12)+
+  geom_text(aes(x = 200, y = 120, label = classicgrid[12]),size = 12)+
+  geom_text(aes(x = 200, y = 200, label = classicgrid[13]),size = 12)+
+  geom_text(aes(x = 200, y = 280, label = classicgrid[14]),size = 12)+
+  geom_text(aes(x = 200, y = 360, label = classicgrid[15]),size = 12)+
   
-  geom_text(aes(x = 280, y = 40, label = classicgrid[16]),size = 10)+
-  geom_text(aes(x = 280, y = 120, label = classicgrid[17]),size = 10)+
-  geom_text(aes(x = 280, y = 200, label = classicgrid[18]),size = 10)+
-  geom_text(aes(x = 280, y = 280, label = classicgrid[19]),size = 10)+
-  geom_text(aes(x = 280, y = 360, label = classicgrid[20]),size = 10)+
+  geom_text(aes(x = 280, y = 40, label = classicgrid[16]),size = 12)+
+  geom_text(aes(x = 280, y = 120, label = classicgrid[17]),size = 12)+
+  geom_text(aes(x = 280, y = 200, label = classicgrid[18]),size = 12)+
+  geom_text(aes(x = 280, y = 280, label = classicgrid[19]),size = 12)+
+  geom_text(aes(x = 280, y = 360, label = classicgrid[20]),size = 12)+
   
-  geom_text(aes(x = 360, y = 40, label = classicgrid[21]),size = 10)+
-  geom_text(aes(x = 360, y = 120, label = classicgrid[22]),size = 10)+
-  geom_text(aes(x = 360, y = 200, label = classicgrid[23]),size = 10)+
-  geom_text(aes(x = 360, y = 280, label = classicgrid[24]),size = 10)+
-  geom_text(aes(x = 360, y = 360, label = classicgrid[25]),size = 10)+
+  geom_text(aes(x = 360, y = 40, label = classicgrid[21]),size = 12)+
+  geom_text(aes(x = 360, y = 120, label = classicgrid[22]),size = 12)+
+  geom_text(aes(x = 360, y = 200, label = classicgrid[23]),size = 12)+
+  geom_text(aes(x = 360, y = 280, label = classicgrid[24]),size = 12)+
+  geom_text(aes(x = 360, y = 360, label = classicgrid[25]),size = 12)+
   
-  geom_text(aes(x = -50, y = 40, label = "unlikely"),size = 5)+
-  geom_text(aes(x = -50, y = 120, label = "very low"),size = 5)+
-  geom_text(aes(x = -50, y = 200, label = "low"),size = 5)+
-  geom_text(aes(x = -50, y = 280, label = "high"),size = 5)+
-  geom_text(aes(x = -50, y = 360, label = "very high"),size = 5)+
+  geom_text(aes(x = -40, y = 40, label = "un-\nlikely"),size = 7)+
+  geom_text(aes(x = -40, y = 120, label = "very\nlow"),size = 7)+
+  geom_text(aes(x = -40, y = 200, label = "low"),size = 7)+
+  geom_text(aes(x = -40, y = 280, label = "high"),size = 7)+
+  geom_text(aes(x = -40, y = 360, label = "very\nhigh"),size = 7)+
   
-  geom_text(aes(x = 40 , y = 440, label = "insignificant"),size = 5)+
-  geom_text(aes(x = 120, y = 440, label = "low"),size = 5)+
-  geom_text(aes(x = 200, y = 440, label = "noticeable"),size = 5)+
-  geom_text(aes(x = 280, y = 440, label = "critical"),size = 5)+
-  geom_text(aes(x = 360, y = 440, label = "catastrophic"),size = 5)+
+  geom_text(aes(x = 40 , y = 440, label = "insig-\nnificant"),size = 7)+
+  geom_text(aes(x = 120, y = 440, label = "low"),size = 7)+
+  geom_text(aes(x = 200, y = 440, label = "notice-\nable"),size = 7)+
+  geom_text(aes(x = 280, y = 440, label = "critical"),size = 7)+
+  geom_text(aes(x = 360, y = 440, label = "catastro-\nphic"),size = 7)+
   
-  geom_text(aes(x = 200, y = 505, label = "Impact"),size = 5)+
-  geom_text(aes(x = -125, y = 200, label = "Probability of occurrence"),size = 5,angle=90)#+
+  geom_text(aes(x = 200, y = 505, label = "IMPACT"),size = 10)+
+  geom_text(aes(x = -105, y = 200, label = "PROBABILITY OF OCCURRENCE"),size = 10,angle=90)#+
   
 }
 
@@ -240,11 +240,11 @@ else
     geom_text(aes(x = 360, y = 280, label = classicgrid[24]),size = 10)+
     geom_text(aes(x = 360, y = 360, label = classicgrid[25]),size = 10)+
     
-    geom_text(aes(x = -50, y = 40, label = "unlikely"),size = 5)+
-    geom_text(aes(x = -50, y = 120, label = "very low"),size = 5)+
-    geom_text(aes(x = -50, y = 200, label = "low"),size = 5)+
-    geom_text(aes(x = -50, y = 280, label = "high"),size = 5)+
-    geom_text(aes(x = -50, y = 360, label = "very high"),size = 5)+
+    geom_text(aes(x = -40, y = 40, label = "unlikely"),size = 5)+
+    geom_text(aes(x = -40, y = 120, label = "very low"),size = 5)+
+    geom_text(aes(x = -40, y = 200, label = "low"),size = 5)+
+    geom_text(aes(x = -40, y = 280, label = "high"),size = 5)+
+    geom_text(aes(x = -40, y = 360, label = "very high"),size = 5)+
     
     geom_text(aes(x = 40 , y = 440, label = "insignificant"),size = 5)+
     geom_text(aes(x = 120, y = 440, label = "low"),size = 5)+
@@ -253,7 +253,7 @@ else
     geom_text(aes(x = 360, y = 440, label = "significant"),size = 5)+
     
     geom_text(aes(x = 200, y = 505, label = "Potential"),size = 5)+
-    geom_text(aes(x = -125, y = 200, label = "Probability of occurrence"),size = 5,angle=90)#+
+    geom_text(aes(x = -100, y = 200, label = "Probability of occurrence"),size = 5,angle=90)#+
   
   
 }  
@@ -265,10 +265,11 @@ else
 
 
 print(thisis)
+thisis <- thisis +  theme_void() +  theme(plot.margin = unit(c(-1.7, -1, -1, -1), "cm"))+ ggtitle("")
 #scenfile <- (paste0("myapp/pictures/1_classicgrid_otitle/", scentext,"_",actualtype,".png"))
 scenfile <- (paste0("myapp/pictures/1_classicgrid_otitle/", scentext,".png"))  
 
-ggsave(filename = scenfile, device = "png", width = 25, height = 25, units = "cm",limitsize = FALSE)
+ggsave(filename = scenfile,plot = thisis, device = "png", width = 23, height = 23, units = "cm",dpi = 600, limitsize = FALSE,bg = "transparent")
 }
 
 

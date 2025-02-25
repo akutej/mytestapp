@@ -14,8 +14,8 @@ library(grDevices)
 
 
 answerstable <- read.csv(file = 'myapp/data/RQ1_corrected_scaled.csv', header=TRUE) #importiere das answers file
-
 dfall <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1)
+dfall <- dfall %>% filter(QUES_ID == "359")
 scenarios <- as.data.frame(table(dfall$QUES_ID))
 numberscenarios  <- nrow(scenarios)
 for (anz in 1:numberscenarios) {
@@ -305,9 +305,10 @@ thisis <- ggplot() +
     #grob = g, xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf
     grob = g, xmin = 0, xmax = 400, ymin = 0, ymax = 400
   ) +
-  xlim(-60,400) +
-  ylim(0,460) +
-  geom_rect(data = rectangleg1, aes(xmin = x1g1, xmax = x2g1, ymin = y1g1, ymax = y2g1), color = rectangleg1$col, fill = NA)+
+  xlim(-100,400) +
+  ylim(0,500) +
+  geom_rect(aes(xmin = 0, xmax = 400, ymin = 0, ymax = 400), fill = NA, color = "black", alpha = 1) +
+    geom_rect(data = rectangleg1, aes(xmin = x1g1, xmax = x2g1, ymin = y1g1, ymax = y2g1), color = rectangleg1$col, fill = NA)+
   geom_rect(data = rectangleg2, aes(xmin = x1g2, xmax = x2g2, ymin = y1g2, ymax = y2g2), color = rectangleg2$col, fill = NA)+
   #geom_rect(data=rectangleg1, mapping=aes(xmin=x1g1, xmax=x2g1, ymin=y1g1, ymax=y2g1),color=rgb(1, 0, 0, alpha=weight), fill=NA)+ 
   #geom_rect(data=rectangleg1m, mapping=aes(xmin=x1g1m, xmax=x2g1m, ymin=y1g1m, ymax=y2g1m),fill = "red", color="red", alpha=1)+
@@ -316,23 +317,24 @@ thisis <- ggplot() +
   #geom_rect(data=rectangleg1m, mapping=aes(xmin=x1g1m, xmax=x2g1m, ymin=y1g1m, ymax=y2g1m),fill = "red", color="red", alpha=1)+
   #geom_rect(data=rectangleg2, mapping=aes(xmin=x1g2, xmax=x2g2, ymin=y1g2, ymax=y2g2, alpha=weight), color="blue")+
   #geom_rect(data=rectangleg2m, mapping=aes(xmin=x1g2m, xmax=x2g2m, ymin=y1g2m, ymax=y2g2m),fill = "blue", color="blue", alpha=1)+
-  geom_rect(aes(xmin=0, xmax=400, ymin=400, ymax=430),fill="lightgrey", color=NA, alpha=1)+
-  geom_rect(aes(xmin=0, xmax=400, ymin=430, ymax=460),fill="grey", color=NA, alpha=1)+
-  geom_rect(aes(xmin=-30, xmax=0, ymin=0, ymax=400),fill="lightgrey", color=NA, alpha=1)+
-  geom_rect(aes(xmin=-60, xmax=-30, ymin=0, ymax=400),fill="grey", color=NA, alpha=1)+
-  geom_text(aes(x = -15, y = 40, label = "low"),size = 5,angle=90)+
-  geom_text(aes(x = -15, y = 200, label = "medium"),size = 5,angle=90)+
-  geom_text(aes(x = -15, y = 360, label = "high"),size = 5,angle=90)+
-  geom_text(aes(x = 40, y = 415, label = "low"),size = 5)+
-  geom_text(aes(x = 200, y = 415, label = "medium"),size = 5)+
-  geom_text(aes(x = 360, y = 415, label = "high"),size = 5)+
-  geom_text(aes(x = 200, y = 445, label = "Impact"),size = 5)+
-  geom_text(aes(x = -45, y = 200, label = "Probability of occurrence"),size = 5,angle=90)#+
+  geom_rect(aes(xmin=0, xmax=400, ymin=400, ymax=450),fill="lightgrey", color="black", alpha=1)+
+  geom_rect(aes(xmin=0, xmax=400, ymin=450, ymax=500),fill="grey", color="black", alpha=1)+
+  geom_rect(aes(xmin=-50, xmax=0, ymin=0, ymax=400),fill="lightgrey", color="black", alpha=1)+
+  geom_rect(aes(xmin=-100, xmax=-50, ymin=0, ymax=400),fill="grey", color="black", alpha=1)+
+  geom_text(aes(x = -25, y = 40, label = "low"),size = 7,angle=90)+
+  geom_text(aes(x = -25, y = 200, label = "medium"),size = 7,angle=90)+
+  geom_text(aes(x = -25, y = 360, label = "high"),size = 7,angle=90)+
+  geom_text(aes(x = 40, y = 425, label = "low"),size = 7)+
+  geom_text(aes(x = 200, y = 425, label = "medium"),size = 7)+
+  geom_text(aes(x = 360, y = 425, label = "high"),size = 7)+
+  geom_text(aes(x = 200, y = 475, label = "IMPACT"),size = 10)+
+  geom_text(aes(x = -75, y = 200, label = "PROBABILITY OF OCCURRENCE"),size = 10,angle=90)
+
 
 print (thisis)
-scenfile <- (paste0("myapp/pictures/2_graphicweight/", scentext,".png"))  
+scenfile <- (paste0("myapp/pictures/paper2/", scentext,".png"))  
 #scenfile <- (paste0("myapp/pictures/2_graphicrectangle_eot/", scentext,"_rectangle_",actualtype,".png"))  
-ggsave(filename = scenfile, device = "png", width = 25, height = 25, units = "cm",limitsize = FALSE)
+ggsave(filename = scenfile,plot = thisis, device = "png", width = 23, height = 23,dpi=600, units = "cm",limitsize = FALSE)
 
 
 }

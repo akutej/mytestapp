@@ -5,6 +5,7 @@ library(ggplot2)
 
 answerstable <- read.csv(file = 'myapp/data/RQ1_corrected.csv', header=TRUE) #importiere das answers file
 dfall <- answerstable %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID == 281)
+dfall <- dfall %>% filter(QUES_ID == "359")
 scenarios <- as.data.frame(table(dfall$QUES_ID))
 numberscenarios  <- nrow(scenarios)
 for (anz in 1:numberscenarios) {
@@ -94,7 +95,7 @@ for (i in 1:numberofanswers){
   print (Uncertaintyweightall)
   #print (D)
   scenfile <- (paste0("myapp/files/4_heatmap/",scentext,"_transformed_new_weight.xlsx"))
-  scenpic <- (paste0("myapp/pictures/17_heatmap_pixel_graphic/",scentext,"_heatmap_weight.bmp"))
+  scenpic <- (paste0("myapp/pictures/paper1/",scentext,"_heatmap_weight.bmp"))
   
   mat1 <- matrix(D$Zähler,ncol=400,nrow=400,byrow=TRUE)
   datahm <- as.matrix(mat1)  
@@ -103,7 +104,7 @@ for (i in 1:numberofanswers){
   heatmap(datahm, Colv = NA, Rowv = NA, scale="none")
   dev.off()
   
-  write.csv(D, paste0("myapp/files/4_heatmap/", scentext,"_transformed_new_weight.csv"), row.names=TRUE)
-  write.xlsx(D,file = scenfile, rowNames=TRUE)
+#  write.csv(D, paste0("myapp/files/4_heatmap/", scentext,"_transformed_new_weight.csv"), row.names=TRUE)
+#  write.xlsx(D,file = scenfile, rowNames=TRUE)
   
 }
