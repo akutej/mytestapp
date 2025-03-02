@@ -50,7 +50,7 @@ for (i in 1:numberofanswers){
   #mat1 <- matrix(seq(0, 100, by = 0.25), ncol = 400, nrow = 400, byrow = TRUE)
   datahm <- as.matrix(mat1)  
   
-  bmp(file=scenpic, width = 1000, height = 1000, units = 'px', res = 100)
+  bmp(file=scenpic, width = 6000, height = 6000, units = 'px', res = 100)
   heatmap(datahm, Colv = NA, Rowv = NA, scale="none")#,
           #labRow = NA, labCol = NA) # Achsenbeschriftungen entfernen
           

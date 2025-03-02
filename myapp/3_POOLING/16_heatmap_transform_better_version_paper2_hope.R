@@ -47,9 +47,9 @@ for (i in 1:numberofanswers){
   scenpic <- (paste0("myapp/pictures/paper2/",scentext,"_heatmap.bmp"))
   
   
-  mat1 <- matrix(D$count,ncol=400,nrow=400,byrow=FALSE)
+  mat2 <- matrix(D$count,ncol=400,nrow=400,byrow=TRUE)
   #mat1 <- matrix(seq(0, 100, by = 0.25), ncol = 400, nrow = 400, byrow = TRUE)
-  datahm <- as.matrix(mat1)  
+  datahm <- as.matrix(mat2)  
   
   #png(file=scenpic, width = 1000, height = 1000, units = 'px', res = 100)
   #heatmap(datahm, Colv = NA, Rowv = NA, scale="none",labRow = NA, labCol = NA) # Achsenbeschriftungen entfernen
@@ -70,7 +70,7 @@ for (i in 1:numberofanswers){
   # 🔹 Heatmap-Plot mit Achsenbeschriftungen
   heatmap_plot <- ggplot() +  
     # 🔹 Heatmap zeichnen (exakt auf 0-400 begrenzt!)
-    geom_tile(data = D_long, aes(x = x, y = y, fill = count), width = 1, height = 1) +  
+    geom_tile(data = D_long, aes(x = y, y = x, fill = count), width = 1, height = 1) +  
     scale_fill_gradientn(colors = heatmap_colors) +  # Heatmap-Farben
     
     # 🔹 Verhindere, dass ggplot unnötigen Rand hinzufügt

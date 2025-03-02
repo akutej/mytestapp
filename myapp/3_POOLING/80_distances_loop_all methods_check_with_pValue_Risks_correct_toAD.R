@@ -4,6 +4,7 @@ library(gplots)
 library(ggplot2)
 library(tibble)
 library(kSamples)
+library(doParallel)
 
 
 # Funktion zur Ausgabe der Reachgrid Variante
@@ -807,15 +808,32 @@ for (anz in 1:number.scenarios) {
           {
             new.x.test <- (ad.test(v_M1_IMP, v_M2_IMP))   
             new.y.test <- (ad.test(v_M1_OCC, v_M2_OCC)) 
+            
+             ad_df <- as.data.frame(new.x.test$ad)
+          
+          AD_version1 <- ad_df[1:1]  # AD-Wert für Version 1
+          T_AD_version1 <- ad_df[1:2]  # T.AD-Wert für Version 1
+          p_value_version1 <- ad_df[1:3]  # P-Wert für Version 1
+          
+          print(AD_version1)
+          print(T_AD_version1)
+          print(p_value_version1)
+          
+            
+            
           }
           
+         
+          #get.x.value->new.x.test$ad[1, "AD"]
+          #print(get.x.value)
+          #new.D.value.x <- new.x.test$statistic
+          #get.x.value <- (new.D.value.x[[1]])
+          #p_wert.x <- new.x.test$p.value
+          #p_wert.x->new.x.test$ad[1, "asympt. P-value"]
+          #print(p_wert.x)
           
-          
-          
-          new.D.value.x <- new.x.test$statistic
-          get.x.value <- (new.D.value.x[[1]])
-          p_wert.x <- new.x.test$p.value
           distance.df <- bind_rows(distance.df, data.frame(scenario = actualscenario, type = "IMPACT" , method1 = M1, method2 = M2 , distance = get.x.value, pValue = p_wert.x))  
+          
           new.D.value.y <- new.y.test$statistic
           get.y.value <- (new.D.value.y[[1]])
           p_wert.y <- new.y.test$p.value
@@ -825,7 +843,7 @@ for (anz in 1:number.scenarios) {
       }
       
 }
-print (distance.df)
+#print (distance.df)
 
 runde_wenn_numerisch <- function(x) {
   if (is.numeric(x)) {
