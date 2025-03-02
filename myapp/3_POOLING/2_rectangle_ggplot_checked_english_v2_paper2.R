@@ -245,7 +245,7 @@ thisis2 <- ggplot() +
 print (thisis2)
 #scenfile2 <- (paste0("myapp/pictures/2_graphicrectangle_eot/", scentext,"_onlycenter_",actualtype,".png"))  
 scenfile2 <- (paste0("myapp/pictures/paper2/", scentext,"_onlycenter.png")) 
-ggsave(filename = scenfile2, device = "png", width = 25, height = 25, units = "cm",limitsize = FALSE)
+ggsave(filename = scenfile2, device = "png", width = 23, height = 23, units = "cm",dpi=600,limitsize = FALSE)
 
 }
 else{
