@@ -63,7 +63,7 @@ for (anz in 1:numberscenarios) {
   main="",xlim=c(0,100),
   labels = FALSE,
   col="lightblue",
-  xlab = "Evaluated Impact Value", 
+  xlab = "Impact Value", 
   ylab = "", 
   cex.axis = 2,  # Achsenbeschriftung vergrößern
   cex.lab = 2,    # Achsentitel vergrößern
@@ -80,7 +80,7 @@ mtext("Frequency", side=3, line=2, at=par("usr")[1], cex=2)
        main="",xlim=c(0,100),
        labels = FALSE,
        col="lightblue",
-       xlab = "Evaluated Probability of Occurrence Value",
+       xlab = "Probability of Occurrence Value",
        ylab = "", 
        cex.axis = 2,  # Achsenbeschriftung vergrößern
        cex.lab = 2,    # Achsentitel vergrößern

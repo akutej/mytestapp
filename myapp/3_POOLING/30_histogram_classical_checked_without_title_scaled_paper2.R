@@ -40,7 +40,7 @@ for (anz in 1:numberscenarios) {
        main="",xlim=c(0,100),
        labels = FALSE,
        col="lightblue",
-       xlab = "Evaluated Impact Value", 
+       xlab = "Impact Value", 
        ylab = "", 
        cex.axis = 2,  # Achsenbeschriftung vergrößern
        cex.lab = 2,    # Achsentitel vergrößern
@@ -49,13 +49,13 @@ for (anz in 1:numberscenarios) {
   mtext("Frequency", side=3, line=2, at=par("usr")[1], cex=2)
   dev.off()
   
-  png(file=filetitleOcc,width=600, height=600)
+  png(file=filetitleOcc,width=23, height=23, units="cm", res=600)
   #hist(OCCURRENCE,breaks = c(0.5,1.5,2.5,3.5,4.5,5.5), main=headtitleOcc,xlim=c(0.5,5.5),labels = FALSE,col="lightblue",xlab = "" )
   hist(OCCURRENCE,   breaks = c(0,20,40,60,80,100),
        main="",xlim=c(0,100),
        labels = FALSE,
        col="lightblue",
-       xlab = "Evaluated Probability of Occurrence Value", 
+       xlab = "Probability of Occurrence Value", 
        ylab = "", 
        cex.axis = 2,  # Achsenbeschriftung vergrößern
        cex.lab = 2,    # Achsentitel vergrößern

@@ -53,7 +53,7 @@ for (anz in 1:numberscenarios) {
        main="",xlim=c(0,100),
        labels = FALSE,
        col="lightblue",
-       xlab = "Evaluated Impact Value", 
+       xlab = "Impact Value", 
        ylab = "", 
        cex.axis = 2,  # Achsenbeschriftung vergrößern
        cex.lab = 2,    # Achsentitel vergrößern
@@ -69,7 +69,7 @@ for (anz in 1:numberscenarios) {
        main="",xlim=c(0,100),
        labels = FALSE,
        col="lightblue",
-       xlab = "Evaluated Probability of Occurrence Value",
+       xlab = "Probability of Occurrence Value",
        ylab = "", 
        cex.axis = 2,  # Achsenbeschriftung vergrößern
        cex.lab = 2,    # Achsentitel vergrößern

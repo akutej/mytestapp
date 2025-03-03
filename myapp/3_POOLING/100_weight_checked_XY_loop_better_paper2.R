@@ -129,7 +129,7 @@ for (anz in 1:number.scenarios) {
                            names.arg = x.grouped$Group,
                            main="", 
                            col="lightblue",
-                           xlab = "Evaluated Impact Value", 
+                           xlab = "Impact Value", 
                            ylab = "", 
                            space = 0,
                            cex.axis = 2,  # Achsenbeschriftung vergrößern
@@ -153,7 +153,7 @@ for (anz in 1:number.scenarios) {
           names.arg = y.grouped$Group,
           main="", 
           col="lightblue",
-          xlab = "Evaluated Probability of Occurrence Value", 
+          xlab = "Probability of Occurrence Value", 
           ylab = "", 
           space = 0,
           cex.axis = 2,  # Achsenbeschriftung vergrößern
