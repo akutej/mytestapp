@@ -3,10 +3,10 @@
 "2","OCC.classic.weighted",0
 "3","IMP.area.weighted",0
 "4","OCC.area.weighted",0
-"5","IMP.center.weighted",0.999999999968853
-"6","OCC.center.weighted",1
-"7","IMP.centertogrid.weighted",4.24817840241935e-55
-"8","OCC.centertogrid.weighted",1.2960583532236e-52
+"5","IMP.center.weighted",0
+"6","OCC.center.weighted",0
+"7","IMP.centertogrid.weighted",0
+"8","OCC.centertogrid.weighted",2.65652038737957e-46
 "9","IMP.reachedgrid.weighted",0
 "10","OCC.reachedgrid.weighted",0
 "11","IMP.pooling.weighted",1
