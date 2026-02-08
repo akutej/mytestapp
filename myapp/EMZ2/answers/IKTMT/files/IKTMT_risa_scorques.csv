@@ -1,0 +1,15 @@
+QUES2SURV_ID;COUNTANS;QUES2SURV_QUESID;QUES2SURV_SURVID;QUES2SURV_SORT;QUES2SURV_METHOD;QUES2SURV_KBID;QUES_ID;QUES_TYP;QUES_TEXT;QUES_HEADLINE;QUES_CATEGORY;QUES_TOPIC;QUES_CAUSE;QUES_EFFECT
+4053;4;930;308;1;classic;ÖU001;930;Chance;[ÖU1] Integration ressourcenschonender Energienutzungsmodelle in die Projektplanung (Alternativenergie, Passivhausstandard, Kühlung/Energiespeicherung durch Grundwasser, Photovoltaik (z. B. in Fassade integrieren oder am Dach), Erdwärme, Sonnenschutz - starke Lamellen, Fassadenfarbe, Niedertemperatur Heiz-Kühlsystem (Baukernaktivierung,  usw.);Chancenfrage;Ökologie, Umwelt;ÖU;;
+4052;4;931;308;2;classic;ÖU002;931;Risiko;[ÖU6] unkontrollierter Wassereintritt;Risikofrage;Ökologie, Umwelt;ÖU;;
+4050;4;933;308;3;classic;PA001;933;Risiko;[PA1] Kommunikationsfehler mit ausführenden Auftragnehmern (Betriebsführung, Instandhaltung);Risikofrage;Projektablauf;PA;;
+4051;4;934;308;4;classic;PA002;934;Risiko;[PA2] Ressourcenverfügbarkeit bei ausführenden Auftragnehmern nicht vorhanden;Risikofrage;Projektablauf;PA;;
+4049;4;935;308;5;classic;PA003;935;Risiko;[PA4] Ausschreibung fehlerhaft;Risikofrage;Projektablauf;PA;;
+4047;4;936;308;6;classic;PF001;936;Chance;[PF2] Baufeldfreimachung für zukünftige Projekte;Chancenfrage;Projektfolgen;PF;;
+4048;4;937;308;7;classic;PF002;937;Risiko;[PF6] keine ausreichende Berücksichtigung der Schnittstellen zwischen Projekt und laufendem Betrieb (technisch);Risikofrage;Projektfolgen;PF;;
+4046;4;932;308;8;classic;RA001;932;Risiko;[RA1] Verzögerungen in diversen Vergabeverfahren (Einsprüche) vor allem bei Schlüsselgewerken;Risikofrage;Rechtliche Aspekte;RA;;
+4044;4;938;308;9;classic;TE001;938;Risiko;[TE1] Auswirkung an angrenzende Bereiche (befinden sich daneben, darüber, darunter);Risikofrage;Technik;TE;;
+4041;4;939;308;10;classic;TE002;939;Chance;[TE1] Verbesserung der technischen Betriebssicherheit;Chancenfrage;Technik;TE;;
+4042;4;943;308;11;classic;TE003;943;Risiko;[TE2] IT- und MT-Schnittstellenproblematiken zwischen den Einrichtungen werden nicht ausreichend berücksichtigt;Risikofrage;Technik;TE;;
+4040;4;940;308;12;classic;TE004;940;Chance;[TE2] Zusammenführung, Anbindung (BMA, GLT, FTS, Zutritt usw.) , Harmonisierung struktureller und technischer Standards und deren Auslegung (alt/neu) ==> Implementierung aktueller Haus- und Betriebstechnik;Chancenfrage;Technik;TE;;
+4045;4;941;308;13;classic;TE005;941;Chance;[TE3] Fernwärme/Kälteversorgung für zukünftige Versorgung berücksichtigen (Neuverlegung, Trassenführung);Chancenfrage;Technik;TE;;
+4043;4;942;308;14;classic;TE006;942;Chance;[TE4] Kollektorgänge für zukünftige Erweiterungen vorbereitet (Onkozentrum);Chancenfrage;Technik;TE;;

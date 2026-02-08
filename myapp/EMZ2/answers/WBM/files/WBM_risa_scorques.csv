@@ -1,0 +1,18 @@
+QUES2SURV_ID;COUNTANS;QUES2SURV_QUESID;QUES2SURV_SURVID;QUES2SURV_SORT;QUES2SURV_METHOD;QUES2SURV_KBID;QUES_ID;QUES_TYP;QUES_TEXT;QUES_HEADLINE;QUES_CATEGORY;QUES_TOPIC;QUES_CAUSE;QUES_EFFECT
+4099;3;988;307;1;classic;ÖU001;988;Chance;[ÖU1] Integration ressourcenschonender Energienutzungsmodelle in die Projektplanung (Alternativenergie, Passivhausstandard, Kühlung/Energiespeicherung durch Grundwasser, Photovoltaik (z. B. in Fassade integrieren oder am Dach), Erdwärme, Sonnenschutz - starke Lamellen, Fassadenfarbe, Niedertemperatur Heiz-Kühlsystem (Baukernaktivierung,  usw.);Chancenfrage;Ökologie, Umwelt;ÖU;;
+4100;3;989;307;2;classic;ÖU002;989;Risiko;[ÖU6] unkontrollierter Wassereintritt;Risikofrage;Ökologie, Umwelt;ÖU;;
+4095;3;974;307;3;classic;PA001;974;Risiko;[PA1] Kommunikationsfehler mit ausführenden Auftragnehmern (Betriebsführung, Instandhaltung);Risikofrage;Projektablauf;PA;;
+4096;2;975;307;4;classic;PA002;975;Risiko;[PA2] Ressourcenverfügbarkeit bei ausführenden Auftragnehmern nicht vorhanden;Risikofrage;Projektablauf;PA;;
+4098;2;976;307;5;classic;PA003;976;Risiko;[PA4] Ausschreibung fehlerhaft;Risikofrage;Projektablauf;PA;;
+4097;2;977;307;6;classic;PA004;977;Risiko;[PA8] Vorgegebene Laufzeiten und Fristen sind nicht berücksichtigt (Beschlussfassung Aufsichtsrat, Einreichung Landesrechnungshof, Ausschreibungsverfahren uvm.);Risikofrage;Projektablauf;PA;;
+4094;2;978;307;7;classic;PF001;978;Risiko;[PF1] Folgekostenermittlung nicht transparent;Risikofrage;Projektfolgen;PF;;
+4091;2;980;307;8;classic;PF002;980;Chance;[PF2] Baufeldfreimachung für zukünftige Projekte;Chancenfrage;Projektfolgen;PF;;
+4093;2;979;307;9;classic;PF003;979;Risiko;[PF2] Betriebsorganisationskonzept nicht gelöst;Risikofrage;Projektfolgen;PF;;
+4092;2;981;307;10;classic;PF004;981;Risiko;[PF6] keine ausreichende Berücksichtigung der Schnittstellen zwischen Projekt und laufendem Betrieb (technisch);Risikofrage;Projektfolgen;PF;;
+4090;2;990;307;11;classic;RA001;990;Risiko;[RA1] Verzögerungen in diversen Vergabeverfahren (Einsprüche) vor allem bei Schlüsselgewerken;Risikofrage;Rechtliche Aspekte;RA;;
+4089;2;982;307;12;classic;TE001;982;Risiko;[TE1] Auswirkung an angrenzende Bereiche (befinden sich daneben, darüber, darunter);Risikofrage;Technik;TE;;
+4088;2;983;307;13;classic;TE002;983;Chance;[TE1] Verbesserung der technischen Betriebssicherheit;Chancenfrage;Technik;TE;;
+4084;2;987;307;14;classic;TE003;987;Risiko;[TE2] IT- und MT-Schnittstellenproblematiken zwischen den Einrichtungen werden nicht ausreichend berücksichtigt;Risikofrage;Technik;TE;;
+4087;1;984;307;15;classic;TE004;984;Chance;[TE2] Zusammenführung, Anbindung (BMA, GLT, FTS, Zutritt usw.) , Harmonisierung struktureller und technischer Standards und deren Auslegung (alt/neu) ==> Implementierung aktueller Haus- und Betriebstechnik;Chancenfrage;Technik;TE;;
+4086;1;985;307;16;classic;TE005;985;Chance;[TE3] Fernwärme/Kälteversorgung für zukünftige Versorgung berücksichtigen (Neuverlegung, Trassenführung);Chancenfrage;Technik;TE;;
+4085;1;986;307;17;classic;TE006;986;Chance;[TE4] Kollektorgänge für zukünftige Erweiterungen vorbereitet (Onkozentrum);Chancenfrage;Technik;TE;;

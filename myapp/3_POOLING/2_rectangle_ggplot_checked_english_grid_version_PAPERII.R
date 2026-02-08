@@ -179,10 +179,10 @@ thisis <- ggplot() +
   ) +
   xlim(-100,400) +
   ylim(0,500) +
+  geom_rect(aes(xmin = 0, xmax = 400, ymin = 0, ymax = 400), fill = NA, color = "black", alpha = 1) +
   geom_segment(aes(x = x_ticks, y = 0, xend = x_ticks, yend = 400), color = "black", linetype = "dashed")+
   geom_segment(aes(x = 0, y = y_ticks, xend = 400, yend = y_ticks), color = "black", linetype = "dashed")+
-  geom_rect(aes(xmin = 0, xmax = 400, ymin = 0, ymax = 400), fill = NA, color = "black", alpha = 1) +
-  geom_rect(data=rectangleg1, mapping=aes(xmin=x1g1, xmax=x2g1, ymin=y1g1, ymax=y2g1), color="red", alpha=0)+
+  geom_rect(data=rectangleg1, mapping=aes(xmin=x1g1, xmax=x2g1, ymin=y1g1, ymax=y2g1), color="blue", alpha=0)+
   #geom_rect(data=rectangleg1m, mapping=aes(xmin=x1g1m, xmax=x2g1m, ymin=y1g1m, ymax=y2g1m),fill = "red", color="red", alpha=1)+
   geom_rect(data=rectangleg2, mapping=aes(xmin=x1g2, xmax=x2g2, ymin=y1g2, ymax=y2g2), color="blue", alpha=0)+
   geom_rect(aes(xmin=0, xmax=400, ymin=400, ymax=450),fill="lightgrey", color="black", alpha=1)+
@@ -227,7 +227,7 @@ thisis2 <- ggplot() +
   geom_segment(aes(x = 0, y = y_ticks, xend = 400, yend = y_ticks), color = "black", linetype = "dashed")+
   geom_rect(aes(xmin = 0, xmax = 400, ymin = 0, ymax = 400), fill = NA, color = "black", alpha = 1) +
   #geom_rect(data=rectangleg1, mapping=aes(xmin=x1g1, xmax=x2g1, ymin=y1g1, ymax=y2g1), color="red", alpha=0)+
-  geom_rect(data=rectangleg1m, mapping=aes(xmin=x1g1m, xmax=x2g1m, ymin=y1g1m, ymax=y2g1m),fill = "red", color="red", alpha=1)+
+  geom_rect(data=rectangleg1m, mapping=aes(xmin=x1g1m, xmax=x2g1m, ymin=y1g1m, ymax=y2g1m),fill = "blue", color="blue", alpha=1)+
   #geom_rect(data=rectangleg2, mapping=aes(xmin=x1g2, xmax=x2g2, ymin=y1g2, ymax=y2g2), color="blue", alpha=0)+
 
   geom_rect(data=rectangleg2m, mapping=aes(xmin=x1g2m, xmax=x2g2m, ymin=y1g2m, ymax=y2g2m),fill = "blue", color="blue", alpha=1)+
@@ -301,7 +301,7 @@ thisis <- ggplot() +
   ) +
   xlim(-60,400) +
   ylim(0,460) +
-  geom_rect(data=rectangleg1, mapping=aes(xmin=x1g1, xmax=x2g1, ymin=y1g1, ymax=y2g1), color="red", alpha=0)+
+  geom_rect(data=rectangleg1, mapping=aes(xmin=x1g1, xmax=x2g1, ymin=y1g1, ymax=y2g1), color="blue", alpha=0)+
   #geom_rect(data=rectangleg1m, mapping=aes(xmin=x1g1m, xmax=x2g1m, ymin=y1g1m, ymax=y2g1m),fill = "red", color="red", alpha=1)+
   geom_rect(data=rectangleg2, mapping=aes(xmin=x1g2, xmax=x2g2, ymin=y1g2, ymax=y2g2), color="blue", alpha=0)+
   #geom_rect(data=rectangleg2m, mapping=aes(xmin=x1g2m, xmax=x2g2m, ymin=y1g2m, ymax=y2g2m),fill = "blue", color="blue", alpha=1)+
@@ -347,7 +347,7 @@ thisis2 <- ggplot() +
   xlim(-60,400) +
   ylim(0,460) +
   #geom_rect(data=rectangleg1, mapping=aes(xmin=x1g1, xmax=x2g1, ymin=y1g1, ymax=y2g1), color="red", alpha=0)+
-  geom_rect(data=rectangleg1m, mapping=aes(xmin=x1g1m, xmax=x2g1m, ymin=y1g1m, ymax=y2g1m),fill = "red", color="red", alpha=1)+
+  geom_rect(data=rectangleg1m, mapping=aes(xmin=x1g1m, xmax=x2g1m, ymin=y1g1m, ymax=y2g1m),fill = "blue", color="blue", alpha=1)+
   #geom_rect(data=rectangleg2, mapping=aes(xmin=x1g2, xmax=x2g2, ymin=y1g2, ymax=y2g2), color="blue", alpha=0)+
   geom_rect(data=rectangleg2m, mapping=aes(xmin=x1g2m, xmax=x2g2m, ymin=y1g2m, ymax=y2g2m),fill = "blue", color="blue", alpha=1)+
   geom_rect(aes(xmin=0, xmax=400, ymin=400, ymax=430),fill="lightgrey", color=NA, alpha=1)+

@@ -1,0 +1,10 @@
+QUES2SURV_ID;COUNTANS;QUES2SURV_QUESID;QUES2SURV_SURVID;QUES2SURV_SORT;QUES2SURV_METHOD;QUES2SURV_KBID;QUES_ID;QUES_TYP;QUES_TEXT;QUES_HEADLINE;QUES_CATEGORY;QUES_TOPIC;QUES_CAUSE;QUES_EFFECT
+4062;5;951;304;1;classic;PF001;951;Risiko;[PF3] unerfüllbare Erwartungshaltung an Auftragnehmer;Risikofrage;Projektfolgen;PF;;
+4060;5;944;304;2;classic;PU001;944;Risiko;[PU3] Widerstand und Einfluss von innen (Abteilungen, Stationen …);Risikofrage;Projektumfeld;PU;;
+4061;5;945;304;3;classic;PU002;945;Risiko;[PU4] Widerstand und Einfluss von außen (z.B. Anrainer …);Risikofrage;Projektumfeld;PU;;
+4057;5;948;304;4;classic;PV001;948;Risiko;[PV1] Enger Kostenrahmen, keine vollständige finanzielle Deckung vorhanden;Risikofrage;Projektvorgaben;PV;;
+4059;5;949;304;5;classic;PV002;949;Risiko;[PV3] Planungsfehler;Risikofrage;Projektvorgaben;PV;;
+4058;5;950;304;6;classic;PV003;950;Risiko;[PV4] Kostenplanungsfehler (z. B. Vorhabens Budget, Investitionsprogramm, Betriebsbudget, Folgekosten usw.);Risikofrage;Projektvorgaben;PV;;
+4056;5;946;304;7;classic;RA001;946;Risiko;[RA3] negative Stellungnahme durch den Landesrechnungshof;Risikofrage;Rechtliche Aspekte;RA;;
+4055;4;952;304;8;classic;SI001;952;Risiko;[SI1] Sperre von Bereichen in der Tiefgarage (Technik für die BRV Anlage fehlt während der Bauphase);Risikofrage;Sicherheit;SI;;
+4054;5;947;304;9;classic;UV001;947;Risiko;[UV1] veränderte Marktentwicklung;Risikofrage;Unvorhergesehenes;UV;;

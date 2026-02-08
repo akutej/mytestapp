@@ -77,7 +77,7 @@ answers <- read.csv(file = 'myapp/data/RQ1_corrected_scaled.csv', header=TRUE) #
 all.answers <- answers %>% filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & QUES_ID != "401" & QUES_ID != "402" & QUES_ID != "403")
 all.answers <- all.answers %>% filter(QUES_TYP == "Risiko")
 #all.answers <- all.answers %>% filter(QUES_ID %in% c("281", "282"))
-#all.answers <- all.answers %>% filter(QUES_ID == "359" )
+all.answers <- all.answers %>% filter(QUES_ID == "359" )
 number.scenarios <- nrow(as.data.frame(table(all.answers$QUES_ID)))
 scenarios <- as.data.frame(table(all.answers$QUES_ID))
 
@@ -463,8 +463,8 @@ for (anz in 1:number.scenarios) {
     weight.y.summary_df <- weight.y.summary_df %>% mutate(weight.y.Wahrs = weight.y.Sum / sum(weight.y.Sum))
     weight.y.summary_df <- weight.y.summary_df %>% mutate(weight.y.Histo = weight.y.Wahrs * numberofanswers)
     
-    weight.x.simulations <- sample(weight.x.summary_df$weight.x.scale, size = 50, replace = TRUE, prob = weight.x.summary_df$weight.x.Wahrs)
-    weight.y.simulations <- sample(weight.y.summary_df$weight.y.scale, size = 50, replace = TRUE, prob = weight.y.summary_df$weight.y.Wahrs)#500000000
+    weight.x.simulations <- sample(weight.x.summary_df$weight.x.scale, size = 5000, replace = TRUE, prob = weight.x.summary_df$weight.x.Wahrs)
+    weight.y.simulations <- sample(weight.y.summary_df$weight.y.scale, size = 5000, replace = TRUE, prob = weight.y.summary_df$weight.y.Wahrs)#500000000
     
     # Mittelwert berechnen
     weight.x.mean <- mean(weight.x.simulations)
@@ -595,7 +595,7 @@ for (anz in 1:number.scenarios) {
             new.y.test <- AndersonDarlingTest(v_M1_OCC,"pnorm", mean = pooling.y, sd = pooling.sd_y)
             #new.x.test <- ks.test(v_M1_IMP, "pnorm", mean = pooling.x, sd = pooling.sd_x, alternative = "two.sided", exact = NULL)
             #new.y.test <- ks.test(v_M1_OCC, "pnorm", mean = pooling.x, sd = pooling.sd_x, alternative = "two.sided", exact = NULL)
-            print (new.x.test)
+            #print (new.x.test)
             new.D.value.x <- new.x.test$statistic
             get.x.value <- (new.D.value.x[[1]])
             p_wert.x <- new.x.test$p.value
@@ -606,26 +606,34 @@ for (anz in 1:number.scenarios) {
           else 
           {
             #print (M1)
-            #print (v_M1_IMP)
-            #print (M2)
-            #print (v_M2_IMP)
+            
             new.x.test <- ad.test(v_M1_IMP,v_M2_IMP)   
             new.y.test <- ad.test(v_M1_OCC, v_M2_OCC)
             
-            print (new.x.test)
             get.x.value <-new.x.test$ad[1] 
             p_wert.x <- new.x.test$ad[1,3] 
-            print ("für X der Diff")
-            print (get.x.value)
-            print (p_wert.x)
             
-            print (new.y.test)
+            if(M1 == "area" && M2 == "weighted" )
+            {
+              hist (v_M1_IMP)
+              hist (v_M2_IMP)
+              print (v_M1_IMP)
+              #print (M2)
+              print (v_M2_IMP)
+              print (new.x.test)
+              
+            }
+            #print ("für X der Diff")
+            #print (get.x.value)
+            #print (p_wert.x)
+           # 
+            #print (new.y.test)
             get.y.value <-new.y.test$ad[1] 
             p_wert.y <- new.y.test$ad[1,3] 
-            print ("für y der Diff")
-            print (get.y.value)
-            print (p_wert.y)
-            print("Done")
+            #print ("für y der Diff")
+            #print (get.y.value)
+            #print (p_wert.y)
+            #print("Done")
             #new.x.test <- (ks.test(v_M1_IMP, v_M2_IMP, alternative = "two.sided", exact = NULL))   
             #new.y.test <- (ks.test(v_M1_OCC, v_M2_OCC, alternative = "two.sided", exact = NULL)) 
           }

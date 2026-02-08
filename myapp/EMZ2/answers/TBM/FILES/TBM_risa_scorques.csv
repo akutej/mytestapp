@@ -1,0 +1,21 @@
+QUES2SURV_ID;COUNTANS;QUES2SURV_QUESID;QUES2SURV_SURVID;QUES2SURV_SORT;QUES2SURV_METHOD;QUES2SURV_KBID;QUES_ID;QUES_TYP;QUES_TEXT;QUES_HEADLINE;QUES_CATEGORY;QUES_TOPIC;QUES_CAUSE;QUES_EFFECT
+4080;2;954;306;1;classic;ÖU001;954;Chance;[ÖU1] Integration ressourcenschonender Energienutzungsmodelle in die Projektplanung (Alternativenergie, Passivhausstandard, Kühlung/Energiespeicherung durch Grundwasser, Photovoltaik (z. B. in Fassade integrieren oder am Dach), Erdwärme, Sonnenschutz - starke Lamellen, Fassadenfarbe, Niedertemperatur Heiz-Kühlsystem (Baukernaktivierung,  usw.);Chancenfrage;Ökologie, Umwelt;ÖU;;
+4081;2;955;306;2;classic;ÖU002;955;Risiko;[ÖU3] Erschütterungen während der Bauphase (Beeinflusst Medizin-und Labortechnik);Risikofrage;Ökologie, Umwelt;ÖU;;
+4082;2;956;306;3;classic;ÖU003;956;Risiko;[ÖU5] Verunreinigung des Grundwasser;Risikofrage;Ökologie, Umwelt;ÖU;;
+4083;2;957;306;4;classic;ÖU004;957;Risiko;[ÖU6] unkontrollierter Wassereintritt;Risikofrage;Ökologie, Umwelt;ÖU;;
+4077;2;960;306;5;classic;PA001;960;Risiko;[PA1] Kommunikationsfehler mit ausführenden Auftragnehmern (Betriebsführung, Instandhaltung);Risikofrage;Projektablauf;PA;;
+4076;2;961;306;6;classic;PA002;961;Risiko;[PA2] Ressourcenverfügbarkeit bei ausführenden Auftragnehmern nicht vorhanden;Risikofrage;Projektablauf;PA;;
+4078;2;962;306;7;classic;PA003;962;Risiko;[PA4] Ausschreibung fehlerhaft;Risikofrage;Projektablauf;PA;;
+4079;2;963;306;8;classic;PA004;963;Risiko;[PA8] Vorgegebene Laufzeiten und Fristen sind nicht berücksichtigt (Beschlussfassung Aufsichtsrat, Einreichung Landesrechnungshof, Ausschreibungsverfahren uvm.);Risikofrage;Projektablauf;PA;;
+4072;2;964;306;9;classic;PF001;964;Risiko;[PF1] Folgekostenermittlung nicht transparent;Risikofrage;Projektfolgen;PF;;
+4073;2;966;306;10;classic;PF002;966;Chance;[PF2] Baufeldfreimachung für zukünftige Projekte;Chancenfrage;Projektfolgen;PF;;
+4075;2;965;306;11;classic;PF003;965;Risiko;[PF2] Betriebsorganisationskonzept nicht gelöst;Risikofrage;Projektfolgen;PF;;
+4074;2;967;306;12;classic;PF004;967;Risiko;[PF6] keine ausreichende Berücksichtigung der Schnittstellen zwischen Projekt und laufendem Betrieb (technisch);Risikofrage;Projektfolgen;PF;;
+4071;2;958;306;13;classic;RA001;958;Risiko;[RA1] Verzögerungen in diversen Vergabeverfahren (Einsprüche) vor allem bei Schlüsselgewerken;Risikofrage;Rechtliche Aspekte;RA;;
+4069;2;968;306;14;classic;TE001;968;Risiko;[TE1] Auswirkung an angrenzende Bereiche (befinden sich daneben, darüber, darunter);Risikofrage;Technik;TE;;
+4067;2;969;306;15;classic;TE002;969;Chance;[TE1] Verbesserung der technischen Betriebssicherheit;Chancenfrage;Technik;TE;;
+4068;2;973;306;16;classic;TE003;973;Risiko;[TE2] IT- und MT-Schnittstellenproblematiken zwischen den Einrichtungen werden nicht ausreichend berücksichtigt;Risikofrage;Technik;TE;;
+4066;2;970;306;17;classic;TE004;970;Chance;[TE2] Zusammenführung, Anbindung (BMA, GLT, FTS, Zutritt usw.) , Harmonisierung struktureller und technischer Standards und deren Auslegung (alt/neu) ==> Implementierung aktueller Haus- und Betriebstechnik;Chancenfrage;Technik;TE;;
+4065;2;971;306;18;classic;TE005;971;Chance;[TE3] Fernwärme/Kälteversorgung für zukünftige Versorgung berücksichtigen (Neuverlegung, Trassenführung);Chancenfrage;Technik;TE;;
+4070;2;972;306;19;classic;TE006;972;Chance;[TE4] Kollektorgänge für zukünftige Erweiterungen vorbereitet (Onkozentrum);Chancenfrage;Technik;TE;;
+4064;2;959;306;20;classic;UV001;959;Risiko;[UV2] Änderung/Reduktion der/des medizinischen Leistungsplanung/-spektrums/-angebotsplanung bis zur Inbetriebnahme;Risikofrage;Unvorhergesehenes;UV;;

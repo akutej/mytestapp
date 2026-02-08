@@ -14,6 +14,7 @@ answerstable <- read.xlsx('myapp/data/RQ1_corrected_scaled_2.xlsx')
 answerstable <- answerstable %>% 
   filter(QUES_ID != "401" & QUES_ID != "402" & QUES_ID != "403") %>%
   filter(QUES2SURV_METHOD == "classic" & ANS2SURV_ANSWERED == 1 & (ACC2SURV_ROLE == 1 | ACC2SURV_ROLE == 2)) %>%
+  #filter(QUES_TYP == "Risiko")
   filter(QUES_TYP == "Chance")
 
 # Filtere die Daten nach Gruppen (alle, Kernteam, Nicht-Kernteam)

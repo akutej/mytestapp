@@ -1,0 +1,9 @@
+QUES2SURV_ID;COUNTANS;QUES2SURV_QUESID;QUES2SURV_SURVID;QUES2SURV_SORT;QUES2SURV_METHOD;QUES2SURV_KBID;QUES_ID;QUES_TYP;QUES_TEXT;QUES_HEADLINE;QUES_CATEGORY;QUES_TOPIC;QUES_CAUSE;QUES_EFFECT
+4037;2;924;302;1;classic;ÖU001;924;Risiko;[ÖU3] Erschütterungen während der Bauphase (Beeinflusst Medizin-und Labortechnik);Risikofrage;Ökologie, Umwelt;ÖU;;
+4038;2;925;302;2;classic;ÖU002;925;Risiko;[ÖU5] Verunreinigung des Grundwasser;Risikofrage;Ökologie, Umwelt;ÖU;;
+4036;2;927;302;3;classic;PA001;927;Risiko;[PA8] Vorgegebene Laufzeiten und Fristen sind nicht berücksichtigt (Beschlussfassung Aufsichtsrat, Einreichung Landesrechnungshof, Ausschreibungsverfahren uvm.);Risikofrage;Projektablauf;PA;;
+4035;2;928;302;4;classic;PF001;928;Risiko;[PF1] Folgekostenermittlung nicht transparent;Risikofrage;Projektfolgen;PF;;
+4034;2;929;302;5;classic;PF002;929;Risiko;[PF2] Betriebsorganisationskonzept nicht gelöst;Risikofrage;Projektfolgen;PF;;
+4032;2;922;302;6;classic;PU001;922;Chance;[PU2] Verbesserung der Positionierung am Arbeitsmarkt;Chancenfrage;Projektumfeld;PU;;
+4033;2;923;302;7;classic;PU002;923;Chance;[PU4] Integration der Pädaudiometrie in die HNO bzw. Kopfzentrum;Chancenfrage;Projektumfeld;PU;;
+4031;2;926;302;8;classic;UV001;926;Risiko;[UV2] Änderung/Reduktion der/des medizinischen Leistungsplanung/-spektrums/-angebotsplanung bis zur Inbetriebnahme;Risikofrage;Unvorhergesehenes;UV;;
